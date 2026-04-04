@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', setting('site_name', 'Andrew.Devlog') . ' - ' . setting('site_tagline', 'Website Development & Digital Agency'))</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: '#0ea5e9',
+                            light: '#38bdf8',
+                            dark: '#0369a1',
+                            50: '#f0f9ff',
+                            100: '#e0effe',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{{ asset('Assets/style.css') }}">
+
+    @yield('head')
+</head>
+<body class="font-sans text-gray-800 antialiased bg-white selection:bg-primary selection:text-white">
+
+    @include('component.navbar')
+
+    <main>
+        @yield('content')
+    </main>
+
+    @include('component.footer')
+    @include('component.search-modal')
+    @include('component.whatsapp_button')
+
+
+    <!-- Scripts -->
+    <script src="{{ asset('Assets/script.js') }}"></script>
+    @yield('scripts')
+</body>
+</html>

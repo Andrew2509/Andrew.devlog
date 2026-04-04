@@ -1,0 +1,100 @@
+@extends('layouts.admin')
+
+@section('title', 'Edit Kategori - ' . setting('site_name', 'Andrew.Devlog') . ' Admin')
+@section('header_title', 'Edit Kategori')
+@section('header_subtitle', 'Sesuaikan detail kategori layanan Anda.')
+
+@section('admin_content')
+<div class="max-w-4xl">
+    <div class="mb-8 flex items-center gap-4">
+        <a href="{{ route('admin.service_categories.index') }}" class="w-12 h-12 bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-gray-500 hover:text-white transition-all border border-white/5 shadow-xl">
+            <i class="fas fa-chevron-left text-xs"></i>
+        </a>
+        <div class="text-xs font-bold text-gray-500 uppercase tracking-widest px-4 py-2 bg-white/5 rounded-xl border border-white/5">
+            Edit: {{ $serviceCategory->name }}
+        </div>
+    </div>
+
+    <form action="{{ route('admin.service_categories.update', $serviceCategory) }}" method="POST" class="bg-gray-900 border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl">
+        <div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+        
+        @csrf
+        @method('PUT')
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+            <!-- Parent Category -->
+            <div class="space-y-3">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fas fa-sitemap text-primary"></i>
+                    Induk Kategori (Opsional)
+                </label>
+                <select name="parent_id" class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold appearance-none">
+                    <option value="">-- Pilih Induk Kategori --</option>
+                    @foreach($parentCategories as $parent)
+                        <option value="{{ $parent->id }}" {{ old('parent_id', $serviceCategory->parent_id) == $parent->id ? 'selected' : '' }}>
+                            {{ $parent->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('parent_id') <p class="text-red-500 text-[10px] mt-1 font-bold uppercase tracking-tight">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Name -->
+            <div class="space-y-3">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fas fa-heading text-primary"></i>
+                    Nama Kategori
+                </label>
+                <input type="text" name="name" placeholder="Misal: Web Development" 
+                    class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold"
+                    value="{{ old('name', $serviceCategory->name) }}" required>
+                @error('name') <p class="text-red-500 text-[10px] mt-1 font-bold uppercase tracking-tight">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Icon -->
+            <div class="space-y-3">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fas fa-icons text-primary"></i>
+                    Icon (FA Class)
+                </label>
+                <input type="text" name="icon" placeholder="fas fa-laptop" 
+                    class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold"
+                    value="{{ old('icon', $serviceCategory->icon) }}">
+                <p class="text-[10px] text-gray-500 font-medium">Contoh: fas fa-code, fas fa-palette, fas fa-mobile-alt</p>
+                @error('icon') <p class="text-red-500 text-[10px] mt-1 font-bold uppercase tracking-tight">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Position -->
+            <div class="space-y-3">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fas fa-sort-numeric-down text-primary"></i>
+                    Urutan Tampilan
+                </label>
+                <input type="number" name="order" placeholder="0" 
+                    class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold"
+                    value="{{ old('order', $serviceCategory->order) }}" min="0">
+                <p class="text-[10px] text-gray-500 font-medium">Angka kecil akan tampil lebih awal (0, 1, 2, ...)</p>
+                @error('order') <p class="text-red-500 text-[10px] mt-1 font-bold uppercase tracking-tight">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Description -->
+            <div class="space-y-3 md:col-span-2">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fas fa-align-left text-primary"></i>
+                    Deskripsi Singkat
+                </label>
+                <textarea name="description" rows="4" placeholder="Jelaskan secara singkat tentang kategori ini..." 
+                    class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-medium resize-none">{{ old('description', $serviceCategory->description) }}</textarea>
+                @error('description') <p class="text-red-500 text-[10px] mt-1 font-bold uppercase tracking-tight">{{ $message }}</p> @enderror
+            </div>
+        </div>
+
+        <div class="mt-12 flex justify-end relative z-10">
+            <button type="submit" class="bg-primary hover:bg-primary-dark text-white px-10 py-4 rounded-2xl font-black text-sm transition-all shadow-xl shadow-primary/25 flex items-center gap-3 uppercase tracking-widest">
+                <span>Update Kategori</span>
+                <i class="fas fa-save text-xs opacity-50"></i>
+            </button>
+        </div>
+    </form>
+</div>
+@endsection
