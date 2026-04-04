@@ -37,7 +37,7 @@
     </script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="{{ asset('Assets/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 
     @yield('head')
 </head>
@@ -55,7 +55,7 @@
 
 
     <!-- Scripts -->
-    <script src="{{ asset('Assets/script.js') }}"></script>
+    <script src="{{ asset('assets/script.js') }}"></script>
     @yield('scripts')
 </body>
 </html>
