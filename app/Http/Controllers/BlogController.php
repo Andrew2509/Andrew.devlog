@@ -62,10 +62,15 @@ class BlogController extends Controller
             }
         }
 
+        // Fetch comments for the post
+        $commentsData = $this->blogger->getComments($id);
+        $comments = $commentsData ? ($commentsData->getItems() ?? []) : [];
+
         return view('page.blog-detail', [
             'post' => $post,
             'blogId' => $this->blogger->getBlogId(),
-            'otherPosts' => $otherPosts
+            'otherPosts' => $otherPosts,
+            'comments' => $comments
         ]);
     }
 }

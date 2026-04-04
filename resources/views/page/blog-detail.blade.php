@@ -172,6 +172,22 @@
         -webkit-box-orient: vertical;  
         overflow: hidden;
     }
+    /* Comment Styles */
+    .comment-item {
+        transition: all 0.3s ease;
+    }
+    .comment-item:hover {
+        transform: translateY(-2px);
+    }
+    .comment-content {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #4b5563;
+    }
+    .comment-content a {
+        color: #0ea5e9;
+        text-decoration: underline;
+    }
 </style>
 @endsection
 
@@ -292,21 +308,85 @@
         </div>
 
         <!-- Comments Section -->
-        <div class="mt-6 bg-white p-5 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <i class="fas fa-comments text-primary text-sm"></i> Tulis Komentar
-            </h3>
-            
-            <div id="blogger-comments" class="w-full">
-                <iframe 
-                    src="https://www.blogger.com/comment-iframe.g?blogID={{ $blogId }}&postID={{ $post->getId() }}&parent={{ urlencode(url()->current()) }}" 
-                    width="100%" 
-                    height="350" 
-                    frameborder="0" 
-                    scrolling="no" 
-                    allowtransparency="true"
-                    class="rounded-xl"
-                ></iframe>
+        <div class="mt-8">
+            <div class="flex items-center justify-between mb-8">
+                <h3 class="text-2xl font-extrabold text-gray-900 flex items-center gap-3">
+                    <i class="fas fa-comments text-primary"></i> Komentar
+                    <span class="px-2.5 py-0.5 bg-gray-100 text-gray-500 text-xs font-bold rounded-full">
+                        {{ count($comments) }}
+                    </span>
+                </h3>
+            </div>
+
+            <!-- Comment List -->
+            <div class="space-y-6 mb-12">
+                @forelse($comments as $comment)
+                    <div class="comment-item bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex gap-4 md:gap-6">
+                        <!-- Avatar -->
+                        <div class="shrink-0">
+                            @php
+                                $author = $comment->getAuthor();
+                                $authorImage = !empty($author->getImage()) ? $author->getImage()->getUrl() : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($author->getDisplayName()))) . '?d=mp&s=100';
+                                // Fix protocol if needed
+                                if (str_starts_with($authorImage, '//')) $authorImage = 'https:' . $authorImage;
+                            @endphp
+                            <div class="w-12 h-12 rounded-2xl overflow-hidden bg-gray-100 border-2 border-primary/20">
+                                <img src="{{ $authorImage }}" alt="{{ $author->getDisplayName() }}" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="flex-1">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3">
+                                <h4 class="font-bold text-gray-900">
+                                    @if($author->getUrl())
+                                        <a href="{{ $author->getUrl() }}" target="_blank" class="hover:text-primary transition-colors">
+                                            {{ $author->getDisplayName() }}
+                                        </a>
+                                    @else
+                                        {{ $author->getDisplayName() }}
+                                    @endif
+                                </h4>
+                                <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                                    <i class="far fa-clock mr-1"></i> {{ date('d M Y, H:i', strtotime($comment->getPublished())) }}
+                                </span>
+                            </div>
+                            <div class="comment-content text-gray-600 prose prose-sm max-w-none">
+                                {!! $comment->getContent() !!}
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="bg-gray-50/50 border-2 border-dashed border-gray-200 rounded-3xl py-12 px-6 text-center">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+                            <i class="far fa-comment-dots text-2xl"></i>
+                        </div>
+                        <p class="text-gray-500 font-medium">Belum ada komentar di artikel ini.</p>
+                        <p class="text-xs text-gray-400 mt-1">Jadilah yang pertama untuk memberikan tanggapan!</p>
+                    </div>
+                @endforelse
+            </div>
+
+            <!-- Post New Comment Header -->
+            <div class="bg-primary/5 rounded-3xl p-6 md:p-8 border border-primary/10">
+                <h3 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-3">
+                    <i class="fas fa-edit text-primary text-sm"></i> Tulis Komentar Baru
+                </h3>
+                
+                <div id="blogger-comments" class="w-full bg-white rounded-2xl p-2 shadow-inner min-h-[350px]">
+                    <iframe 
+                        src="https://www.blogger.com/comment-iframe.g?blogID={{ $blogId }}&postID={{ $post->getId() }}&parent={{ urlencode(url()->current()) }}" 
+                        width="100%" 
+                        height="350" 
+                        frameborder="0" 
+                        scrolling="yes" 
+                        allowtransparency="true"
+                        class="w-full"
+                    ></iframe>
+                </div>
+                <p class="text-[11px] text-center text-gray-400 mt-4">
+                    <i class="fas fa-info-circle mr-1"></i> Komentar Anda akan dimoderasi sesuai dengan kebijakan komunitas kami.
+                </p>
             </div>
         </div>
 

@@ -75,6 +75,24 @@ class BloggerService
      * Note: Blogger slig are usually the full path including .html
      */
     /**
+     * Get comments for a specific post.
+     */
+    public function getComments($postId)
+    {
+        try {
+            $optParams = [
+                'fetchBodies' => true,
+                'maxResults' => 100, // Reasonable limit
+            ];
+
+            return $this->blogger->comments->listComments($this->blogId, $postId, $optParams);
+        } catch (\Exception $e) {
+            Log::error("Blogger API Error (Get Comments): " . $e->getMessage());
+            return null;
+        }
+    }
+
+    /**
      * Search posts by query.
      */
     public function searchPosts($query)
