@@ -102,7 +102,7 @@
                 </div>
 
                 <!-- Illustration -->
-                <img src="{{ asset('assets/Image/Illustration.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }} Illustration" class="w-full h-auto drop-shadow-2xl">
+                <img src="{{ asset('assets/image/Illustration.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }} Illustration" class="w-full h-auto drop-shadow-2xl">
             </div>
         </div>
     </section>
