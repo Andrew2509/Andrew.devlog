@@ -26,6 +26,8 @@ class Portfolio extends Model
             return $this->image;
         }
 
-        return asset('assets/image/portfolios/' . $this->image);
+        // Clean the image path if it contains multiple 'portfolios/' or just 'portfolios/'
+        $imageName = str_replace('portfolios/', '', $this->image);
+        return asset('assets/image/portfolios/' . $imageName);
     }
 }
