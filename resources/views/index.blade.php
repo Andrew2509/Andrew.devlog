@@ -50,7 +50,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero-{{ strtolower(setting('site_name', 'andrew.devlog')) }} relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-24 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('assets/image/Backround.png') }}');">
+    <section class="hero-{{ strtolower(setting('site_name', 'andrew.devlog')) }} relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-24 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('assets/image/Background.png') }}');">
         <!-- Decorative Blobs -->
         <div class="absolute top-0 left-0 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
         <div class="absolute top-0 right-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
