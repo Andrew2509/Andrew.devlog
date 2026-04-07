@@ -25,7 +25,10 @@
 }
 .marquee-container {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     width: max-content;
+    flex-shrink: 0;
     animation: scroll-marquee 25s linear infinite;
 }
 .marquee-wrapper:hover .marquee-container {

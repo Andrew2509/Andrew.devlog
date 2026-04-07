@@ -50,7 +50,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero-{{ strtolower(setting('site_name', 'andrew.devlog')) }} relative overflow-hidden bg-primary-50 pt-28 pb-16 lg:pt-32 lg:pb-24">
+    <section class="hero-{{ strtolower(setting('site_name', 'andrew.devlog')) }} relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-24 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('assets/image/Backround.png') }}');">
         <!-- Decorative Blobs -->
         <div class="absolute top-0 left-0 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
         <div class="absolute top-0 right-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
@@ -100,9 +100,6 @@
                         </span>
                     </div>
                 </div>
-
-                <!-- Illustration -->
-                <img src="{{ asset('assets/image/Illustration.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }} Illustration" class="w-full h-auto drop-shadow-2xl">
             </div>
         </div>
     </section>
@@ -112,8 +109,8 @@
         {{-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
             <p class="text-center text-sm font-semibold text-gray-400 uppercase tracking-wider">Dipercaya oleh Perusahaan Terkemuka</p>
         </div> --}}
-        <div class="relative w-full overflow-hidden flex">
-            <div class="marquee-container gap-16 px-8 items-center">
+        <div class="relative w-full overflow-hidden">
+            <div class="marquee-container flex flex-nowrap gap-8 md:gap-16 px-8 items-center">
                 @foreach($clients as $client)
                 <div class="flex items-center gap-4 text-2xl md:text-3xl font-bold text-gray-800 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 cursor-pointer transition-all duration-300">
                     <img src="{{ $client->logo_url }}" alt="{{ $client->name }}" class="h-10 md:h-12 w-auto object-contain">
