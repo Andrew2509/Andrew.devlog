@@ -37,7 +37,10 @@ class PortfolioController extends Controller
         ]);
 
         if ($request->image_type === 'file' && $request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('portfolios', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('assets/image/portfolios'), $imageName);
+            $imagePath = $imageName;
         } else {
             $imagePath = $request->image_url;
         }
@@ -84,13 +87,22 @@ class PortfolioController extends Controller
         if ($request->image_type === 'file' && $request->hasFile('image')) {
             // Delete old file if exists
             if ($portfolio->image && !str_starts_with($portfolio->image, 'http')) {
-                Storage::disk('public')->delete($portfolio->image);
+                $oldPath = public_path('assets/image/portfolios/' . $portfolio->image);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
             }
-            $data['image'] = $request->file('image')->store('portfolios', 'public');
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('assets/image/portfolios'), $imageName);
+            $data['image'] = $imageName;
         } elseif ($request->image_type === 'url' && $request->image_url) {
             // Delete old file if exists
             if ($portfolio->image && !str_starts_with($portfolio->image, 'http')) {
-                Storage::disk('public')->delete($portfolio->image);
+                $oldPath = public_path('assets/image/portfolios/' . $portfolio->image);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
             }
             $data['image'] = $request->image_url;
         }
@@ -102,7 +114,12 @@ class PortfolioController extends Controller
 
     public function destroy(Portfolio $portfolio)
     {
-        Storage::disk('public')->delete($portfolio->image);
+        if ($portfolio->image && !str_starts_with($portfolio->image, 'http')) {
+            $path = public_path('assets/image/portfolios/' . $portfolio->image);
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
         $portfolio->delete();
 
         return redirect()->route('admin.portfolio.index')->with('success', 'Project berhasil dihapus.');

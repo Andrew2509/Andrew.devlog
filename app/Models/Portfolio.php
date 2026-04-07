@@ -26,6 +26,6 @@ class Portfolio extends Model
             return $this->image;
         }
 
-        return asset('storage/' . $this->image);
+        return asset('assets/image/portfolios/' . $this->image);
     }
 }
