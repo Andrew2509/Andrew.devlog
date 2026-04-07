@@ -26,7 +26,7 @@
                 @forelse($portfolios as $portfolio)
                 <div id="project-{{ $portfolio->id }}" class="portfolio-item group bg-white rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
                     <div class="relative overflow-hidden aspect-video">
-                        <img src="{{ asset('storage/' . $portfolio->image) }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="{{ $portfolio->image_url }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
                              <a href="{{ $portfolio->link ?? '#' }}" target="{{ $portfolio->link ? '_blank' : '_self' }}" class="bg-white text-gray-900 px-6 py-2 rounded-full font-bold shadow-lg hover:bg-primary hover:text-white transition-colors">Lihat Website</a>
                         </div>

@@ -29,12 +29,18 @@ class PortfolioController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image_type' => 'required|in:file,url',
+            'image' => 'required_if:image_type,file|nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'image_url' => 'required_if:image_type,url|nullable|url',
             'description' => 'required|string',
             'link' => 'nullable|url',
         ]);
 
-        $imagePath = $request->file('image')->store('portfolios', 'public');
+        if ($request->image_type === 'file' && $request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('portfolios', 'public');
+        } else {
+            $imagePath = $request->image_url;
+        }
 
         Portfolio::create([
             'title' => $request->title,
@@ -59,7 +65,9 @@ class PortfolioController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image_type' => 'required|in:file,url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'image_url' => 'required_if:image_type,url|nullable|url',
             'description' => 'required|string',
             'link' => 'nullable|url',
         ]);
@@ -73,9 +81,18 @@ class PortfolioController extends Controller
             'is_featured' => $request->has('is_featured'),
         ];
 
-        if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($portfolio->image);
+        if ($request->image_type === 'file' && $request->hasFile('image')) {
+            // Delete old file if exists
+            if ($portfolio->image && !str_starts_with($portfolio->image, 'http')) {
+                Storage::disk('public')->delete($portfolio->image);
+            }
             $data['image'] = $request->file('image')->store('portfolios', 'public');
+        } elseif ($request->image_type === 'url' && $request->image_url) {
+            // Delete old file if exists
+            if ($portfolio->image && !str_starts_with($portfolio->image, 'http')) {
+                Storage::disk('public')->delete($portfolio->image);
+            }
+            $data['image'] = $request->image_url;
         }
 
         $portfolio->update($data);

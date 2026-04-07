@@ -303,7 +303,7 @@
                 @forelse($portfolios as $portfolio)
                 <div class="portfolio-item fade-in-up-element group relative overflow-hidden rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 bg-white" style="transition-delay: {{ 0.2 + ($loop->index * 0.1) }}s;">
                     <div class="w-full h-72">
-                        <img src="{{ asset('storage/' . $portfolio->image) }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="{{ $portfolio->image_url }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
                         <span class="text-primary-100 font-semibold text-sm mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{{ $portfolio->category }}</span>
