@@ -102,25 +102,41 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @php
                     $storedLinks = setting('sosmed_links');
-                    $links = [
-                        ['id' => 1, 'title' => 'Konsultasi Project via WhatsApp', 'url' => 'https://wa.me/628123456789', 'icon' => 'fa-brands fa-whatsapp', 'icon_color' => 'text-emerald-500', 'type' => 'gradient-dark'],
-                        ['id' => 2, 'title' => 'Lihat Daftar Harga Layanan', 'url' => route('harga'), 'icon' => 'tag', 'icon_color' => 'text-amber-500', 'type' => 'normal'],
-                        ['id' => 3, 'title' => 'Lihat Portfolio Project Saya', 'url' => route('portfolio'), 'icon' => 'briefcase', 'icon_color' => 'text-indigo-500', 'type' => 'normal'],
-                        ['id' => 4, 'title' => 'Kunjungi GitHub Repository', 'url' => 'https://github.com/AndrewMasrikat', 'icon' => 'fa-brands fa-github', 'icon_color' => 'text-slate-700', 'type' => 'normal'],
-                        ['id' => 5, 'title' => 'Mari Terhubung di LinkedIn', 'url' => 'https://linkedin.com/in/andrewmasrikat', 'icon' => 'fa-brands fa-linkedin', 'icon_color' => 'text-blue-600', 'type' => 'normal'],
-                        ['id' => 6, 'title' => 'Kirim Email Penawaran Kerja Sama', 'url' => 'mailto:contact@andrewdevlog.com', 'icon' => 'mail', 'icon_color' => 'text-rose-500', 'type' => 'normal']
+                    $baseMetadata = [
+                        ['id' => 0, 'icon' => 'globe', 'icon_color' => 'text-cyan-500', 'type' => 'normal'],
+                        ['id' => 1, 'icon' => 'fa-brands fa-whatsapp', 'icon_color' => 'text-emerald-500', 'type' => 'gradient-dark'],
+                        ['id' => 2, 'icon' => 'tag', 'icon_color' => 'text-amber-500', 'type' => 'normal'],
+                        ['id' => 3, 'icon' => 'briefcase', 'icon_color' => 'text-indigo-500', 'type' => 'normal'],
+                        ['id' => 4, 'icon' => 'fa-brands fa-github', 'icon_color' => 'text-slate-700', 'type' => 'normal'],
+                        ['id' => 5, 'icon' => 'fa-brands fa-linkedin', 'icon_color' => 'text-blue-600', 'type' => 'normal'],
+                        ['id' => 6, 'icon' => 'mail', 'icon_color' => 'text-rose-500', 'type' => 'normal']
+                    ];
+
+                    $defaults = [
+                        ['id' => 0, 'title' => 'Lihat website Andrew.devlog', 'url' => '/'],
+                        ['id' => 1, 'title' => 'Konsultasi Project via WhatsApp', 'url' => 'https://wa.me/628123456789'],
+                        ['id' => 2, 'title' => 'Lihat Daftar Harga Layanan', 'url' => route('harga')],
+                        ['id' => 3, 'title' => 'Lihat Portfolio Project Saya', 'url' => route('portfolio')],
+                        ['id' => 4, 'title' => 'Kunjungi GitHub Repository', 'url' => 'https://github.com/AndrewMasrikat'],
+                        ['id' => 5, 'title' => 'Mari Terhubung di LinkedIn', 'url' => 'https://linkedin.com/in/andrewmasrikat'],
+                        ['id' => 6, 'title' => 'Kirim Email Penawaran Kerja Sama', 'url' => 'mailto:contact@andrewdevlog.com']
                     ];
 
                     if ($storedLinks) {
                         $parsedLinks = json_decode($storedLinks, true);
-                        $links = collect($links)->map(function($base) use ($parsedLinks) {
-                            $match = collect($parsedLinks)->firstWhere('id', $base['id']);
-                            if ($match) {
-                                $base['title'] = $match['title'] ?? $base['title'];
-                                $base['url'] = $match['url'] ?? $base['url'];
-                            }
-                            return $base;
-                        })->toArray();
+                        $links = collect($parsedLinks)->map(function($stored) use ($baseMetadata) {
+                            $meta = collect($baseMetadata)->firstWhere('id', $stored['id']);
+                            return array_merge([
+                                'icon' => 'link', 
+                                'icon_color' => 'text-slate-400', 
+                                'type' => 'normal'
+                            ], $meta ?? [], $stored);
+                        });
+                    } else {
+                        $links = collect($defaults)->map(function($def) use ($baseMetadata) {
+                            $meta = collect($baseMetadata)->firstWhere('id', $def['id']);
+                            return array_merge($def, $meta ?? []);
+                        });
                     }
                 @endphp
 
@@ -150,31 +166,44 @@
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    @php
-                        $defaultServices = [
-                            ['id' => 'web', 'name' => 'Web Development', 'desc' => 'Pembuatan website company profile, e-commerce, landing page, hingga sistem informasi custom.', 'bg' => 'bg-gradient-to-br from-slate-800 to-slate-900', 'icon' => 'globe', 'rotate' => '-rotate-12'],
-                            ['id' => 'app', 'name' => 'Mobile App Development', 'desc' => 'Pengembangan aplikasi Android & iOS berkualitas tinggi yang responsif dan user-friendly.', 'bg' => 'bg-gradient-to-br from-indigo-500 to-blue-600', 'icon' => 'smartphone', 'rotate' => 'rotate-6'],
-                            ['id' => 'uiux', 'name' => 'UI/UX Design', 'desc' => 'Perancangan antarmuka yang modern, estetis, dan memberikan pengalaman pengguna terbaik.', 'bg' => 'bg-gradient-to-br from-violet-500 to-purple-600', 'icon' => 'pen-tool', 'rotate' => '-rotate-6'],
-                            ['id' => 'api', 'name' => 'Backend & API', 'desc' => 'Pembuatan arsitektur server, database management, dan integrasi RESTful API yang aman.', 'bg' => 'bg-gradient-to-br from-teal-500 to-emerald-600', 'icon' => 'database', 'rotate' => 'rotate-12'],
-                            ['id' => 'seo', 'name' => 'SEO Optimization', 'desc' => 'Optimasi mesin pencari untuk meningkatkan visibilitas website Anda dan mendatangkan trafik organik yang tertarget.', 'bg' => 'bg-gradient-to-br from-amber-500 to-orange-600', 'icon' => 'trending-up', 'rotate' => '-rotate-12'],
-                            ['id' => 'redesign', 'name' => 'Redesign Website', 'desc' => 'Pembaruan UI/UX dan struktur website lama Anda menjadi lebih modern, cepat, dan responsif di semua perangkat.', 'bg' => 'bg-gradient-to-br from-rose-500 to-pink-600', 'icon' => 'palette', 'rotate' => 'rotate-12'],
-                            ['id' => 'repair', 'name' => 'Perbaikan Website', 'desc' => 'Penyelesaian bug, error, blank page, atau perbaikan masalah layout agar website Anda kembali berfungsi normal.', 'bg' => 'bg-gradient-to-br from-red-600 to-rose-700', 'icon' => 'wrench', 'rotate' => '-rotate-6'],
-                            ['id' => 'maintenance', 'name' => 'Maintenance Website', 'desc' => 'Pemeliharaan server, pembaruan sistem, backup data berkala, dan monitoring keamanan untuk stabilitas jangka panjang.', 'bg' => 'bg-gradient-to-br from-cyan-500 to-blue-600', 'icon' => 'shield-check', 'rotate' => 'rotate-12']
+                        $baseServices = [
+                            ['id' => 'web', 'icon' => 'globe', 'rotate' => '-rotate-12', 'bg' => 'bg-gradient-to-br from-slate-800 to-slate-900'],
+                            ['id' => 'app', 'icon' => 'smartphone', 'rotate' => 'rotate-6', 'bg' => 'bg-gradient-to-br from-indigo-500 to-blue-600'],
+                            ['id' => 'uiux', 'icon' => 'pen-tool', 'rotate' => '-rotate-6', 'bg' => 'bg-gradient-to-br from-violet-500 to-purple-600'],
+                            ['id' => 'api', 'icon' => 'database', 'rotate' => 'rotate-12', 'bg' => 'bg-gradient-to-br from-teal-500 to-emerald-600'],
+                            ['id' => 'seo', 'icon' => 'trending-up', 'rotate' => '-rotate-12', 'bg' => 'bg-gradient-to-br from-amber-500 to-orange-600'],
+                            ['id' => 'redesign', 'icon' => 'palette', 'rotate' => 'rotate-12', 'bg' => 'bg-gradient-to-br from-rose-500 to-pink-600'],
+                            ['id' => 'repair', 'icon' => 'wrench', 'rotate' => '-rotate-6', 'bg' => 'bg-gradient-to-br from-red-600 to-rose-700'],
+                            ['id' => 'maintenance', 'icon' => 'shield-check', 'rotate' => 'rotate-12', 'bg' => 'bg-gradient-to-br from-cyan-500 to-blue-600']
+                        ];
+
+                        $defaults = [
+                            ['id' => 'web', 'name' => 'Web Development', 'desc' => 'Pembuatan website company profile, e-commerce, landing page, hingga sistem informasi custom.'],
+                            ['id' => 'app', 'name' => 'Mobile App Development', 'desc' => 'Pengembangan aplikasi Android & iOS berkualitas tinggi yang responsif dan user-friendly.'],
+                            ['id' => 'uiux', 'name' => 'UI/UX Design', 'desc' => 'Perancangan antarmuka yang modern, estetis, dan memberikan pengalaman pengguna terbaik.'],
+                            ['id' => 'api', 'name' => 'Backend & API', 'desc' => 'Pembuatan arsitektur server, database management, dan integrasi RESTful API yang aman.'],
+                            ['id' => 'seo', 'name' => 'SEO Optimization', 'desc' => 'Optimasi mesin pencari untuk meningkatkan visibilitas website Anda dan mendatangkan trafik organik yang tertarget.'],
+                            ['id' => 'redesign', 'name' => 'Redesign Website', 'desc' => 'Pembaruan UI/UX dan struktur website lama Anda menjadi lebih modern, cepat, dan responsif di semua perangkat.'],
+                            ['id' => 'repair', 'name' => 'Perbaikan Website', 'desc' => 'Penyelesaian bug, error, blank page, atau perbaikan masalah layout agar website Anda kembali berfungsi normal.'],
+                            ['id' => 'maintenance', 'name' => 'Maintenance Website', 'desc' => 'Pemeliharaan server, pembaruan sistem, backup data berkala, dan monitoring keamanan untuk stabilitas jangka panjang.']
                         ];
 
                         $storedServices = setting('sosmed_services');
                         if ($storedServices) {
-                            $storedServices = json_decode($storedServices, true);
-                            $finalServices = collect($defaultServices)->map(function($default) use ($storedServices) {
-                                $match = collect($storedServices)->firstWhere('id', $default['id']);
-                                if ($match) {
-                                    $default['name'] = $match['name'];
-                                    $default['desc'] = $match['desc'];
-                                }
-                                return $default;
+                            $parsedServices = json_decode($storedServices, true);
+                            $finalServices = collect($parsedServices)->map(function($stored) use ($baseServices) {
+                                $base = collect($baseServices)->firstWhere('id', $stored['id']);
+                                return array_merge([
+                                    'icon' => 'star', 
+                                    'rotate' => 'rotate-0', 
+                                    'bg' => 'bg-slate-800'
+                                ], $base ?? [], $stored);
                             });
                         } else {
-                            $finalServices = $defaultServices;
+                            $finalServices = collect($defaults)->map(function($def) use ($baseServices) {
+                                $base = collect($baseServices)->firstWhere('id', $def['id']);
+                                return array_merge($def, $base ?? []);
+                            });
                         }
                     @endphp
 

@@ -2,7 +2,7 @@
 
 @section('title', 'Daftar Link - Sosmed Bio')
 @section('header_title', 'Sosmed: Daftar Link')
-@section('header_subtitle', 'Kelola 6 tombol link utama yang muncul di halaman Bio Anda.')
+@section('header_subtitle', 'Kelola 7 tombol link utama yang muncul di halaman Bio Anda.')
 
 @section('admin_content')
 <div class="max-w-6xl">
@@ -18,6 +18,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @php
                 $icons = [
+                    'fas fa-globe text-cyan-500',
                     'fab fa-whatsapp text-emerald-500',
                     'fas fa-tag text-amber-500',
                     'fas fa-briefcase text-indigo-500',

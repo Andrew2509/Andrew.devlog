@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             <!-- Logo Section -->
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <a href="{{ url('/') }}" class="flex items-center gap-2 cursor-pointer py-1">
                     @if(setting('site_logo'))
                         <img src="{{ setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto drop-shadow-md">
@@ -27,9 +27,9 @@
             </div>
 
             <!-- Search & Actions Section -->
-            <div class="hidden md:flex items-center gap-3 flex-shrink-0">
+            <div class="hidden md:flex items-center gap-3 shrink-0">
                 <button
-                    class="[--background:#ffffff] [--color:#000000] [--muted:#f4f4f5] [--muted-foreground:#71717a] [--border:#e4e4e7] relative inline-flex items-center gap-2 whitespace-nowrap transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 border border-[--border] bg-[--background] hover:bg-[--muted] text-[--muted-foreground] hover:text-[--color] px-3 py-2 justify-start rounded-[0.75rem] text-xs font-medium shadow-sm h-9 w-44 group"
+                    class="[--background:#ffffff] [--color:#000000] [--muted:#f4f4f5] [--muted-foreground:#71717a] [--border:#e4e4e7] relative inline-flex items-center gap-2 whitespace-nowrap transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 border border-[--border] bg-[--background] hover:bg-[--muted] text-[--muted-foreground] hover:text-[--color] px-3 py-2 justify-start rounded-xl text-xs font-medium shadow-sm h-9 w-44 group"
                     type="button"
                     onclick="openSearch()"
                 >

@@ -5,7 +5,7 @@
 <!-- Footer -->
 <footer class="bg-[#0b0f1a] text-white pt-0 pb-10 relative overflow-hidden">
     <!-- Neon Top Border -->
-    <div class="h-[2px] w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 shadow-[0_0_20px_#0ea5e9]"></div>
+    <div class="h-0.5 w-full bg-linear-to-r from-transparent via-primary to-transparent opacity-50 shadow-[0_0_20px_#0ea5e9]"></div>
 
 
 
@@ -47,14 +47,14 @@
             <!-- Column 2: Services (Dynamic) -->
             <div>
                 <h4 class="text-xs font-black mb-10 text-white uppercase tracking-[0.3em] flex items-center gap-3">
-                    <span class="w-6 h-[1px] bg-primary"></span>
+                    <span class="w-6 h-px bg-primary"></span>
                     SERVICES
                 </h4>
                 <ul class="space-y-4">
                     @forelse($footerCategories as $category)
                         <li>
                             <a href="{{ route('harga', ['category' => $category->slug]) }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">
-                                <span class="w-0 group-hover/link:w-3 h-[1px] bg-primary transition-all"></span>
+                                <span class="w-0 group-hover/link:w-3 h-px bg-primary transition-all"></span>
                                 {{ $category->name }}
                             </a>
                         </li>
@@ -69,7 +69,7 @@
             <!-- Column 3: Quick Links -->
             <div>
                 <h4 class="text-xs font-black mb-10 text-white uppercase tracking-[0.3em] flex items-center gap-3">
-                    <span class="w-6 h-[1px] bg-primary"></span>
+                    <span class="w-6 h-px bg-primary"></span>
                     EXPLORE
                 </h4>
                 <ul class="space-y-4">
@@ -83,7 +83,7 @@
             <!-- Column 4: Social & Follow -->
             <div>
                 <h4 class="text-xs font-black mb-10 text-white uppercase tracking-[0.3em] flex items-center gap-3">
-                    <span class="w-6 h-[1px] bg-primary"></span>
+                    <span class="w-6 h-px bg-primary"></span>
                     CONNECT
                 </h4>
                 <p class="text-gray-500 text-sm font-bold mb-8 leading-relaxed">
@@ -103,7 +103,7 @@
                         <a href="{{ setting($social['setting']) }}" target="_blank" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-all transform hover:-translate-y-1 relative group"
                            style="--hover-color: {{ $social['color'] }}">
                             <i class="{{ $social['icon'] }}"></i>
-                            <div class="absolute inset-0 rounded-2xl bg-[var(--hover-color)] opacity-0 group-hover:opacity-20 blur-lg transition-opacity"></div>
+                            <div class="absolute inset-0 rounded-2xl bg-(--hover-color) opacity-0 group-hover:opacity-20 blur-lg transition-opacity"></div>
                         </a>
                         @endif
                     @endforeach
