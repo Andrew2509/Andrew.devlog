@@ -104,7 +104,8 @@ class SosmedController extends Controller
             ['id' => 3, 'title' => 'Lihat Portfolio Project Saya', 'url' => '/portfolio'],
             ['id' => 4, 'title' => 'Kunjungi GitHub Repository', 'url' => 'https://github.com/AndrewMasrikat'],
             ['id' => 5, 'title' => 'Mari Terhubung di LinkedIn', 'url' => 'https://linkedin.com/in/andrewmasrikat'],
-            ['id' => 6, 'title' => 'Kirim Email Penawaran Kerja Sama', 'url' => 'mailto:contact@andrewdevlog.com']
+            ['id' => 6, 'title' => 'Kirim Email Penawaran Kerja Sama', 'url' => 'mailto:contact@andrewdevlog.com'],
+            ['id' => 7, 'title' => 'Lihat website andrew.devlog', 'url' => '/']
         ];
 
         if ($stored) {
