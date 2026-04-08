@@ -69,11 +69,16 @@
 
             <!-- Hero Banner -->
             <div class="rounded-3xl p-8 md:p-8 relative overflow-hidden shadow-xl shadow-slate-900/10 min-h-[500px] flex items-center bg-slate-900 bg-cover bg-center banner-responsive">
+                <!-- Overlay to ensure readability -->
+                <div class="absolute inset-0 bg-slate-950/40"></div>
+                <!-- Decorative effects -->
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-indigo-500 opacity-20 blur-3xl"></div>
+                <div class="absolute bottom-0 right-20 -mb-16 w-48 h-48 rounded-full bg-violet-400 opacity-20 blur-2xl"></div>
 
-                <div class="relative z-10 flex flex-row items-center justify-between w-full gap-6">
-                    <div class="flex-1 text-left">
-                        <div class="flex items-center justify-start gap-3 mb-3">
-                            <div class="w-8 h-8 bg-indigo-500/20 rounded-lg flex items-center justify-center text-indigo-400 border border-indigo-500/30">
+                <div class="relative z-10 flex flex-col md:flex-row items-center md:justify-between w-full gap-6">
+                    <div class="flex-1 text-center md:text-left">
+                        <div class="flex items-center justify-center md:justify-start gap-3 mb-3">
+                            <div class="w-8 h-8 bg-indigo-500/20 rounded-lg flex items-center justify-center text-indigo-400 backdrop-blur-sm border border-indigo-500/30">
                                 <i data-lucide="code" class="w-5 h-5"></i>
                             </div>
                             <span class="text-indigo-300 font-bold text-sm tracking-widest uppercase">Tingkatkan Bisnis Anda</span>
