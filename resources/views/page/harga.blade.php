@@ -34,7 +34,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Category Navigation -->
-            <div class="mb-12 space-y-6">
+            <div class="sticky top-20 z-30 bg-white/95 backdrop-blur-md py-6 mb-12 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 border-b border-gray-100 shadow-sm sm:shadow-none">
                 <!-- Parent Categories -->
                 <div class="flex flex-wrap justify-center gap-3">
                     <a href="{{ route('harga') }}" 
@@ -52,7 +52,7 @@
 
                 <!-- Child Categories (Sub-menu) -->
                 @if($activeParent && $activeParent->children->count() > 0)
-                <div class="flex flex-wrap justify-center gap-2 pb-2 bg-gray-50/50 p-4 rounded-3xl border border-dashed border-gray-200">
+                <div class="flex flex-wrap justify-center gap-2 mt-4 pb-2 bg-gray-50/50 p-4 rounded-3xl border border-dashed border-gray-200">
                     @foreach($activeParent->children as $child)
                         <a href="{{ route('harga', ['category' => $child->slug]) }}" 
                            class="px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 border {{ $currentCategory && $currentCategory->id == $child->id ? 'bg-white text-primary border-primary/20 shadow-sm' : 'text-gray-400 border-transparent hover:text-gray-700' }}">
