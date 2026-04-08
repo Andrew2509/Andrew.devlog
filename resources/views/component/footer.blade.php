@@ -20,10 +20,7 @@
                         @if(setting('footer_logo') || setting('site_logo'))
                             <img src="{{ setting('footer_logo') ?: setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto transition-transform group-hover:scale-105">
                         @else
-                            <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-12 transition-transform">
-                                <i class="fas fa-bolt text-black text-xl"></i>
-                            </div>
-                            <span class="text-2xl font-black tracking-tighter uppercase">{{ setting('site_name', 'ANDREW.DEVLOG') }}</span>
+                            <img src="{{ asset('assets/image/Logo.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto transition-transform group-hover:scale-105">
                         @endif
                     </a>
                 </div>

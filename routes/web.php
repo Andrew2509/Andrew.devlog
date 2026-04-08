@@ -9,6 +9,7 @@ Route::get('/pesan', [App\Http\Controllers\HomeController::class, 'pesan'])->nam
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{id}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
 
+Route::get('/me', function () { return view('page.sosmed'); })->name('sosmed');
 Route::get('/privacy', function () { return view('page.privacy'); })->name('privacy');
 Route::get('/terms', function () { return view('page.terms'); })->name('terms');
 Route::post('/inquiry', [App\Http\Controllers\InquiryController::class, 'store'])->name('inquiry.store');
@@ -48,4 +49,12 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
 
     // Blogger Management
     Route::get('/blogger', [App\Http\Controllers\Admin\BloggerController::class, 'index'])->name('admin.blogger.index');
+
+    // Sosmed Management
+    Route::get('/sosmed/about', [App\Http\Controllers\Admin\SosmedController::class, 'about'])->name('admin.sosmed.about');
+    Route::post('/sosmed/about', [App\Http\Controllers\Admin\SosmedController::class, 'updateAbout'])->name('admin.sosmed.about.update');
+    Route::get('/sosmed/services', [App\Http\Controllers\Admin\SosmedController::class, 'services'])->name('admin.sosmed.services');
+    Route::post('/sosmed/services', [App\Http\Controllers\Admin\SosmedController::class, 'updateServices'])->name('admin.sosmed.services.update');
+    Route::get('/sosmed/links', [App\Http\Controllers\Admin\SosmedController::class, 'links'])->name('admin.sosmed.links');
+    Route::post('/sosmed/links', [App\Http\Controllers\Admin\SosmedController::class, 'updateLinks'])->name('admin.sosmed.links.update');
 });

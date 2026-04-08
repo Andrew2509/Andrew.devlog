@@ -151,8 +151,8 @@
     <aside id="admin-sidebar" class="w-48 glass-sidebar fixed inset-y-0 left-0 z-[110] flex flex-col transition-all duration-300 overflow-y-auto overflow-x-hidden -translate-x-full lg:translate-x-0">
         <div class="p-6">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center neon-shadow">
-                    <i class="fas fa-bolt text-white text-xl"></i>
+                <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center neon-shadow p-1.5 border border-white/10">
+                    <img src="{{ asset('assets/image/Logo.png') }}" alt="Admin Logo" class="w-full h-full object-contain">
                 </div>
                 <span class="text-lg font-black text-white tracking-tight uppercase leading-none">Admin<br><span class="text-primary text-xs uppercase opacity-70 tracking-[0.2em]">Devlog</span></span>
             </a>
@@ -185,6 +185,28 @@
                 <i class="fab fa-blogger-b w-4 text-sm"></i>
                 <span class="font-bold text-xs tracking-tight">Blogger Artikels</span>
             </a>
+
+            <!-- Sosmed (Bio) Menu -->
+            <div class="space-y-1">
+                <button type="button" onclick="toggleSosmedMenu()" class="w-full flex items-center justify-between gap-3 px-3 py-3 rounded-xl transition-all {{ Request::is('admin/sosmed*') ? 'nav-link-active' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
+                    <div class="flex items-center gap-3 pointer-events-none">
+                        <i class="fas fa-share-alt w-4 text-sm"></i>
+                        <span class="font-bold text-xs tracking-tight">Sosmed (Bio)</span>
+                    </div>
+                    <i id="sosmed-arrow" class="fas fa-chevron-right text-[10px] transition-transform pointer-events-none {{ Request::is('admin/sosmed*') ? 'rotate-90' : '' }}"></i>
+                </button>
+                <div id="sosmed-submenu" class="{{ Request::is('admin/sosmed*') ? '' : 'hidden' }} flex flex-col px-3 space-y-1 mt-1 border-l-2 border-primary/20 ml-5">
+                    <a href="{{ route('admin.sosmed.about') }}" class="py-2 pl-3 text-[11px] font-bold transition-colors {{ Request::is('admin/sosmed/about') ? 'text-primary' : 'text-gray-500 hover:text-white' }}">
+                        About Me
+                    </a>
+                    <a href="{{ route('admin.sosmed.services') }}" class="py-2 pl-3 text-[11px] font-bold transition-colors {{ Request::is('admin/sosmed/services') ? 'text-primary' : 'text-gray-500 hover:text-white' }}">
+                        Layanan Saya
+                    </a>
+                    <a href="{{ route('admin.sosmed.links') }}" class="py-2 pl-3 text-[11px] font-bold transition-colors {{ Request::is('admin/sosmed/links') ? 'text-primary' : 'text-gray-500 hover:text-white' }}">
+                        Daftar Link
+                    </a>
+                </div>
+            </div>
 
             <div class="text-[9px] font-bold text-gray-500 uppercase tracking-widest px-3 mb-2 mt-8">Client & Pesan</div>
 
@@ -279,6 +301,13 @@
                 document.body.style.overflow = '';
                 setTimeout(() => backdrop.classList.add('hidden'), 300);
             }
+        }
+
+        function toggleSosmedMenu() {
+            const submenu = document.getElementById('sosmed-submenu');
+            const arrow = document.getElementById('sosmed-arrow');
+            submenu.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-90');
         }
     </script>
     @yield('scripts')

@@ -8,10 +8,7 @@
                     @if(setting('site_logo'))
                         <img src="{{ setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto drop-shadow-md">
                     @else
-                        <div class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-2xl shadow-lg shadow-primary/20">
-                            {{ substr(setting('site_name', 'Andrew.Devlog'), 0, 1) }}
-                        </div>
-                        <span class="font-bold text-2xl text-gray-900 tracking-tighter">{{ setting('site_name', 'Andrew.Devlog') }}</span>
+                        <img src="{{ asset('assets/image/Logo.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto drop-shadow-md">
                     @endif
                 </a>
             </div>
