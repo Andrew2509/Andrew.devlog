@@ -34,17 +34,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Category Navigation -->
-            <div class="sticky top-20 z-30 bg-white/95 backdrop-blur-md py-6 mb-12 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 border-b border-gray-100 shadow-sm sm:shadow-none">
+            <div class="sticky top-20 z-30 bg-white/95 backdrop-blur-md py-3 sm:py-6 mb-8 sm:mb-12 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 border-b border-gray-100 shadow-sm sm:shadow-none">
                 <!-- Parent Categories -->
-                <div class="flex flex-wrap justify-center gap-3">
+                <div class="flex overflow-x-auto sm:flex-wrap justify-start sm:justify-center gap-2 sm:gap-3 hide-scrollbar pb-1 sm:pb-0">
                     <a href="{{ route('harga') }}" 
-                       class="px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 border {{ !$currentCategory ? 'bg-primary text-white shadow-xl shadow-primary/20 border-primary' : 'bg-white text-gray-600 border-gray-100 hover:border-primary/30 hover:bg-primary/5' }}">
+                       class="whitespace-nowrap px-4 py-2 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm transition-all duration-300 border {{ !$currentCategory ? 'bg-primary text-white shadow-lg shadow-primary/20 border-primary' : 'bg-white text-gray-600 border-gray-100 hover:border-primary/30 hover:bg-primary/5' }}">
                         Semua Layanan
                     </a>
                     @foreach($categories as $category)
                         <a href="{{ route('harga', ['category' => $category->slug]) }}" 
-                           class="flex items-center gap-2.5 px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 border {{ $activeParent && $activeParent->id == $category->id ? 'bg-primary text-white shadow-xl shadow-primary/20 border-primary' : 'bg-white text-gray-600 border-gray-100 hover:border-primary/30 hover:bg-primary/5' }}">
-                            <i class="{{ $category->icon ?? 'fas fa-th-large' }} text-sm {{ $activeParent && $activeParent->id == $category->id ? 'text-white' : 'text-primary/60' }}"></i>
+                           class="whitespace-nowrap flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm transition-all duration-300 border {{ $activeParent && $activeParent->id == $category->id ? 'bg-primary text-white shadow-lg shadow-primary/20 border-primary' : 'bg-white text-gray-600 border-gray-100 hover:border-primary/30 hover:bg-primary/5' }}">
+                            <i class="{{ $category->icon ?? 'fas fa-th-large' }} text-xs sm:text-sm {{ $activeParent && $activeParent->id == $category->id ? 'text-white' : 'text-primary/60' }}"></i>
                             {{ $category->name }}
                         </a>
                     @endforeach
@@ -52,16 +52,20 @@
 
                 <!-- Child Categories (Sub-menu) -->
                 @if($activeParent && $activeParent->children->count() > 0)
-                <div class="flex flex-wrap justify-center gap-2 mt-4 pb-2 bg-gray-50/50 p-4 rounded-3xl border border-dashed border-gray-200">
+                <div class="flex overflow-x-auto sm:flex-wrap justify-start sm:justify-center gap-2 mt-2 sm:mt-4 pb-1 sm:pb-2 bg-gray-50/50 p-2 sm:p-4 rounded-2xl sm:rounded-3xl border border-dashed border-gray-200 hide-scrollbar">
                     @foreach($activeParent->children as $child)
                         <a href="{{ route('harga', ['category' => $child->slug]) }}" 
-                           class="px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 border {{ $currentCategory && $currentCategory->id == $child->id ? 'bg-white text-primary border-primary/20 shadow-sm' : 'text-gray-400 border-transparent hover:text-gray-700' }}">
+                           class="whitespace-nowrap px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold transition-all duration-300 border {{ $currentCategory && $currentCategory->id == $child->id ? 'bg-white text-primary border-primary/20 shadow-sm' : 'text-gray-400 border-transparent hover:text-gray-700' }}">
                             {{ $child->name }}
                         </a>
                     @endforeach
                 </div>
                 @endif
             </div>
+<style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
 
             <!-- Current Selection Header -->
             <div class="mb-10 text-center">
