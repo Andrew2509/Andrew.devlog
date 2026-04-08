@@ -166,6 +166,7 @@
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    @php
                         $baseServices = [
                             ['id' => 'web', 'icon' => 'globe', 'rotate' => '-rotate-12', 'bg' => 'bg-gradient-to-br from-slate-800 to-slate-900'],
                             ['id' => 'app', 'icon' => 'smartphone', 'rotate' => 'rotate-6', 'bg' => 'bg-gradient-to-br from-indigo-500 to-blue-600'],
