@@ -68,7 +68,7 @@
         <main class="flex-1 space-y-8">
 
             <!-- Hero Banner -->
-            <div class="rounded-3xl p-8 md:p-10 relative overflow-hidden shadow-xl shadow-slate-900/10 min-h-[250px] md:min-h-[300px] flex items-center bg-slate-900 bg-cover bg-center banner-responsive">
+            <div class="rounded-3xl p-6 md:p-8 relative overflow-hidden shadow-xl shadow-slate-900/10 min-h-[180px] md:min-h-[220px] flex items-center bg-slate-900 bg-cover bg-center banner-responsive">
                 <div class="relative z-10 flex flex-col items-start w-full gap-6">
                     <div class="flex-1">
                         <div class="flex items-center justify-start gap-3 mb-4">
