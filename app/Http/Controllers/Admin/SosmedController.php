@@ -99,13 +99,13 @@ class SosmedController extends Controller
     {
         $stored = Setting::getValue('sosmed_links');
         $defaults = [
+            ['id' => 0, 'title' => 'Lihat website andrew.devlog', 'url' => '/'],
             ['id' => 1, 'title' => 'Konsultasi Project via WhatsApp', 'url' => 'https://wa.me/628123456789'],
             ['id' => 2, 'title' => 'Lihat Daftar Harga Layanan', 'url' => '/harga'],
             ['id' => 3, 'title' => 'Lihat Portfolio Project Saya', 'url' => '/portfolio'],
             ['id' => 4, 'title' => 'Kunjungi GitHub Repository', 'url' => 'https://github.com/AndrewMasrikat'],
             ['id' => 5, 'title' => 'Mari Terhubung di LinkedIn', 'url' => 'https://linkedin.com/in/andrewmasrikat'],
-            ['id' => 6, 'title' => 'Kirim Email Penawaran Kerja Sama', 'url' => 'mailto:contact@andrewdevlog.com'],
-            ['id' => 7, 'title' => 'Lihat website andrew.devlog', 'url' => '/']
+            ['id' => 6, 'title' => 'Kirim Email Penawaran Kerja Sama', 'url' => 'mailto:contact@andrewdevlog.com']
         ];
 
         if ($stored) {
