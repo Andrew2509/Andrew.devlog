@@ -45,7 +45,7 @@
                 <div class="flex flex-col items-center lg:items-start text-center lg:text-left gap-4 mb-6">
                     <!-- Profile Logo -->
                     <div class="w-24 h-24 lg:w-20 lg:h-20 bg-white rounded-2xl flex items-center justify-center shadow-lg shadow-slate-200 transform transition-transform hover:scale-105 duration-300 p-2 border border-slate-100">
-                        <img src="{{ asset('assets/image/Logo.png') }}" alt="{{ setting('site_name') }} Logo" class="w-full h-full object-contain">
+                        <img src="{{ setting('site_logo') ?: asset('assets/image/logo.png') }}" alt="{{ setting('site_name') }} Logo" class="w-full h-full object-contain">
                     </div>
 
                     <div>

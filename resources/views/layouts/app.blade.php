@@ -17,14 +17,14 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', setting('site_name', 'Andrew.Devlog'))">
     <meta property="og:description" content="@yield('meta_description', setting('meta_description', 'Andrew.DevLog melayani jasa pembuatan website profesional, aplikasi web, dan optimasi SEO.'))">
-    <meta property="og:image" content="@yield('meta_image', asset('assets/image/logo.png'))">
+    <meta property="og:image" content="@yield('meta_image', setting('site_logo') ?: asset('assets/image/logo.png'))">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ url()->current() }}">
     <meta property="twitter:title" content="@yield('title', setting('site_name', 'Andrew.Devlog'))">
     <meta property="twitter:description" content="@yield('meta_description', setting('meta_description', 'Andrew.DevLog melayani jasa pembuatan website profesional, aplikasi web, dan optimasi SEO.'))">
-    <meta property="twitter:image" content="@yield('meta_image', asset('assets/image/logo.png'))">
+    <meta property="twitter:image" content="@yield('meta_image', setting('site_logo') ?: asset('assets/image/logo.png'))">
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="{{ setting('site_favicon') ?: asset('assets/image/logo.png') }}">

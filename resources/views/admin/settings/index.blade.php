@@ -29,12 +29,10 @@
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-                    <!-- Logo Upload -->
-                    <div class="md:col-span-2 space-y-4 mb-4">
-                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
-                            Logo Website
-                        </label>
-                        <div class="flex flex-col md:flex-row items-center gap-8 bg-black/20 p-8 rounded-[32px] border border-white/5">
+                    <!-- Logo & Favicon Upload -->
+                    <div class="md:col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4">
+                        <!-- Logo Upload -->
+                        <div class="flex flex-col md:flex-row items-center gap-8 bg-black/20 p-8 rounded-[32px] border border-white/5 h-full">
                             <div class="relative group">
                                 <div class="w-32 h-32 rounded-2xl bg-white/5 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-primary/50 transition-all shadow-2xl">
                                     @if(setting('site_logo'))
@@ -49,14 +47,42 @@
                                 </div>
                             </div>
                             <div class="flex-1 space-y-4 text-center md:text-left">
-                                <h4 class="text-white font-bold text-sm">Ganti Logo Website</h4>
+                                <h4 class="text-white font-bold text-sm">Logo Website</h4>
                                 <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest leading-relaxed">
-                                    Upload file format PNG/JPG (Max. 2MB).<br>Logo akan disimpan langsung ke database.
+                                    PNG/JPG (Max. 2MB).
                                 </p>
                                 <label class="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 text-white text-xs font-black rounded-xl border border-white/5 cursor-pointer transition-all uppercase tracking-widest">
                                     <i class="fas fa-upload text-primary text-[10px]"></i>
-                                    <span>Pilih File</span>
+                                    <span>Pilih Logo</span>
                                     <input type="file" name="site_logo" class="hidden" onchange="previewLogo(this, 'logo-preview', 'logo-placeholder')">
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Favicon Upload -->
+                        <div class="flex flex-col md:flex-row items-center gap-8 bg-black/20 p-8 rounded-[32px] border border-white/5 h-full">
+                            <div class="relative group">
+                                <div class="w-32 h-32 rounded-2xl bg-white/5 flex items-center justify-center overflow-hidden border border-white/10 group-hover:border-primary/50 transition-all shadow-2xl">
+                                    @if(setting('site_favicon'))
+                                        <img src="{{ setting('site_favicon') }}" id="favicon-preview" class="w-16 h-16 object-contain">
+                                    @else
+                                        <div id="favicon-placeholder" class="text-gray-600 flex flex-col items-center gap-2">
+                                            <i class="fas fa-th-large text-3xl"></i>
+                                            <span class="text-[8px] font-bold uppercase tracking-tighter">No Icon</span>
+                                        </div>
+                                        <img id="favicon-preview" class="hidden w-16 h-16 object-contain">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="flex-1 space-y-4 text-center md:text-left">
+                                <h4 class="text-white font-bold text-sm">Favicon Browser</h4>
+                                <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest leading-relaxed">
+                                    PNG/ICO (Max. 1MB).
+                                </p>
+                                <label class="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 text-white text-xs font-black rounded-xl border border-white/5 cursor-pointer transition-all uppercase tracking-widest">
+                                    <i class="fas fa-upload text-primary text-[10px]"></i>
+                                    <span>Pilih Icon</span>
+                                    <input type="file" name="site_favicon" class="hidden" onchange="previewLogo(this, 'favicon-preview', 'favicon-placeholder')">
                                 </label>
                             </div>
                         </div>

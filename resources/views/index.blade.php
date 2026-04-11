@@ -52,7 +52,7 @@
   "@@context": "https://schema.org",
   "@@type": "ProfessionalService",
   "name": "{{ setting('site_name', 'Andrew.Devlog') }}",
-  "image": "{{ asset('assets/image/Logo.png') }}",
+  "image": "{{ setting('site_logo') ?: asset('assets/image/logo.png') }}",
   "@@id": "{{ url('/') }}",
   "url": "{{ url('/') }}",
   "telephone": "{{ setting('contact_phone', '') }}",

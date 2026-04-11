@@ -32,7 +32,15 @@ class SettingController extends Controller
             Setting::setValue('footer_logo', $base64, 'footer');
         }
 
-        $data = $request->except('_token', '_method', 'site_logo', 'footer_logo');
+        // Handle Site Favicon Upload
+        if ($request->hasFile('site_favicon')) {
+            $file = $request->file('site_favicon');
+            $imageData = base64_encode(file_get_contents($file->getRealPath()));
+            $base64 = 'data:' . $file->getMimeType() . ';base64,' . $imageData;
+            Setting::setValue('site_favicon', $base64, 'general');
+        }
+
+        $data = $request->except('_token', '_method', 'site_logo', 'footer_logo', 'site_favicon');
 
         foreach ($data as $key => $value) {
             // Determine group based on key prefix or mapping
