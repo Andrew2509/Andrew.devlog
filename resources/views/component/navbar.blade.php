@@ -46,8 +46,8 @@
                 <button onclick="openSearch()" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary transition-colors" aria-label="Buka Pencarian">
                     <i class="fas fa-search"></i>
                 </button>
-                <button onclick="toggleMobileMenu()" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary transition-colors" aria-label="Buka Menu Navigasi">
-                    <i class="fas fa-bars text-xl"></i>
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary transition-colors" aria-label="Buka Menu Navigasi">
+                    <i id="mobile-menu-icon" class="fas fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
