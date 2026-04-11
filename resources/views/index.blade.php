@@ -49,15 +49,15 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
+  "@@context": "https://schema.org",
+  "@@type": "ProfessionalService",
   "name": "{{ setting('site_name', 'Andrew.Devlog') }}",
   "image": "{{ asset('assets/image/Logo.png') }}",
-  "@id": "{{ url('/') }}",
+  "@@id": "{{ url('/') }}",
   "url": "{{ url('/') }}",
   "telephone": "{{ setting('contact_phone', '') }}",
   "address": {
-    "@type": "PostalAddress",
+    "@@type": "PostalAddress",
     "streetAddress": "Surabaya",
     "addressLocality": "Surabaya",
     "addressRegion": "Jawa Timur",
@@ -65,12 +65,12 @@
     "addressCountry": "ID"
   },
   "geo": {
-    "@type": "GeoCoordinates",
+    "@@type": "GeoCoordinates",
     "latitude": -7.2575,
     "longitude": 112.7521
   },
   "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
+    "@@type": "OpeningHoursSpecification",
     "dayOfWeek": [
       "Monday",
       "Tuesday",
