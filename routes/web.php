@@ -8,6 +8,7 @@ Route::get('/harga', [App\Http\Controllers\HomeController::class, 'harga'])->nam
 Route::get('/pesan', [App\Http\Controllers\HomeController::class, 'pesan'])->name('pesan');
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{id}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
+Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/me', function () { return view('page.sosmed'); })->name('sosmed');
 Route::get('/privacy', function () { return view('page.privacy'); })->name('privacy');
