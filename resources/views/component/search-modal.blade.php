@@ -5,6 +5,7 @@
             <!-- Header -->
             <div class="px-6 py-5 border-b border-gray-100 flex items-center gap-4">
                 <i class="fas fa-search text-gray-400 text-lg"></i>
+                <label for="search-input" class="sr-only">Cari layanan atau portofolio</label>
                 <input 
                     type="text" 
                     id="search-input" 
@@ -16,7 +17,7 @@
                     <kbd class="hidden sm:inline-flex h-6 select-none items-center gap-1 rounded border border-gray-100 bg-gray-50 px-2 font-mono text-[10px] font-medium text-gray-400 opacity-100">
                         ESC
                     </kbd>
-                    <button onclick="closeSearch()" class="text-gray-400 hover:text-gray-600 focus:outline-none p-1">
+                    <button onclick="closeSearch()" class="text-gray-400 hover:text-gray-600 focus:outline-none p-1" aria-label="Tutup Pencarian">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>

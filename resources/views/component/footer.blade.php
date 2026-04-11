@@ -20,7 +20,7 @@
                         @if(setting('footer_logo') || setting('site_logo'))
                             <img src="{{ setting('footer_logo') ?: setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto transition-transform group-hover:scale-105">
                         @else
-                            <img src="{{ asset('assets/image/Logo.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto transition-transform group-hover:scale-105">
+                            <img src="{{ asset('assets/image/logo.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto transition-transform group-hover:scale-105">
                         @endif
                     </a>
                 </div>
@@ -101,7 +101,7 @@
                     @foreach($socials as $social)
                         @if(setting($social['setting']))
                         <a href="{{ setting($social['setting']) }}" target="_blank" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-all transform hover:-translate-y-1 relative group"
-                           style="--hover-color: {{ $social['color'] }}">
+                           style="--hover-color: {{ $social['color'] }}" aria-label="Follow me on {{ str_replace('social_', '', $social['setting']) }}">
                             <i class="{{ $social['icon'] }}"></i>
                             <div class="absolute inset-0 rounded-2xl bg-(--hover-color) opacity-0 group-hover:opacity-20 blur-lg transition-opacity"></div>
                         </a>
@@ -123,13 +123,13 @@
 
         <!-- Bottom Row -->
         <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="text-gray-600 text-[10px] font-black uppercase tracking-widest text-center md:text-left">
+            <div class="text-gray-500 text-xs font-black uppercase tracking-widest text-center md:text-left">
                 {{ setting('footer_copyright', '© 2026 ANDREW.DEVLOG. ALL RIGHTS RESERVED.') }}
             </div>
             <div class="flex items-center gap-10">
                 <a href="{{ url('/privacy') }}" class="text-[10px] font-black text-gray-600 hover:text-primary uppercase tracking-widest transition-colors">Privacy</a>
                 <a href="{{ url('/terms') }}" class="text-[10px] font-black text-gray-600 hover:text-primary uppercase tracking-widest transition-colors">Terms</a>
-                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-12 h-12 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all group">
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-12 h-12 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all group" aria-label="Kembali ke atas">
                     <i class="fas fa-chevron-up group-hover:-translate-y-1 transition-transform"></i>
                 </button>
             </div>

@@ -8,7 +8,7 @@
                     @if(setting('site_logo'))
                         <img src="{{ setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto drop-shadow-md">
                     @else
-                        <img src="{{ asset('assets/image/Logo.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto drop-shadow-md">
+                        <img src="{{ asset('assets/image/logo.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto drop-shadow-md">
                     @endif
                 </a>
             </div>
@@ -27,19 +27,12 @@
             </div>
 
             <!-- Search & Actions Section -->
-            <div class="hidden md:flex items-center gap-3 shrink-0">
-                <button
-                    class="[--background:#ffffff] [--color:#000000] [--muted:#f4f4f5] [--muted-foreground:#71717a] [--border:#e4e4e7] relative inline-flex items-center gap-2 whitespace-nowrap transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 border border-[--border] bg-[--background] hover:bg-[--muted] text-[--muted-foreground] hover:text-[--color] px-3 py-2 justify-start rounded-xl text-xs font-medium shadow-sm h-9 w-44 group"
-                    type="button"
-                    onclick="openSearch()"
-                >
-                    <i class="fas fa-search text-[10px]"></i>
-                    <span class="hidden lg:inline-flex">Cari sesuatu...</span>
-                    <span class="inline-flex lg:hidden">Cari...</span>
-                    <kbd
-                        class="pointer-events-none absolute right-[0.4rem] top-[0.4rem] hidden xl:flex h-5 select-none items-center gap-1 rounded border border-[--border] bg-[--muted] px-1 font-mono text-[9px] font-medium opacity-100"
-                    >
-                        ⌘K
+            <div class="hidden md:flex items-center gap-8">
+                <button onclick="openSearch()" class="flex items-center gap-3 px-4 py-2 rounded-xl bg-gray-50 border border-gray-100 text-gray-400 hover:text-primary hover:border-primary-100 transition-all group" aria-label="Buka Pencarian">
+                    <i class="fas fa-search text-sm"></i>
+                    <span class="text-sm font-medium">Cari sesuatu...</span>
+                    <kbd class="hidden lg:inline-flex h-5 select-none items-center gap-1 rounded border border-gray-200 bg-white px-1.5 font-mono text-[10px] font-medium text-gray-400 opacity-100">
+                        Ctrl+K
                     </kbd>
                 </button>
 
@@ -49,9 +42,12 @@
             </div>
 
             <!-- Mobile menu button -->
-            <div class="md:hidden flex items-center">
-                <button class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-xl text-gray-900 border border-gray-100 active:scale-90 transition-all" id="mobile-menu-btn">
-                    <i class="fas fa-bars" id="mobile-menu-icon"></i>
+            <div class="md:hidden flex items-center gap-4">
+                <button onclick="openSearch()" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary transition-colors" aria-label="Buka Pencarian">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button onclick="toggleMobileMenu()" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary transition-colors" aria-label="Buka Menu Navigasi">
+                    <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
         </div>

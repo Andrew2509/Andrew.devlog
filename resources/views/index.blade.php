@@ -178,7 +178,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up-element" style="transition-delay: 0.1s;">
                 <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Keunggulan Saya</h2>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Kenapa Memilih {{ setting('site_name', 'Andrew.Devlog') }}?</h3>
+                <h2 class="text-3xl md:text-4xl font-black mb-6 tracking-tight">Kelebihan Menggunakan Jasa {{ setting('site_name', 'Andrew.Devlog') }}?</h2>
                 <p class="text-gray-600 text-lg">Saya tidak hanya membuat website, saya membangun aset digital yang menghasilkan pertumbuhan nyata untuk bisnis Anda.</p>
             </div>
 
@@ -213,7 +213,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up-element">
                 <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Layanan Saya</h2>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Solusi Digital Komprehensif</h3>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Solusi Digital Komprehensif</h2>
                 <p class="text-gray-600 text-lg">Semua yang Anda butuhkan untuk mendominasi era digital.</p>
             </div>
 
@@ -277,7 +277,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-20 fade-in-up-element">
                 <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Bagaimana Saya Bekerja</h2>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Proses Kerja yang Transparan</h3>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Proses Kerja yang Transparan</h2>
                 <p class="text-gray-600 text-lg">Langkah demi langkah terstruktur dari awal hingga peluncuran.</p>
             </div>
 
@@ -332,7 +332,7 @@
             <div class="flex flex-row justify-between items-end gap-4 mb-12 fade-in-up-element">
                 <div class="text-left max-w-[70%]">
                     <h2 class="text-primary font-bold tracking-wide uppercase text-xs mb-1">Karya Saya</h2>
-                    <h3 class="text-2xl md:text-4xl font-extrabold text-gray-900 mb-2">Portofolio Proyek</h3>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Portofolio Proyek</h2>
                     <p class="text-gray-600 text-sm md:text-lg hidden sm:block">Solusi digital pilihan saya.</p>
                 </div>
                 <div class="flex-shrink-0 mb-1">
@@ -381,7 +381,7 @@
             <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12 fade-in-up-element" style="transition-delay: 0.2s;">
                 <div class="text-center md:text-left max-w-2xl">
                     <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Daftar Harga</h2>
-                    <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Pilih Paket Sesuai Kebutuhan</h3>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Pilih Paket Sesuai Kebutuhan</h2>
                     <p class="text-gray-600 text-lg">Investasi terbaik untuk pertumbuhan digital bisnis Anda.</p>
                 </div>
                 <div class="flex-shrink-0">
@@ -468,7 +468,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up-element">
                 <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Testimoni</h2>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Apa Kata Klien Saya?</h3>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Apa Kata Klien Saya?</h2>
                 <p class="text-gray-600 text-lg">Keberhasilan klien adalah prioritas utama saya.</p>
             </div>
 
@@ -476,7 +476,7 @@
             <div class="fade-in-up-element relative" style="transition-delay: 0.2s;">
                 <div class="overflow-hidden" style="max-height: 580px;">
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.10/iframeResizer.min.js"></script>
-                    <iframe onload="iFrameResize(this)" src="{{ setting('google_reviews_iframe', 'https://5d994d31ef99443986d2ad9bf3283ff9.elf.site') }}" style="border:none;width:100%; min-height: 500px;"></iframe>
+                    <iframe onload="iFrameResize(this)" src="{{ setting('google_reviews_iframe', 'https://5d994d31ef99443986d2ad9bf3283ff9.elf.site') }}" title="Widget Ulasan Google" style="border:none;width:100%; min-height: 500px;"></iframe>
                 </div>
                 <!-- Masking bottom banner if it still appears -->
                 <div class="absolute bottom-0 left-0 w-full h-12 bg-white pointer-events-none z-10"></div>
@@ -530,7 +530,15 @@
 
                 <div class="fade-in-up-element space-y-10" style="transition-delay: 0.2s;">
                     <div class="w-full h-64 bg-gray-200 rounded-3xl overflow-hidden border border-gray-200 relative group">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126646.20963380062!2d112.63004838637763!3d-7.275443760395779!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbf8381ac47f%3A0x3027a76e352be40!2sSurabaya%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="filter grayscale group-hover:grayscale-0 transition-all duration-700"></iframe>
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15814.721471329582!2d110.37213215!3d-7.717409249999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a599f9c7be773%3A0xe13ca773e3cd9783!2sGading%20Sari%2C%20Donokerto%2C%20Kec.%20Turi%2C%20Kabupaten%20Sleman%2C%20Daerah%20Istimewa%20Yogyakarta!5e0!3m2!1sid!2sid!4v1741544321045!5m2!1sid!2sid" 
+                            title="Lokasi Kantor Andrew Devlog di Google Maps"
+                            class="absolute inset-0 w-full h-full" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
             </div>
