@@ -46,6 +46,51 @@
         }
     }
 </script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "{{ setting('site_name', 'Andrew.Devlog') }}",
+  "image": "{{ asset('assets/image/Logo.png') }}",
+  "@id": "{{ url('/') }}",
+  "url": "{{ url('/') }}",
+  "telephone": "{{ setting('contact_phone', '') }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Surabaya",
+    "addressLocality": "Surabaya",
+    "addressRegion": "Jawa Timur",
+    "postalCode": "60000",
+    "addressCountry": "ID"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -7.2575,
+    "longitude": 112.7521
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ],
+    "opens": "00:00",
+    "closes": "23:59"
+  },
+  "sameAs": [
+    "{{ setting('social_instagram', '#') }}",
+    "{{ setting('social_linkedin', '#') }}"
+  ],
+  "priceRange": "$$",
+  "description": "{{ setting('meta_description', 'Andrew.DevLog melayani jasa pembuatan website profesional, aplikasi web, dan optimasi SEO untuk meningkatkan visibilitas bisnis Anda di Google.') }}"
+}
+</script>
 @endsection
 
 @section('content')
