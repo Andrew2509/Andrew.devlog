@@ -6,7 +6,7 @@
 @section('admin_content')
 <div class="px-6 py-4" x-data="{ 
     contentType: 'text', 
-    tags: [], 
+    tags: @json(old('tags') ? json_decode(old('tags'), true) : []), 
     tagInput: '',
     addTag() {
         let val = this.tagInput.trim().replace(/,/g, '');

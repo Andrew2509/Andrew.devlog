@@ -34,7 +34,7 @@ class TemplateController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|string|in:' . implode(',', array_keys(Template::getTypes())),
+            'type' => 'required|string',
             'content_type' => 'required|string|in:' . implode(',', array_keys(Template::getContentTypes())),
             'thumbnail_url' => 'nullable|url',
             'tags' => 'nullable|string',
@@ -83,7 +83,7 @@ class TemplateController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|string|in:' . implode(',', array_keys(Template::getTypes())),
+            'type' => 'required|string',
             'content_type' => 'required|string|in:' . implode(',', array_keys(Template::getContentTypes())),
             'thumbnail_url' => 'nullable|url',
             'tags' => 'nullable|string',
