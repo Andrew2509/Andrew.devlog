@@ -63,10 +63,6 @@ class HomeController extends Controller
         if (!$url) return response('No URL provided', 400);
 
         try {
-            // Intelligent Wrapper Extractor: Detect if this is a wrapper page (e.g. HTML Codex) 
-            // and find the REAL direct demo link automatically.
-            $isWrapper = stripos($url, 'htmlcodex.com/demo') !== false;
-            
             // Initial fetch to check for wrapper structure
             $response = \Illuminate\Support\Facades\Http::withHeaders([
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -75,10 +71,26 @@ class HomeController extends Controller
             
             $html = $response->body();
 
-            // If it is a known wrapper, extract the direct link from the iframe src
-            if ($isWrapper && preg_match('/<iframe\s+id="demo-iframe"\s+src="([^"]+)"/i', $html, $matches)) {
-                $url = $matches[1];
-                // Recurse/Re-fetch the real content
+            // Intelligent Wrapper Extractor: Detect if this is a wrapper page (e.g. HTML Codex)
+            // Support both preview-frame and demo-iframe, including various regex patterns
+            $iframeRegex = '/<iframe[^>]+(?:id|name)=["\'](?:preview-frame|demo-iframe)["\'][^>]+src=["\']([^"\']+)["\']/i';
+            if (preg_match($iframeRegex, $html, $matches)) {
+                $iframeSrc = $matches[1];
+                
+                // Resolve relative URLs if necessary
+                if (!filter_var($iframeSrc, FILTER_VALIDATE_URL)) {
+                    $parsedUrl = parse_url($url);
+                    $domain = ($parsedUrl['scheme'] ?? 'https') . '://' . ($parsedUrl['host'] ?? '');
+                    if (str_starts_with($iframeSrc, '/')) {
+                        $iframeSrc = $domain . $iframeSrc;
+                    } else {
+                        $path = dirname($parsedUrl['path'] ?? '/');
+                        $iframeSrc = $domain . rtrim($path, '/') . '/' . $iframeSrc;
+                    }
+                }
+                
+                $url = $iframeSrc;
+                // Re-fetch the real content from the extracted URL
                 $response = \Illuminate\Support\Facades\Http::withHeaders([
                     'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                 ])->get($url);
@@ -90,7 +102,6 @@ class HomeController extends Controller
             $baseHref = ($baseUrlParts['scheme'] ?? 'https') . '://' . ($baseUrlParts['host'] ?? '');
             
             if (isset($baseUrlParts['path'])) {
-                // If path is a file, get directory. If not, use path.
                 $path = $baseUrlParts['path'];
                 if (preg_match('/\.[a-z0-9]+$/i', $path)) {
                     $baseHref .= dirname($path);
@@ -100,66 +111,66 @@ class HomeController extends Controller
             }
             $baseHref = rtrim($baseHref, '/') . '/';
 
-            // Sanitize HTML to prevent all known anti-iframe and anti-copy scripts
-            // 1. Kill window.top/self checks and ALL breakout attempts
-            $html = preg_replace('/if\s*\(\s*window\.top\s*!==?\s*window\.self\s*\)/i', 'if(false)', $html);
-            $html = preg_replace('/if\s*\(\s*self\s*!==?\s*top\s*\)/i', 'if(false)', $html);
-            $html = preg_replace('/window\.top\.location\s*=\s*/i', '// window.top.location = ', $html);
-            
-            // 2. Kill DevTools/Browser width detection and ALL innerHTML overwrites used for protection
-            $html = preg_replace('/Math\.abs\s*\(\s*window\.outerWidth\s*-\s*window\.innerWidth\s*\)/i', '0', $html);
-            $html = preg_replace('/Math\.abs\s*\(\s*window\.outerHeight\s*-\s*window\.innerHeight\s*\)/i', '0', $html);
-            
-            // This is the most important: prevent script from clearing the page content
-            $html = preg_replace('/document\.documentElement\.innerHTML\s*=\s*/i', 'console.log("Blocked attempt to clear page"); // ', $html);
-            $html = preg_replace('/document\.body\.innerHTML\s*=\s*/i', 'console.log("Blocked attempt to clear body"); // ', $html);
+            // ATOMIC SANITIZATION: Kill problematic scripts and text
+            // 1. Strip entire script blocks that contain known anti-iframe code
+            $html = preg_replace('/<script\b[^>]*>[\s\S]*?(?:top\s*!==?\s*self|window\.top\s*!==?\s*window\.self|Access Denied|Embedding not allowed)[\s\S]*?<\/script>/i', '<!-- Blocked anti-iframe script -->', $html);
 
-            // 3. Remove specific protection messages and strings
-            $html = str_ireplace([
-                'Embedding not allowed', 
-                'Access Denied', 
-                'Developer Tools are disabled for this preview',
-                'Developer Tools'
-            ], 'Live Preview Active', $html);
+            // 2. Kill window.top/self checks and breakout attempts in surviving code
+            $html = preg_replace('/if\s*\(\s*(window\.)?top\s*!==?\s*(window\.)?self\s*\)/i', 'if(false)', $html);
+            $html = preg_replace('/if\s*\(\s*(self\.)?!==?\s*top\s*\)/i', 'if(false)', $html);
+            $html = preg_replace('/(window\.)?top\.location\s*=\s*/i', '// top.location = ', $html);
             
-            // 4. Remove common copy protection and debugger scripts
+            // 3. Prevent clearing the page content
+            $html = preg_replace('/document\.documentElement\.innerHTML\s*=\s*/i', '// blocked innerHTML clear: ', $html);
+            $html = preg_replace('/document\.body\.innerHTML\s*=\s*/i', '// blocked innerHTML clear: ', $html);
+
+            // 4. Remove access denied messages from HTML tags directly
+            $html = preg_replace('/Access Denied/i', 'Live Proxy Connected', $html);
+            $html = preg_replace('/Developer Tools are disabled/i', 'Interactive Preview', $html);
+
+            // 5. Remove copy protection
             $html = str_replace(['debugger;', 'debugger'], '', $html);
             $html = preg_replace('/oncontextmenu\s*=\s*[^;>]+/i', '', $html);
             $html = preg_replace('/onselectstart\s*=\s*[^;>]+/i', '', $html);
-            $html = preg_replace('/ondragstart\s*=\s*[^;>]+/i', '', $html);
 
             $baseTag = '<base href="' . $baseHref . '">';
             
-            // 5. Inject a "Survival Script" that runs BEFORE any other script to kill protections globally
+            // 6. Inject the "Survival Script 2.0" that runs BEFORE any other script
             $survivalScript = '
             <script>
                 (function() {
-                    // Force outer dimensions to match inner to bypass DevTools detection
+                    // Bypass DevTools detection
                     try {
                         Object.defineProperty(window, "outerWidth", { get: function() { return window.innerWidth; } });
                         Object.defineProperty(window, "outerHeight", { get: function() { return window.innerHeight; } });
                     } catch(e) {}
 
-                    // Prevent scripts from clearing the page with "Access Denied" or other messages
+                    // Global window.top override (bypasses "if (top != self)")
+                    try {
+                        Object.defineProperty(window, "top", { get: function() { return window.self; } });
+                        Object.defineProperty(window, "parent", { get: function() { return window.self; } });
+                    } catch(e) {}
+
+                    // Block suspicious innerHTML/textContent writes
                     try {
                         const originalSetter = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML").set;
                         Object.defineProperty(Element.prototype, "innerHTML", {
-                            set: function(value) {
-                                if (typeof value === "string" && (
-                                    value.toLowerCase().includes("access denied") || 
-                                    value.toLowerCase().includes("developer tools") || 
-                                    value.toLowerCase().includes("embedding not allowed")
-                                )) {
-                                    console.warn("Bypass: Blocked attempt to clear page content.");
+                            set: function(v) {
+                                if (typeof v === "string" && /access denied|developer tools|embedding/i.test(v)) {
+                                    console.warn("Proxy: Blocked error message injection.");
                                     return;
                                 }
-                                originalSetter.call(this, value);
+                                originalSetter.call(this, v);
                             }
                         });
                     } catch(e) {}
-
-                    // Neutralize window.top breakout attempts in JS
-                    window.top = window.self;
+                    
+                    // Neutralize document.write for protection messages
+                    const oldWrite = document.write;
+                    document.write = function(v) {
+                        if (typeof v === "string" && /access denied|developer tools/i.test(v)) return;
+                        oldWrite.apply(document, arguments);
+                    };
                 })();
             </script>';
             
@@ -171,7 +182,7 @@ class HomeController extends Controller
 
             return response($html);
         } catch (\Exception $e) {
-            return response('Could not load preview. <a href="'.$url.'" target="_blank">Click here to open in new tab.</a>', 500);
+            return response('Preview error. <a href="'.$url.'" target="_blank">Open in tab.</a>', 500);
         }
     }
 

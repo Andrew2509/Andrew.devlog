@@ -132,14 +132,28 @@ class TemplateController extends Controller
                 ]);
                 $response = @file_get_contents($finalUrl, false, $context);
 
-                if ($response && preg_match('/<iframe id="preview-frame" src="([^"]+)"/i', $response, $iframeMatches)) {
-                    // Check if it's a valid URL
-                    if (filter_var($iframeMatches[1], FILTER_VALIDATE_URL)) {
-                        $finalUrl = $iframeMatches[1];
+                $iframeRegex = '/<iframe[^>]+(?:id|name)=["\'](?:preview-frame|demo-iframe)["\'][^>]+src=["\']([^"\']+)["\']/i';
+                if ($response && preg_match($iframeRegex, $response, $iframeMatches)) {
+                    $iframeSrc = $iframeMatches[1];
+                    
+                    // Resolve relative URLs if necessary
+                    if (!filter_var($iframeSrc, FILTER_VALIDATE_URL)) {
+                        $parsedUrl = parse_url($finalUrl);
+                        $domain = ($parsedUrl['scheme'] ?? 'https') . '://' . ($parsedUrl['host'] ?? '');
+                        if (str_starts_with($iframeSrc, '/')) {
+                            $iframeSrc = $domain . $iframeSrc;
+                        } else {
+                            $path = dirname($parsedUrl['path'] ?? '/');
+                            $iframeSrc = $domain . rtrim($path, '/') . '/' . $iframeSrc;
+                        }
+                    }
+                    
+                    if (filter_var($iframeSrc, FILTER_VALIDATE_URL)) {
+                        $finalUrl = $iframeSrc;
                     }
                 }
             } catch (\Exception $e) {
-                // Silent catch, keep the demo URL if extraction fails
+                // Silent catch, keep the current URL if extraction fails
             }
         }
 
