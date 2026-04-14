@@ -1,3 +1,5 @@
+@extends('layouts.admin')
+
 @section('header_title', 'Edit Template')
 @section('header_subtitle', 'Perbarui konten template Anda.')
 

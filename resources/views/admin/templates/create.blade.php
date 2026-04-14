@@ -1,3 +1,5 @@
+@extends('layouts.admin')
+
 @section('header_title', 'Tambah Template')
 @section('header_subtitle', 'Buat konten baru untuk sistem.')
 
