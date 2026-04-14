@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Portfolio;
 use App\Models\Price;
 use App\Models\ServiceCategory;
+use App\Models\Template;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -35,7 +36,8 @@ class HomeController extends Controller
 
     public function templates()
     {
-        return view('page.templates');
+        $templates = Template::where('status', true)->latest()->get();
+        return view('page.templates', compact('templates'));
     }
 
     public function harga(Request $request)

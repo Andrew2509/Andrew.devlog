@@ -235,6 +235,11 @@
                 <i class="fas fa-cog w-4 text-sm"></i>
                 <span class="font-bold text-xs tracking-tight">Pengaturan Website</span>
             </a>
+
+            <a href="{{ route('admin.system.clear_cache') }}" class="flex items-center gap-3 px-3 py-3 rounded-xl transition-all hover:bg-white/5 text-gray-400 hover:text-white mt-1 border border-white/5" onclick="return confirm('Bersihkan semua cache sistem (rute & tampilan)? Ini berguna jika tampilan website online tidak berubah setelah update.')">
+                <i class="fas fa-sync-alt w-4 text-sm text-primary animate-spin-hover"></i>
+                <span class="font-bold text-xs tracking-tight">Bersihkan Cache</span>
+            </a>
         </nav>
 
         <div class="p-4 mt-auto">

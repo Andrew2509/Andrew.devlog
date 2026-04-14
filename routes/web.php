@@ -60,6 +60,9 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::get('/sosmed/links', [App\Http\Controllers\Admin\SosmedController::class, 'links'])->name('admin.sosmed.links');
     Route::post('/sosmed/links', [App\Http\Controllers\Admin\SosmedController::class, 'updateLinks'])->name('admin.sosmed.links.update');
 
+    // System Utilities
+    Route::get('/system/clear-cache', [App\Http\Controllers\Admin\SystemController::class, 'clearCache'])->name('admin.system.clear_cache');
+
     // Template Management
     Route::resource('templates', App\Http\Controllers\Admin\TemplateController::class)->names('admin.templates');
 });
