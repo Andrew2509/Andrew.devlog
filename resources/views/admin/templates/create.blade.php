@@ -140,18 +140,19 @@
                             <div class="flex-1 bg-white px-3 py-1 rounded-lg text-[10px] text-gray-400 truncate border border-gray-200 shadow-sm">
                                 ${val}
                             </div>
-                            <a href="${val}" target="_blank" class="text-blue-500 hover:text-blue-700">
-                                <i class="fas fa-external-link-alt text-[10px]"></i>
-                            </a>
                         </div>
                         <div class="flex-1 bg-gray-50 relative group">
-                            <img src="https://s.wordpress.com/mshots/v1/${encodeURIComponent(val)}?w=800" class="w-full h-full object-cover">
+                            <div id="snapshot-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-10 transition-opacity duration-500">
+                                <div class="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-3"></div>
+                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Generating Snapshot...</p>
+                            </div>
+                            <img src="https://s.wordpress.com/mshots/v1/${encodeURIComponent(val)}?w=800" 
+                                 class="w-full h-full object-cover transition-opacity duration-1000 opacity-0"
+                                 onload="this.classList.remove('opacity-0'); document.getElementById('snapshot-loader').classList.add('opacity-0'); setTimeout(() => document.getElementById('snapshot-loader').remove(), 500);">
+                            
                             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
                                 <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center">Snapshot Website</p>
                                 <a href="${val}" target="_blank" class="px-4 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-bold shadow-lg shadow-blue-900/40">Buka Link Asli</a>
-                            </div>
-                            <div class="absolute bottom-2 left-2 right-2 p-2 bg-yellow-500/90 text-black text-[9px] font-bold rounded-lg border border-yellow-600 shadow-lg">
-                                <i class="fas fa-info-circle mr-1"></i> Preview snapshot akan muncul secara otomatis.
                             </div>
                         </div>
                     </div>`;
@@ -162,6 +163,7 @@
         }
 
         linkInput.addEventListener('input', updatePreview);
+        linkInput.addEventListener('blur', updatePreview);
 
         form.addEventListener('submit', function() {
             finalInput.value = linkInput.value;

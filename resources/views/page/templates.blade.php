@@ -67,7 +67,7 @@
                         <div class="relative overflow-hidden aspect-[4/3]">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
                             
-                            {{-- Image handling - using random unplash based on category for now, or you could add image field to Template model later --}}
+                            {{-- Image handling - using WordPress MShots for automatic screenshots if it's a link --}}
                             @php
                                 $placeholderImages = [
                                     'company_profile' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
@@ -76,7 +76,12 @@
                                     'personal_portfolio' => 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2670&auto=format&fit=crop',
                                     'other' => 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop'
                                 ];
+                                
                                 $imgUrl = $placeholderImages[$template->type] ?? $placeholderImages['other'];
+                                
+                                if ($template->content_type === 'link') {
+                                    $imgUrl = "https://s.wordpress.com/mshots/v1/" . urlencode($template->content) . "?w=1280";
+                                }
                             @endphp
 
                             <img src="{{ $imgUrl }}" alt="{{ $template->name }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
