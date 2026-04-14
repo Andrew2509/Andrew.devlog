@@ -40,18 +40,18 @@ class TemplateController extends Controller
             'is_new_tab' => 'boolean',
         ]);
 
-        if ($request->content_type === 'link') {
+        if ($request->input('content_type') === 'link') {
             $request->validate(['content' => 'required|url']);
         } else {
             $request->validate(['content' => 'required|string']);
         }
 
-        $content = $this->transformContent($request->content, $request->content_type);
+        $content = $this->transformContent($request->input('content'), $request->input('content_type'));
 
         Template::create([
             'name' => $request->name,
             'type' => $request->type,
-            'content_type' => $request->content_type,
+            'content_type' => $request->input('content_type'),
             'content' => $content,
             'status' => $request->has('status'),
             'is_new_tab' => $request->has('is_new_tab'),
@@ -83,18 +83,18 @@ class TemplateController extends Controller
             'is_new_tab' => 'boolean',
         ]);
 
-        if ($request->content_type === 'link') {
+        if ($request->input('content_type') === 'link') {
             $request->validate(['content' => 'required|url']);
         } else {
             $request->validate(['content' => 'required|string']);
         }
 
-        $content = $this->transformContent($request->content, $request->content_type);
+        $content = $this->transformContent($request->input('content'), $request->input('content_type'));
 
         $template->update([
             'name' => $request->name,
             'type' => $request->type,
-            'content_type' => $request->content_type,
+            'content_type' => $request->input('content_type'),
             'content' => $content,
             'status' => $request->has('status'),
             'is_new_tab' => $request->has('is_new_tab'),
