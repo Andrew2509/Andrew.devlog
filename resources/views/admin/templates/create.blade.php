@@ -37,53 +37,41 @@
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Tipe Konten</label>
-                    <div class="flex flex-wrap gap-4">
-                        @foreach($contentTypes as $key => $label)
-                        <label class="flex-1 min-w-[140px] cursor-pointer group">
-                            <input type="radio" name="content_type" value="{{ $key }}" x-model="contentType" class="hidden" {{ $loop->first ? 'checked' : '' }}>
-                            <div class="px-4 py-4 rounded-2xl border transition-all flex flex-col items-center gap-2"
-                                 :class="contentType == '{{ $key }}' ? 'bg-blue-600/10 border-blue-600 text-blue-500' : 'bg-white/5 border-white/10 text-gray-500 group-hover:bg-white/[0.07]'">
-                                <i class="fas @if($key == 'text') fa-align-left @elseif($key == 'html') fa-code @else fa-link @endif text-xl"></i>
-                                <span class="text-[11px] font-bold uppercase tracking-wider">{{ $label }}</span>
-                            </div>
-                        </label>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Konten Template</label>
-                    
-                    <!-- Text Content -->
-                    <div x-show="contentType == 'text'">
-                        <textarea name="content_text" id="content_text" rows="6" placeholder="Masukkan teks biasa..."
-                                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all">{{ old('content') }}</textarea>
-                    </div>
-
-                    <!-- HTML Content -->
-                    <div x-show="contentType == 'html'" wire:ignore>
-                        <textarea name="content_html" id="content_html" rows="10" placeholder="Editor HTML...">{{ old('content') }}</textarea>
-                    </div>
-
-                    <!-- Link Content -->
-                    <div x-show="contentType == 'link'" class="space-y-4">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Konten Template (Link Demo)</label>
+                    <div class="space-y-4">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
                                 <i class="fas fa-link"></i>
                             </div>
                             <input type="url" name="content_link" id="content_link" value="{{ old('content') }}" placeholder="https://example.com" 
-                                   class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all">
+                                   class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all font-mono text-sm tracking-tight @error('content') border-red-500 @enderror">
                         </div>
+
+                        <!-- Info Box -->
+                        <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-6 shadow-xl shadow-blue-500/5">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+                                    <i class="fas fa-magic"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h5 class="text-blue-400 font-bold text-sm mb-1">Otomasi Pintar</h5>
+                                    <p class="text-gray-400 text-xs leading-relaxed">
+                                        Cukup tempelkan link website. Sistem kami akan memprosesnya untuk memberikan pratinjau snapshot terbaik secara otomatis.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="flex items-center gap-2 px-1">
-                            <input type="checkbox" name="is_new_tab" id="is_new_tab" value="1" class="w-4 h-4 bg-white/5 border-white/10 rounded text-blue-600 accent-blue-600">
-                            <label for="is_new_tab" class="text-sm text-gray-400 cursor-pointer">Buka di tab baru (target="_blank")</label>
+                            <input type="checkbox" name="is_new_tab" id="is_new_tab" value="1" checked class="w-4 h-4 bg-white/5 border-white/10 rounded text-blue-600 accent-blue-600 cursor-pointer">
+                            <label for="is_new_tab" class="text-sm text-gray-400 cursor-pointer">Buka pratinjau di tab baru</label>
                         </div>
                     </div>
                     
                     @error('content') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                     
                     <!-- Hidden field to unify content -->
+                    <input type="hidden" name="content_type" value="link">
                     <input type="hidden" name="content" id="final_content">
                 </div>
             </div>
@@ -130,108 +118,57 @@
     option { background-color: #1a1a1a; color: white; }
 </style>
 
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        tinymce.init({
-            selector: '#content_html',
-            height: 400,
-            skin: 'oxide-dark',
-            content_css: 'dark',
-            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
-            toolbar: 'undo redo | blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-            setup: function (editor) {
-                editor.on('change', function () {
-                    updatePreview();
-                });
-            }
-        });
-
-        const contentTypeInputs = document.querySelectorAll('input[name="content_type"]');
-        const textInput = document.getElementById('content_text');
         const linkInput = document.getElementById('content_link');
         const previewArea = document.getElementById('preview-area');
         const finalInput = document.getElementById('final_content');
         const form = document.querySelector('form');
 
-        function transformUrl(url) {
-            // We no longer transform on frontend to allow backend to scrape the landing page for real ID
-            return url;
-        }
-
         function updatePreview() {
-            const type = document.querySelector('input[name="content_type"]:checked').value;
-            let val = '';
-
-            if (type === 'text') {
-                val = textInput.value;
-                previewArea.innerText = val || 'Input konten untuk melihat preview...';
-            } else if (type === 'html') {
-                val = tinymce.get('content_html').getContent();
-                previewArea.innerHTML = val || 'Input konten untuk melihat preview...';
-            } else if (type === 'link') {
-                // Auto transform URL
-                const originalUrl = linkInput.value;
-                const transformedUrl = transformUrl(originalUrl);
-                
-                if (originalUrl !== transformedUrl) {
-                    linkInput.value = transformedUrl;
-                    val = transformedUrl;
-                } else {
-                    val = originalUrl;
-                }
-
-                if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
-                    previewArea.innerHTML = `
-                        <div class="w-full flex flex-col bg-white rounded-xl shadow-2xl overflow-hidden border border-white/10" style="height: 350px;">
-                            <div class="bg-gray-100 px-4 py-2 flex items-center gap-3 border-b">
-                                <div class="flex gap-1.5">
-                                    <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-                                </div>
-                                <div class="flex-1 bg-white px-3 py-1 rounded-lg text-[10px] text-gray-400 truncate border border-gray-200 shadow-sm">
-                                    ${val}
-                                </div>
-                                <a href="${val}" target="_blank" class="text-blue-500 hover:text-blue-700">
-                                    <i class="fas fa-external-link-alt text-[10px]"></i>
-                                </a>
+            const val = linkInput.value;
+            
+            if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
+                previewArea.innerHTML = `
+                    <div class="w-full flex flex-col bg-white rounded-xl shadow-2xl overflow-hidden border border-white/10" style="height: 350px;">
+                        <div class="bg-gray-100 px-4 py-2 flex items-center gap-3 border-b">
+                            <div class="flex gap-1.5">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
                             </div>
-                            <div class="flex-1 bg-gray-50 relative group">
-                                <img src="https://s.wordpress.com/mshots/v1/${encodeURIComponent(val)}?w=800" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
-                                    <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center">Snapshot Website</p>
-                                    <a href="${val}" target="_blank" class="px-4 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-bold shadow-lg shadow-blue-900/40">Buka Link Asli</a>
-                                </div>
-                                <div class="absolute bottom-2 left-2 right-2 p-2 bg-yellow-500/90 text-black text-[9px] font-bold rounded-lg border border-yellow-600 shadow-lg">
-                                    <i class="fas fa-info-circle mr-1"></i> Beberapa situs memblokir preview live demi keamanan.
-                                </div>
+                            <div class="flex-1 bg-white px-3 py-1 rounded-lg text-[10px] text-gray-400 truncate border border-gray-200 shadow-sm">
+                                ${val}
                             </div>
-                        </div>`;
-                } else {
-                    previewArea.innerHTML = val ? `<a href="${val}" target="_blank" class="text-blue-500 underline">${val}</a>` : 'Input URL...';
-                }
+                            <a href="${val}" target="_blank" class="text-blue-500 hover:text-blue-700">
+                                <i class="fas fa-external-link-alt text-[10px]"></i>
+                            </a>
+                        </div>
+                        <div class="flex-1 bg-gray-50 relative group">
+                            <img src="https://s.wordpress.com/mshots/v1/${encodeURIComponent(val)}?w=800" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
+                                <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center">Snapshot Website</p>
+                                <a href="${val}" target="_blank" class="px-4 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-bold shadow-lg shadow-blue-900/40">Buka Link Asli</a>
+                            </div>
+                            <div class="absolute bottom-2 left-2 right-2 p-2 bg-yellow-500/90 text-black text-[9px] font-bold rounded-lg border border-yellow-600 shadow-lg">
+                                <i class="fas fa-info-circle mr-1"></i> Preview snapshot akan muncul secara otomatis.
+                            </div>
+                        </div>
+                    </div>`;
+            } else {
+                previewArea.innerHTML = val ? `<a href="${val}" target="_blank" class="text-blue-500 underline text-xs font-mono">${val}</a>` : '<span class="text-gray-500 italic text-[10px]">Input URL untuk melihat preview...</span>';
             }
             finalInput.value = val;
         }
 
-        contentTypeInputs.forEach(input => {
-            input.addEventListener('change', updatePreview);
-        });
-
-        textInput.addEventListener('input', updatePreview);
         linkInput.addEventListener('input', updatePreview);
 
         form.addEventListener('submit', function() {
-            const type = document.querySelector('input[name="content_type"]:checked').value;
-            if (type === 'text') {
-                finalInput.value = textInput.value;
-            } else if (type === 'html') {
-                finalInput.value = tinymce.get('content_html').getContent();
-            } else if (type === 'link') {
-                finalInput.value = linkInput.value;
-            }
+            finalInput.value = linkInput.value;
         });
+
+        // Initial sync
+        updatePreview();
     });
 </script>
 @endsection
