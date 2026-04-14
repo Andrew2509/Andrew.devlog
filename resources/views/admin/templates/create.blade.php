@@ -1,6 +1,7 @@
-@extends('layouts.admin')
+@section('header_title', 'Tambah Template')
+@section('header_subtitle', 'Buat konten baru untuk sistem.')
 
-@section('content')
+@section('admin_content')
 <div class="px-6 py-4" x-data="{ contentType: 'text' }">
     <div class="mb-8 flex items-center gap-4">
         <a href="{{ route('admin.templates.index') }}" class="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 text-gray-400 rounded-xl transition-all">

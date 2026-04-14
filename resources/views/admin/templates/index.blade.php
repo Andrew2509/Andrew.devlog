@@ -1,6 +1,7 @@
-@extends('layouts.admin')
+@section('header_title', 'Manajemen Template')
+@section('header_subtitle', 'Kelola konten template untuk berbagai kebutuhan sistem.')
 
-@section('content')
+@section('admin_content')
 <div class="px-6 py-4">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
