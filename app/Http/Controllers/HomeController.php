@@ -107,7 +107,6 @@ class HomeController extends Controller
             return response('Could not load preview. <a href="'.$url.'" target="_blank">Click here to open in new tab.</a>', 500);
         }
     }
-}
 
     public function harga(Request $request)
     {
