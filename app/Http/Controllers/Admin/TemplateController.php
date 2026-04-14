@@ -36,6 +36,7 @@ class TemplateController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|string|in:' . implode(',', array_keys(Template::getTypes())),
             'content_type' => 'required|string|in:' . implode(',', array_keys(Template::getContentTypes())),
+            'thumbnail_url' => 'nullable|url',
             'status' => 'boolean',
             'is_new_tab' => 'boolean',
         ]);
@@ -53,6 +54,7 @@ class TemplateController extends Controller
             'type' => $request->type,
             'content_type' => $request->input('content_type'),
             'content' => $content,
+            'thumbnail_url' => $request->thumbnail_url,
             'status' => $request->has('status'),
             'is_new_tab' => $request->has('is_new_tab'),
         ]);
@@ -79,6 +81,7 @@ class TemplateController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|string|in:' . implode(',', array_keys(Template::getTypes())),
             'content_type' => 'required|string|in:' . implode(',', array_keys(Template::getContentTypes())),
+            'thumbnail_url' => 'nullable|url',
             'status' => 'boolean',
             'is_new_tab' => 'boolean',
         ]);
@@ -96,6 +99,7 @@ class TemplateController extends Controller
             'type' => $request->type,
             'content_type' => $request->input('content_type'),
             'content' => $content,
+            'thumbnail_url' => $request->thumbnail_url,
             'status' => $request->has('status'),
             'is_new_tab' => $request->has('is_new_tab'),
         ]);

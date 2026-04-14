@@ -14,6 +14,7 @@ class Template extends Model
         'type',
         'content_type',
         'content',
+        'thumbnail_url',
         'status',
         'is_new_tab',
     ];

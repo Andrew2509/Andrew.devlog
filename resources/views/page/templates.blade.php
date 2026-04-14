@@ -73,18 +73,23 @@
                                     'company_profile' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
                                     'ecommerce' => 'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2689&auto=format&fit=crop',
                                     'landing_page' => 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop',
-                                    'personal_portfolio' => 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2670&auto=format&fit=crop',
-                                    'other' => 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop'
-                                ];
-                                
-                                $imgUrl = $placeholderImages[$template->type] ?? $placeholderImages['other'];
-                                
-                                if ($template->content_type === 'link') {
-                                    $imgUrl = "https://s.wordpress.com/mshots/v1/" . urlencode($template->content) . "?w=1280";
+                                $thumbnail = '';
+                                if ($template->thumbnail_url) {
+                                    $thumbnail = $template->thumbnail_url;
+                                } elseif ($template->content_type === 'link') {
+                                    $thumbnail = 'https://s.wordpress.com/mshots/v1/' . urlencode($template->content) . '?w=800';
+                                } else {
+                                    $placeholders = [
+                                        'company_profile' => 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
+                                        'ecommerce' => 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80',
+                                        'landing_page' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+                                        'personal_portfolio' => 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80'
+                                    ];
+                                    $thumbnail = $placeholders[$template->type] ?? 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
                                 }
                             @endphp
 
-                            <img src="{{ $imgUrl }}" alt="{{ $template->name }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            <img src="{{ $thumbnail }}" alt="{{ $template->name }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
                             
                             <div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-20">
                                 <a 

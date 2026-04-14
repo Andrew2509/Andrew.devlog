@@ -44,8 +44,16 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
                                 <i class="fas fa-link"></i>
                             </div>
-                            <input type="url" name="content_link" id="content_link" value="{{ $template->content }}" placeholder="https://example.com" 
+                            <input type="url" name="content_link" id="content_link" value="{{ old('content', $template->content) }}" placeholder="https://example.com" 
                                    class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all font-mono text-sm tracking-tight @error('content') border-red-500 @enderror">
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <input type="url" name="thumbnail_url" id="thumbnail_url" value="{{ old('thumbnail_url', $template->thumbnail_url) }}" placeholder="Link Gambar (Opsional)" 
+                                   class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all text-sm tracking-tight @error('thumbnail_url') border-red-500 @enderror">
                         </div>
 
                         <!-- Info Box -->
@@ -152,14 +160,19 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const linkInput = document.getElementById('content_link');
+        const thumbInput = document.getElementById('thumbnail_url');
         const previewArea = document.getElementById('preview-area');
         const finalInput = document.getElementById('final_content');
         const form = document.querySelector('form');
 
         function updatePreview() {
             const val = linkInput.value;
+            const thumbVal = thumbInput.value;
             
             if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
+                let displayImg = thumbVal ? thumbVal : `https://s.wordpress.com/mshots/v1/${encodeURIComponent(val)}?w=800`;
+                let isScreenshot = !thumbVal;
+
                 previewArea.innerHTML = `
                     <div class="w-full flex flex-col bg-white rounded-xl shadow-2xl overflow-hidden border border-white/10" style="height: 350px;">
                         <div class="bg-gray-100 px-4 py-2 flex items-center gap-3 border-b">
@@ -175,14 +188,14 @@
                         <div class="flex-1 bg-gray-50 relative group">
                             <div id="snapshot-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-10 transition-opacity duration-500">
                                 <div class="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-3"></div>
-                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Generating Snapshot...</p>
+                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">${isScreenshot ? 'Generating Snapshot...' : 'Loading Image...'}</p>
                             </div>
-                            <img src="https://s.wordpress.com/mshots/v1/${encodeURIComponent(val)}?w=800" 
+                            <img src="${displayImg}" 
                                  class="w-full h-full object-cover transition-opacity duration-1000 opacity-0"
                                  onload="this.classList.remove('opacity-0'); document.getElementById('snapshot-loader').classList.add('opacity-0'); setTimeout(() => document.getElementById('snapshot-loader').remove(), 500);">
                             
                             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
-                                <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center">Snapshot Website</p>
+                                <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center">${isScreenshot ? 'Snapshot Website' : 'Custom Image Link'}</p>
                                 <a href="${val}" target="_blank" class="px-4 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-bold shadow-lg shadow-blue-900/40">Buka Link Asli</a>
                             </div>
                         </div>
@@ -195,6 +208,7 @@
 
         linkInput.addEventListener('input', updatePreview);
         linkInput.addEventListener('blur', updatePreview);
+        thumbInput.addEventListener('input', updatePreview);
 
         form.addEventListener('submit', function() {
             finalInput.value = linkInput.value;
