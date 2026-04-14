@@ -54,6 +54,42 @@ class HomeController extends Controller
         return response($template->content);
     }
 
+    /**
+     * Proxy external URL to allow interactive preview in iframe (bypass X-Frame-Options)
+     */
+    public function externalPreview(Request $request)
+    {
+        $url = $request->get('url');
+        if (!$url) return response('No URL provided', 400);
+
+        try {
+            // Using Http facade to fetch content
+            $response = \Illuminate\Support\Facades\Http::get($url);
+            $html = $response->body();
+
+            // Inject <base> tag to fix relative links (images, css, js)
+            $baseUrl = parse_url($url);
+            $baseHref = $baseUrl['scheme'] . '://' . $baseUrl['host'] . (isset($baseUrl['path']) ? $baseUrl['path'] : '');
+            
+            // If the path ends with a filename, get the directory
+            if (preg_match('/\.[a-z0-9]+$/i', $baseHref)) {
+                $baseHref = dirname($baseHref) . '/';
+            }
+
+            $baseTag = '<base href="' . $baseHref . '">';
+            
+            if (strpos($html, '<head>') !== false) {
+                $html = str_replace('<head>', '<head>' . $baseTag, $html);
+            } else {
+                $html = $baseTag . $html;
+            }
+
+            return response($html);
+        } catch (\Exception $e) {
+            return response('Could not load preview. <a href="'.$url.'" target="_blank">Click here to open in new tab.</a>', 500);
+        }
+    }
+
 
     public function harga(Request $request)
     {
