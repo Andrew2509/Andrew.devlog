@@ -5,12 +5,24 @@
 
 @section('admin_content')
 <div class="px-6 py-4" x-data="{ 
-    contentType: @js($template->content_type ?? 'link'),
-    tags: @js(old('tags') ? json_decode(old('tags'), true) : ($template->tags ?? [])),
+    contentType: @js(old('content_type', $template->content_type ?? 'link')),
+    tags: @js($template->tags ?? []),
     tagInput: '',
     contentLink: @js(old('content', $template->content ?? '')),
     thumbUrl: @js(old('thumbnail_url', $template->thumbnail_url ?? '')),
     imgLoaded: false,
+    
+    init() {
+        // If there's old data for tags, override the template tags
+        let oldTags = @js(old('tags'));
+        if (oldTags) {
+            try {
+                this.tags = JSON.parse(oldTags);
+            } catch(e) {
+                console.error('Error parsing old tags', e);
+            }
+        }
+    },
     
     addTag() {
         let val = this.tagInput.trim().replace(/,/g, '');
@@ -34,6 +46,11 @@
     ensureProtocol() {
         if (this.contentLink && !this.contentLink.startsWith('http://') && !this.contentLink.startsWith('https://') && this.contentLink.includes('.')) {
             this.contentLink = 'https://' + this.contentLink;
+        }
+    },
+    ensureProtocolThumb() {
+        if (this.thumbUrl && !this.thumbUrl.startsWith('http://') && !this.thumbUrl.startsWith('https://') && this.thumbUrl.includes('.')) {
+            this.thumbUrl = 'https://' + this.thumbUrl;
         }
     }
 }">
@@ -131,6 +148,7 @@
                                 <i class="fas fa-link"></i>
                             </div>
                             <input type="url" name="content" x-model="contentLink" required
+                                   value="{{ old('content', $template->content) }}"
                                    placeholder="https://example.com" 
                                    @input="imgLoaded = false"
                                    @blur="ensureProtocol()"
@@ -146,6 +164,7 @@
                                     <i class="fas fa-image"></i>
                                 </div>
                                 <input type="url" name="thumbnail_url" x-model="thumbUrl" 
+                                       value="{{ old('thumbnail_url', $template->thumbnail_url) }}"
                                        placeholder="Tempel link gambar jika tidak ingin menggunakan snapshot otomatis" 
                                        @input="imgLoaded = false"
                                        class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all text-sm tracking-tight @error('thumbnail_url') border-red-500 ring-1 ring-red-500 @enderror">
