@@ -46,7 +46,7 @@
         document.body.style.overflow = 'auto';
         this.previewUrl = '';
     }
-}" @keydown.escape.window="closePreview()">
+}" x-on:keydown.escape.window="closePreview()">
 
     <!-- Hero Section -->
     <header class="pt-32 pb-24 bg-gradient-to-b from-primary-50 to-white overflow-hidden relative">
@@ -107,14 +107,14 @@
                             <div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-20">
                                 @if($template->content_type === 'link')
                                     <button 
-                                        @click="openPreview('{{ $template->content }}', 'link', '{{ $template->name }}')"
+                                        x-on:click="openPreview('{{ $template->content }}', 'link', '{{ $template->name }}')"
                                         class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95"
                                     >
                                         <i class="fas fa-eye text-sm"></i> Live Preview
                                     </button>
                                 @else
                                     <button 
-                                        @click="openPreview('{{ route('template.preview', $template->id) }}', 'html', '{{ $template->name }}')"
+                                        x-on:click="openPreview('{{ route('template.preview', $template->id) }}', 'html', '{{ $template->name }}')"
                                         class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95"
                                     >
                                         <i class="fas fa-eye text-sm"></i> Detail Template
@@ -241,12 +241,12 @@
             x-transition:leave-end="opacity-0"
             class="fixed inset-0 z-[100] flex flex-col bg-gray-900/90 backdrop-blur-md"
             x-cloak
-            @click.away="closePreview()"
+            x-on:click.away="closePreview()"
         >
             <!-- Modal Header -->
             <div class="flex items-center justify-between px-6 py-4 bg-white/10 backdrop-blur-md border-b border-white/10">
                 <div class="flex items-center gap-4">
-                    <button @click="closePreview()" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-red-500 transition-colors">
+                    <button x-on:click="closePreview()" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-red-500 transition-colors">
                         <i class="fas fa-times"></i>
                     </button>
                     <div>
@@ -257,13 +257,13 @@
 
                 <!-- Device Controls -->
                 <div class="hidden md:flex items-center gap-2 bg-black/20 p-1.5 rounded-2xl border border-white/5">
-                    <button @click="device = 'desktop'" :class="device === 'desktop' ? 'bg-primary text-white' : 'text-white/40 hover:text-white'" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all">
+                    <button x-on:click="device = 'desktop'" :class="device === 'desktop' ? 'bg-primary text-white' : 'text-white/40 hover:text-white'" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all">
                         <i class="fas fa-desktop"></i>
                     </button>
-                    <button @click="device = 'tablet'" :class="device === 'tablet' ? 'bg-primary text-white' : 'text-white/40 hover:text-white'" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all">
+                    <button x-on:click="device = 'tablet'" :class="device === 'tablet' ? 'bg-primary text-white' : 'text-white/40 hover:text-white'" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all">
                         <i class="fas fa-tablet-alt"></i>
                     </button>
-                    <button @click="device = 'mobile'" :class="device === 'mobile' ? 'bg-primary text-white' : 'text-white/40 hover:text-white'" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all">
+                    <button x-on:click="device = 'mobile'" :class="device === 'mobile' ? 'bg-primary text-white' : 'text-white/40 hover:text-white'" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all">
                         <i class="fas fa-mobile-alt"></i>
                     </button>
                 </div>
@@ -296,7 +296,7 @@
                         <iframe 
                             :src="previewUrl" 
                             class="w-full h-full bg-white"
-                            @load="loading = false"
+                            x-on:load="loading = false"
                             frameborder="0"
                         ></iframe>
                     </template>
@@ -307,8 +307,8 @@
                             <img 
                                 :src="getSnapshotUrl()" 
                                 class="w-full h-auto min-h-full object-top"
-                                @load="loading = false"
-                                @error="loading = false"
+                                x-on:load="loading = false"
+                                x-on:error="loading = false"
                             >
                         </div>
                     </template>
