@@ -46,11 +46,13 @@ class TemplateController extends Controller
             $request->validate(['content' => 'required|string']);
         }
 
+        $content = $this->transformContent($request->content, $request->content_type);
+
         Template::create([
             'name' => $request->name,
             'type' => $request->type,
             'content_type' => $request->content_type,
-            'content' => $request->content,
+            'content' => $content,
             'status' => $request->has('status'),
             'is_new_tab' => $request->has('is_new_tab'),
         ]);
@@ -87,16 +89,37 @@ class TemplateController extends Controller
             $request->validate(['content' => 'required|string']);
         }
 
+        $content = $this->transformContent($request->content, $request->content_type);
+
         $template->update([
             'name' => $request->name,
             'type' => $request->type,
             'content_type' => $request->content_type,
-            'content' => $request->content,
+            'content' => $content,
             'status' => $request->has('status'),
             'is_new_tab' => $request->has('is_new_tab'),
         ]);
 
         return redirect()->route('admin.templates.index')->with('success', 'Template berhasil diperbarui.');
+    }
+
+    /**
+     * Transform link to demo if it matches known patterns
+     */
+    private function transformContent($content, $contentType)
+    {
+        if ($contentType !== 'link') {
+            return $content;
+        }
+
+        // HTML Codex transformation
+        // Pattern: https://htmlcodex.com/restoran-website-template/
+        // To: https://htmlcodex.com/demo/?template=restoran
+        if (preg_match('/htmlcodex\.com\/([^\/]+)-website-template\/?$/i', $content, $matches)) {
+            return "https://htmlcodex.com/demo/?template=" . $matches[1];
+        }
+
+        return $content;
     }
 
     /**

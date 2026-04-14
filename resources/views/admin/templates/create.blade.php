@@ -154,6 +154,17 @@
         const finalInput = document.getElementById('final_content');
         const form = document.querySelector('form');
 
+        function transformUrl(url) {
+            if (!url) return url;
+            // HTML Codex transformation
+            const codexRegex = /htmlcodex\.com\/([^\/]+)-website-template\/?$/i;
+            const match = url.match(codexRegex);
+            if (match) {
+                return `https://htmlcodex.com/demo/?template=${match[1]}`;
+            }
+            return url;
+        }
+
         function updatePreview() {
             const type = document.querySelector('input[name="content_type"]:checked').value;
             let val = '';
@@ -165,7 +176,17 @@
                 val = tinymce.get('content_html').getContent();
                 previewArea.innerHTML = val || 'Input konten untuk melihat preview...';
             } else if (type === 'link') {
-                val = linkInput.value;
+                // Auto transform URL
+                const originalUrl = linkInput.value;
+                const transformedUrl = transformUrl(originalUrl);
+                
+                if (originalUrl !== transformedUrl) {
+                    linkInput.value = transformedUrl;
+                    val = transformedUrl;
+                } else {
+                    val = originalUrl;
+                }
+
                 if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
                     previewArea.innerHTML = `
                         <div class="w-full flex flex-col bg-white rounded-xl shadow-2xl overflow-hidden border border-white/10" style="height: 350px;">
