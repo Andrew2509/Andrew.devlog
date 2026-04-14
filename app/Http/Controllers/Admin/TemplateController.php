@@ -37,9 +37,12 @@ class TemplateController extends Controller
             'type' => 'required|string|in:' . implode(',', array_keys(Template::getTypes())),
             'content_type' => 'required|string|in:' . implode(',', array_keys(Template::getContentTypes())),
             'thumbnail_url' => 'nullable|url',
+            'tags' => 'nullable|string',
             'status' => 'boolean',
             'is_new_tab' => 'boolean',
         ]);
+
+        $tags = $request->tags ? json_decode($request->tags, true) : [];
 
         if ($request->input('content_type') === 'link') {
             $request->validate(['content' => 'required|url']);
@@ -52,6 +55,7 @@ class TemplateController extends Controller
         Template::create([
             'name' => $request->name,
             'type' => $request->type,
+            'tags' => $tags,
             'content_type' => $request->input('content_type'),
             'content' => $content,
             'thumbnail_url' => $request->thumbnail_url,
@@ -82,9 +86,12 @@ class TemplateController extends Controller
             'type' => 'required|string|in:' . implode(',', array_keys(Template::getTypes())),
             'content_type' => 'required|string|in:' . implode(',', array_keys(Template::getContentTypes())),
             'thumbnail_url' => 'nullable|url',
+            'tags' => 'nullable|string',
             'status' => 'boolean',
             'is_new_tab' => 'boolean',
         ]);
+
+        $tags = $request->tags ? json_decode($request->tags, true) : [];
 
         if ($request->input('content_type') === 'link') {
             $request->validate(['content' => 'required|url']);
@@ -97,6 +104,7 @@ class TemplateController extends Controller
         $template->update([
             'name' => $request->name,
             'type' => $request->type,
+            'tags' => $tags,
             'content_type' => $request->input('content_type'),
             'content' => $content,
             'thumbnail_url' => $request->thumbnail_url,

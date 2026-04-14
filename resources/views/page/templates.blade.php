@@ -107,7 +107,15 @@
                         </div>
                         <div class="p-10">
                             <div class="flex items-center gap-2 mb-4">
-                                <span class="bg-primary/10 text-primary text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest border border-primary/20">{{ $typeName }}</span>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                @if($template->tags && count($template->tags) > 0)
+                                    @foreach($template->tags as $tag)
+                                        <span class="bg-primary/10 text-primary text-[10px] font-black px-4 py-2 rounded-xl uppercase tracking-widest border border-primary/20 shadow-sm shadow-primary/5 transition-all hover:bg-primary/20 cursor-default">{{ $tag }}</span>
+                                    @endforeach
+                                @else
+                                    <span class="bg-primary/10 text-primary text-[10px] font-black px-4 py-2 rounded-xl uppercase tracking-widest border border-primary/20">{{ $typeName }}</span>
+                                @endif
+                            </div>
                             </div>
                             <h3 class="text-2xl font-black text-gray-900 mb-3 tracking-tight">{{ $template->name }}</h3>
                             

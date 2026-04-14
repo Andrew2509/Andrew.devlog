@@ -12,6 +12,7 @@ class Template extends Model
     protected $fillable = [
         'name',
         'type',
+        'tags',
         'content_type',
         'content',
         'thumbnail_url',
@@ -22,6 +23,7 @@ class Template extends Model
     protected $casts = [
         'status' => 'boolean',
         'is_new_tab' => 'boolean',
+        'tags' => 'array',
     ];
 
     /**

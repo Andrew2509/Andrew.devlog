@@ -4,7 +4,23 @@
 @section('header_subtitle', 'Buat konten baru untuk sistem.')
 
 @section('admin_content')
-<div class="px-6 py-4" x-data="{ contentType: 'text' }">
+<div class="px-6 py-4" x-data="{ 
+    contentType: 'text', 
+    tags: [], 
+    tagInput: '',
+    addTag() {
+        let val = this.tagInput.trim().replace(/,/g, '');
+        if (val !== '') {
+            if (!this.tags.includes(val)) {
+                this.tags.push(val);
+            }
+            this.tagInput = '';
+        }
+    },
+    removeTag(index) {
+        this.tags.splice(index, 1);
+    }
+}">
     <div class="mb-8 flex items-center gap-4">
         <a href="{{ route('admin.templates.index') }}" class="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 text-gray-400 rounded-xl transition-all">
             <i class="fas fa-arrow-left"></i>
@@ -26,13 +42,30 @@
                                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all @error('name') border-red-500 @enderror">
                         @error('name') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Jenis Template</label>
-                        <select name="type" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all custom-select">
-                            @foreach($types as $key => $label)
-                                <option value="{{ $key }}" {{ old('type') == $key ? 'selected' : '' }}>{{ $label }}</option>
-                            @endforeach
-                        </select>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Tag Template (Ketik & Enter/Spasi)</label>
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-3 flex flex-wrap gap-2 focus-within:border-blue-500 transition-all min-h-[58px]">
+                            <template x-for="(tag, index) in tags" :key="index">
+                                <span class="bg-blue-600/20 text-blue-400 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-blue-500/20 animate-in fade-in zoom-in duration-300">
+                                    <span x-text="tag"></span>
+                                    <button type="button" @click="removeTag(index)" class="hover:text-red-400 transition-colors">
+                                        <i class="fas fa-times text-[8px]"></i>
+                                    </button>
+                                </span>
+                            </template>
+                            <input type="text" x-model="tagInput" 
+                                   @keydown.enter.prevent="addTag()" 
+                                   @keydown.space.prevent="addTag()" 
+                                   @keydown.comma.prevent="addTag()" 
+                                   @blur="addTag()"
+                                   placeholder="Contoh: Modern, Portfolio, Business..." 
+                                   class="bg-transparent border-none focus:ring-0 focus:outline-none text-white text-sm flex-1 min-w-[200px] py-1 placeholder:text-gray-600">
+                        </div>
+                        <input type="hidden" name="tags" :value="JSON.stringify(tags)">
+                        @error('tags') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                        
+                        <!-- Legacy fallback for 'type' column (using first tag or 'other') -->
+                        <input type="hidden" name="type" :value="tags.length > 0 ? tags[0].toLowerCase().replace(/ /g, '_') : 'other'">
                     </div>
                 </div>
 
