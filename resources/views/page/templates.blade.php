@@ -107,7 +107,7 @@
                         </div>
                         <div class="p-10">
                             <div class="flex items-center gap-2 mb-4">
-                                <span class="text-primary/60 text-[10px] font-black uppercase tracking-widest">{{ $typeName }}</span>
+                                <span class="bg-primary/10 text-primary text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest border border-primary/20">{{ $typeName }}</span>
                             </div>
                             <h3 class="text-2xl font-black text-gray-900 mb-3 tracking-tight">{{ $template->name }}</h3>
                             
