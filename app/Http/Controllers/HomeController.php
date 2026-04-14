@@ -63,13 +63,27 @@ class HomeController extends Controller
         if (!$url) return response('No URL provided', 400);
 
         try {
-            // Using Http facade to fetch content with a real User-Agent to avoid bot blocking
+            // Intelligent Wrapper Extractor: Detect if this is a wrapper page (e.g. HTML Codex) 
+            // and find the REAL direct demo link automatically.
+            $isWrapper = stripos($url, 'htmlcodex.com/demo') !== false;
+            
+            // Initial fetch to check for wrapper structure
             $response = \Illuminate\Support\Facades\Http::withHeaders([
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                 'Accept-Language' => 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
             ])->get($url);
             
             $html = $response->body();
+
+            // If it is a known wrapper, extract the direct link from the iframe src
+            if ($isWrapper && preg_match('/<iframe\s+id="demo-iframe"\s+src="([^"]+)"/i', $html, $matches)) {
+                $url = $matches[1];
+                // Recurse/Re-fetch the real content
+                $response = \Illuminate\Support\Facades\Http::withHeaders([
+                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                ])->get($url);
+                $html = $response->body();
+            }
 
             // Inject <base> tag to fix relative links (images, css, js)
             $baseUrlParts = parse_url($url);

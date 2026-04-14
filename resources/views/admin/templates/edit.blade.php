@@ -62,6 +62,30 @@
                                   class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all">{{ $template->content_type == 'text' ? $template->content : old('content') }}</textarea>
                     </div>
 
+                    <!-- Link Content -->
+                    <div x-show="contentType === 'link'" class="space-y-4">
+                        <input type="url" id="content_link" class="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all" value="{{ $template->content_type === 'link' ? $template->content : '' }}" placeholder="https://example.com">
+                        
+                        <!-- Tip Box -->
+                        <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h5 class="text-blue-400 font-bold mb-1">Tips Preview Terbaik</h5>
+                                    <p class="text-gray-400 text-sm leading-relaxed">
+                                        Gunakan <strong>Direct Link</strong> (Link Tanpa Frame) agar pratinjau tampil mewah tanpa error "Access Denied". 
+                                        <br><br>
+                                        <span class="text-xs text-blue-400/80 italic bg-blue-500/5 px-2 py-1 rounded-md border border-blue-500/10">
+                                            Contoh HTML Codex: Klik "Remove Frame" lalu copy URL barunya.
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- HTML Content -->
                     <div x-show="contentType == 'html'" wire:ignore>
                         <textarea name="content_html" id="content_html" rows="10" placeholder="Editor HTML...">{{ $template->content_type == 'html' ? $template->content : old('content') }}</textarea>
