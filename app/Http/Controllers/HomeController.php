@@ -86,23 +86,33 @@ class HomeController extends Controller
             }
             $baseHref = rtrim($baseHref, '/') . '/';
 
-            // Sanitize HTML to prevent anti-iframe and anti-copy scripts
-            // 1. Kill window.top/self checks and breakouts
+            // Sanitize HTML to prevent all known anti-iframe and anti-copy scripts
+            // 1. Kill window.top/self checks and ALL breakout attempts
             $html = preg_replace('/if\s*\(\s*window\.top\s*!==?\s*window\.self\s*\)/i', 'if(false)', $html);
             $html = preg_replace('/if\s*\(\s*self\s*!==?\s*top\s*\)/i', 'if(false)', $html);
-            $html = preg_replace('/window\.top\.location\s*=\s*window\.location\.href/i', 'console.log("no breakout")', $html);
+            $html = preg_replace('/window\.top\.location\s*=\s*/i', '// window.top.location = ', $html);
             
-            // 2. Kill DevTools/Browser width detection (Access Denied)
-            $html = preg_replace('/Math\.abs\s*\(\s*window\.outerWidth\s*-\s*window\.innerWidth\s*\)\s*>\s*[a-zA-Z0-9]+/i', 'false', $html);
-            $html = preg_replace('/Math\.abs\s*\(\s*window\.outerHeight\s*-\s*window\.innerHeight\s*\)\s*>\s*[a-zA-Z0-9]+/i', 'false', $html);
+            // 2. Kill DevTools/Browser width detection and ALL innerHTML overwrites used for protection
+            $html = preg_replace('/Math\.abs\s*\(\s*window\.outerWidth\s*-\s*window\.innerWidth\s*\)/i', '0', $html);
+            $html = preg_replace('/Math\.abs\s*\(\s*window\.outerHeight\s*-\s*window\.innerHeight\s*\)/i', '0', $html);
+            
+            // This is the most important: prevent script from clearing the page content
+            $html = preg_replace('/document\.documentElement\.innerHTML\s*=\s*/i', 'console.log("Blocked attempt to clear page"); // ', $html);
+            $html = preg_replace('/document\.body\.innerHTML\s*=\s*/i', 'console.log("Blocked attempt to clear body"); // ', $html);
 
-            // 3. Remove specific protection messages
-            $html = str_ireplace(['Embedding not allowed', 'Access Denied'], ['Previewing...', 'Previewing...'], $html);
+            // 3. Remove specific protection messages and strings
+            $html = str_ireplace([
+                'Embedding not allowed', 
+                'Access Denied', 
+                'Developer Tools are disabled for this preview',
+                'Developer Tools'
+            ], 'Live Preview Active', $html);
             
             // 4. Remove common copy protection and debugger scripts
             $html = str_replace(['debugger;', 'debugger'], '', $html);
             $html = preg_replace('/oncontextmenu\s*=\s*[^;>]+/i', '', $html);
             $html = preg_replace('/onselectstart\s*=\s*[^;>]+/i', '', $html);
+            $html = preg_replace('/ondragstart\s*=\s*[^;>]+/i', '', $html);
 
             $baseTag = '<base href="' . $baseHref . '">';
             
