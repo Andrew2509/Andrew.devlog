@@ -156,8 +156,15 @@
 
         function transformUrl(url) {
             if (!url) return url;
+            
+            // If it's already a demo link with item or template, don't transform again
+            if (url.includes('htmlcodex.com/demo/')) {
+                return url;
+            }
+
             // HTML Codex transformation
-            const codexRegex = /htmlcodex\.com\/([^\/]+)-website-template\/?$/i;
+            // Pattern: https://htmlcodex.com/restoran-website-template/
+            const codexRegex = /htmlcodex\.com\/([^\/?]+)-website-template\/?$/i;
             const match = url.match(codexRegex);
             if (match) {
                 return `https://htmlcodex.com/demo/?template=${match[1]}`;

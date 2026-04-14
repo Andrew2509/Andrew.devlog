@@ -112,14 +112,38 @@ class TemplateController extends Controller
             return $content;
         }
 
+        $finalUrl = $content;
+
         // HTML Codex transformation
-        // Pattern: https://htmlcodex.com/restoran-website-template/
-        // To: https://htmlcodex.com/demo/?template=restoran
-        if (preg_match('/htmlcodex\.com\/([^\/]+)-website-template\/?$/i', $content, $matches)) {
-            return "https://htmlcodex.com/demo/?template=" . $matches[1];
+        // Pattern 1: https://htmlcodex.com/restoran-website-template/
+        if (preg_match('/htmlcodex\.com\/([^\/?]+)-website-template\/?$/i', $content, $matches)) {
+            $finalUrl = "https://htmlcodex.com/demo/?template=" . $matches[1];
         }
 
-        return $content;
+        // If it's any HTML Codex demo link (item or template), try to extract the direct source
+        if (str_contains($finalUrl, 'htmlcodex.com/demo/')) {
+            try {
+                $context = stream_context_create([
+                    'http' => [
+                        'method' => "GET",
+                        'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\r\n",
+                        'timeout' => 8
+                    ]
+                ]);
+                $response = @file_get_contents($finalUrl, false, $context);
+
+                if ($response && preg_match('/<iframe id="preview-frame" src="([^"]+)"/i', $response, $iframeMatches)) {
+                    // Check if it's a valid URL
+                    if (filter_var($iframeMatches[1], FILTER_VALIDATE_URL)) {
+                        $finalUrl = $iframeMatches[1];
+                    }
+                }
+            } catch (\Exception $e) {
+                // Silent catch, keep the demo URL if extraction fails
+            }
+        }
+
+        return $finalUrl;
     }
 
     /**

@@ -63,9 +63,15 @@
                     </div>
 
                     <!-- Link Content -->
-                    <div x-show="contentType === 'link'" class="space-y-4">
-                        <input type="url" id="content_link" class="w-full bg-black/20 border border-white/5 rounded-2xl p-4 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all" value="{{ $template->content_type === 'link' ? $template->content : '' }}" placeholder="https://example.com">
-                        
+                    <div x-show="contentType == 'link'" class="space-y-4">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <input type="url" name="content_link" id="content_link" value="{{ $template->content_type == 'link' ? $template->content : old('content') }}" placeholder="https://example.com" 
+                                   class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all">
+                        </div>
+
                         <!-- Tip Box -->
                         <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-6">
                             <div class="flex items-start gap-4">
@@ -84,28 +90,18 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- HTML Content -->
-                    <div x-show="contentType == 'html'" wire:ignore>
-                        <textarea name="content_html" id="content_html" rows="10" placeholder="Editor HTML...">{{ $template->content_type == 'html' ? $template->content : old('content') }}</textarea>
-                    </div>
-
-                    <!-- Link Content -->
-                    <div x-show="contentType == 'link'" class="space-y-4">
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
-                                <i class="fas fa-link"></i>
-                            </div>
-                            <input type="url" name="content_link" id="content_link" value="{{ $template->content_type == 'link' ? $template->content : old('content') }}" placeholder="https://example.com" 
-                                   class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all">
-                        </div>
                         <div class="flex items-center gap-2 px-1">
                             <input type="checkbox" name="is_new_tab" id="is_new_tab" value="1" {{ $template->is_new_tab ? 'checked' : '' }} class="w-4 h-4 bg-white/5 border-white/10 rounded text-blue-600 accent-blue-600">
                             <label for="is_new_tab" class="text-sm text-gray-400 cursor-pointer">Buka di tab baru (target="_blank")</label>
                         </div>
                     </div>
                     
+                    <!-- HTML Content -->
+                    <div x-show="contentType == 'html'" wire:ignore>
+                        <textarea name="content_html" id="content_html" rows="10" placeholder="Editor HTML...">{{ $template->content_type == 'html' ? $template->content : old('content') }}</textarea>
+                    </div>
+
                     @error('content') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                     
                     <!-- Hidden field to unify content -->
@@ -212,8 +208,15 @@
 
         function transformUrl(url) {
             if (!url) return url;
+            
+            // If it's already a demo link with item or template, don't transform again
+            if (url.includes('htmlcodex.com/demo/')) {
+                return url;
+            }
+
             // HTML Codex transformation
-            const codexRegex = /htmlcodex\.com\/([^\/]+)-website-template\/?$/i;
+            // Pattern: https://htmlcodex.com/restoran-website-template/
+            const codexRegex = /htmlcodex\.com\/([^\/?]+)-website-template\/?$/i;
             const match = url.match(codexRegex);
             if (match) {
                 return `https://htmlcodex.com/demo/?template=${match[1]}`;
