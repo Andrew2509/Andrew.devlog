@@ -236,7 +236,7 @@
                                          class="w-full h-full object-cover transition-opacity duration-1000"
                                          :class="imgLoaded ? 'opacity-100' : 'opacity-0'"
                                          @load="imgLoaded = true"
-                                         @error="imgLoaded = true; $el.src='https://placehold.co/800x600/1a1a1a/444?text=Preview+Not+Available'">
+                                         x-on:error="imgLoaded = true; $el.src='https://placehold.co/800x600/1a1a1a/444?text=Preview+Not+Available'">
                                     
                                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
                                         <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center" x-text="thumbUrl ? 'Custom Image Link' : 'Snapshot Website'"></p>
