@@ -163,11 +163,12 @@
             }
 
             // HTML Codex transformation
-            // Pattern: https://htmlcodex.com/restoran-website-template/
-            const codexRegex = /htmlcodex\.com\/([^\/?]+)-website-template\/?$/i;
+            // Robust Pattern: matches any slug that looks like a product page
+            const codexRegex = /htmlcodex\.com\/([^\/?]+)\/?$/i;
             const match = url.match(codexRegex);
             if (match) {
-                return `https://htmlcodex.com/demo/?template=${match[1]}`;
+                const slug = match[1].replace('-website-template', '');
+                return `https://htmlcodex.com/demo/?template=${slug}`;
             }
             return url;
         }

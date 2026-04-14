@@ -114,10 +114,31 @@ class TemplateController extends Controller
 
         $finalUrl = $content;
 
-        // HTML Codex transformation
-        // Pattern 1: https://htmlcodex.com/restoran-website-template/
-        if (preg_match('/htmlcodex\.com\/([^\/?]+)-website-template\/?$/i', $content, $matches)) {
-            $finalUrl = "https://htmlcodex.com/demo/?template=" . $matches[1];
+        // Pattern 1: HTML Codex Landing Page (e.g. bootstrap-restaurant-template)
+        if (str_contains($content, 'htmlcodex.com/') && !str_contains($content, 'htmlcodex.com/demo')) {
+            try {
+                $context = stream_context_create([
+                    'http' => [
+                        'method' => "GET",
+                        'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36\r\n" .
+                                   "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\n",
+                        'timeout' => 10
+                    ]
+                ]);
+                $html = @file_get_contents($content, false, $context);
+                
+                // Scrape the "Live Demo" button link which contains the numeric ID (?item=ID)
+                if ($html && preg_match('/href=["\'](https:\/\/htmlcodex\.com\/demo\/\?item=[0-9]+)["\']/i', $html, $matches)) {
+                    $finalUrl = $matches[1];
+                } 
+                // Fallback Pattern: try to construct ?template= slug if scraping fails
+                elseif (preg_match('/htmlcodex\.com\/([^\/?]+)\/?$/i', $content, $matches)) {
+                    $slug = str_replace('-website-template', '', $matches[1]);
+                    $finalUrl = "https://htmlcodex.com/demo/?template=" . $slug;
+                }
+            } catch (\Exception $e) {
+                // Keep the original URL or fallback if blocked
+            }
         }
 
         // If it's any HTML Codex demo link (item or template), try to extract the direct source
@@ -126,17 +147,19 @@ class TemplateController extends Controller
                 $context = stream_context_create([
                     'http' => [
                         'method' => "GET",
-                        'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\r\n",
-                        'timeout' => 8
+                        'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36\r\n" .
+                                   "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\n" .
+                                   "Referer: " . $content . "\r\n",
+                        'timeout' => 10
                     ]
                 ]);
                 $response = @file_get_contents($finalUrl, false, $context);
 
-                $iframeRegex = '/<iframe[^>]+(?:id|name)=["\'](?:preview-frame|demo-iframe)["\'][^>]+src=["\']([^"\']+)["\']/i';
+                $iframeRegex = '/<iframe[^>]+(?:id|name)=["\'](?:preview-frame|demo-iframe|preview-iframe|main-iframe)["\'][^>]+src=["\']([^"\']+)["\']/i';
                 if ($response && preg_match($iframeRegex, $response, $iframeMatches)) {
                     $iframeSrc = $iframeMatches[1];
                     
-                    // Resolve relative URLs if necessary
+                    // Resolve relative URLs
                     if (!filter_var($iframeSrc, FILTER_VALIDATE_URL)) {
                         $parsedUrl = parse_url($finalUrl);
                         $domain = ($parsedUrl['scheme'] ?? 'https') . '://' . ($parsedUrl['host'] ?? '');
@@ -153,7 +176,7 @@ class TemplateController extends Controller
                     }
                 }
             } catch (\Exception $e) {
-                // Silent catch, keep the current URL if extraction fails
+                // Silent catch
             }
         }
 

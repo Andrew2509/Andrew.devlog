@@ -63,17 +63,29 @@ class HomeController extends Controller
         if (!$url) return response('No URL provided', 400);
 
         try {
-            // Initial fetch to check for wrapper structure
-            $response = \Illuminate\Support\Facades\Http::withHeaders([
-                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept-Language' => 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
-            ])->get($url);
-            
+            // Enhanced Headers to bypass 406/403/Cloudflare minor rules
+            $headers = [
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'Accept-Language' => 'en-US,en;q=0.9',
+                'Cache-Control' => 'no-cache',
+                'Pragma' => 'no-cache',
+                'Sec-Ch-Ua' => '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
+                'Sec-Ch-Ua-Mobile' => '?0',
+                'Sec-Ch-Ua-Platform' => '"Windows"',
+                'Sec-Fetch-Dest' => 'document',
+                'Sec-Fetch-Mode' => 'navigate',
+                'Sec-Fetch-Site' => 'none',
+                'Sec-Fetch-User' => '?1',
+                'Upgrade-Insecure-Requests' => '1',
+            ];
+
+            // Initial fetch
+            $response = \Illuminate\Support\Facades\Http::withHeaders($headers)->get($url);
             $html = $response->body();
 
-            // Intelligent Wrapper Extractor: Detect if this is a wrapper page (e.g. HTML Codex)
-            // Support both preview-frame and demo-iframe, including various regex patterns
-            $iframeRegex = '/<iframe[^>]+(?:id|name)=["\'](?:preview-frame|demo-iframe)["\'][^>]+src=["\']([^"\']+)["\']/i';
+            // Intelligent Wrapper Extractor 3.0: Optimized for ?item=ID and various iframe patterns
+            $iframeRegex = '/<iframe[^>]+(?:id|name)=["\'](?:preview-frame|demo-iframe|preview-iframe|main-iframe)["\'][^>]+src=["\']([^"\']+)["\']/i';
             if (preg_match($iframeRegex, $html, $matches)) {
                 $iframeSrc = $matches[1];
                 
@@ -90,14 +102,13 @@ class HomeController extends Controller
                 }
                 
                 $url = $iframeSrc;
-                // Re-fetch the real content from the extracted URL
-                $response = \Illuminate\Support\Facades\Http::withHeaders([
-                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                ])->get($url);
+                // Re-fetch using the same robust headers, adding Referer to satisfy some strict checks
+                $headers['Referer'] = $request->get('url'); 
+                $response = \Illuminate\Support\Facades\Http::withHeaders($headers)->get($url);
                 $html = $response->body();
             }
 
-            // Inject <base> tag to fix relative links (images, css, js)
+            // Inject <base> tag to fix relative links
             $baseUrlParts = parse_url($url);
             $baseHref = ($baseUrlParts['scheme'] ?? 'https') . '://' . ($baseUrlParts['host'] ?? '');
             
@@ -111,68 +122,52 @@ class HomeController extends Controller
             }
             $baseHref = rtrim($baseHref, '/') . '/';
 
-            // ATOMIC SANITIZATION: Kill problematic scripts and text
-            // 1. Strip entire script blocks that contain known anti-iframe code
-            $html = preg_replace('/<script\b[^>]*>[\s\S]*?(?:top\s*!==?\s*self|window\.top\s*!==?\s*window\.self|Access Denied|Embedding not allowed)[\s\S]*?<\/script>/i', '<!-- Blocked anti-iframe script -->', $html);
+            // ATOMIC SANITIZATION 3.0: More aggressive blocking
+            // Strip entire script blocks that check for top/self
+            $html = preg_replace('/<script\b[^>]*>[\s\S]*?(?:top\s*!==?\s*self|window\.top\s*!==?\s*window\.self|Access Denied|Embedding not allowed|Developer Tools|X-Frame-Options)[\s\S]*?<\/script>/i', '<!-- Removed anti-iframe script -->', $html);
 
-            // 2. Kill window.top/self checks and breakout attempts in surviving code
+            // Neutralize breakouts and breakout checks
             $html = preg_replace('/if\s*\(\s*(window\.)?top\s*!==?\s*(window\.)?self\s*\)/i', 'if(false)', $html);
-            $html = preg_replace('/if\s*\(\s*(self\.)?!==?\s*top\s*\)/i', 'if(false)', $html);
-            $html = preg_replace('/(window\.)?top\.location\s*=\s*/i', '// top.location = ', $html);
-            
-            // 3. Prevent clearing the page content
-            $html = preg_replace('/document\.documentElement\.innerHTML\s*=\s*/i', '// blocked innerHTML clear: ', $html);
-            $html = preg_replace('/document\.body\.innerHTML\s*=\s*/i', '// blocked innerHTML clear: ', $html);
+            $html = preg_replace('/(window\.)?top\.location\s*=\s*/i', '// blocked breakout: ', $html);
+            $html = preg_replace('/document\.write\s*\(\s*["\']Access Denied/i', '// blocked access denied write: ', $html);
 
-            // 4. Remove access denied messages from HTML tags directly
-            $html = preg_replace('/Access Denied/i', 'Live Proxy Connected', $html);
-            $html = preg_replace('/Developer Tools are disabled/i', 'Interactive Preview', $html);
-
-            // 5. Remove copy protection
-            $html = str_replace(['debugger;', 'debugger'], '', $html);
-            $html = preg_replace('/oncontextmenu\s*=\s*[^;>]+/i', '', $html);
-            $html = preg_replace('/onselectstart\s*=\s*[^;>]+/i', '', $html);
-
-            $baseTag = '<base href="' . $baseHref . '">';
-            
-            // 6. Inject the "Survival Script 2.0" that runs BEFORE any other script
+            // survival script 3.0 - Injected at the very start of <head>
             $survivalScript = '
             <script>
                 (function() {
-                    // Bypass DevTools detection
+                    // Spoof browser properties to hide being an iframe/bot
                     try {
-                        Object.defineProperty(window, "outerWidth", { get: function() { return window.innerWidth; } });
-                        Object.defineProperty(window, "outerHeight", { get: function() { return window.innerHeight; } });
+                        Object.defineProperty(window, "outerWidth", { get: () => window.innerWidth });
+                        Object.defineProperty(window, "outerHeight", { get: () => window.innerHeight });
+                        Object.defineProperty(navigator, "webdriver", { get: () => false });
+                        window.chrome = { runtime: {}, loadTimes: Date.now, csi: () => {}, getBrowserSearchProxyw: () => {} };
                     } catch(e) {}
 
-                    // Global window.top override (bypasses "if (top != self)")
+                    // Root bypass for frame busting
                     try {
-                        Object.defineProperty(window, "top", { get: function() { return window.self; } });
-                        Object.defineProperty(window, "parent", { get: function() { return window.self; } });
+                        Object.defineProperty(window, "top", { get: () => window.self });
+                        Object.defineProperty(window, "parent", { get: () => window.self });
+                        Object.defineProperty(document, "referrer", { get: () => "' . $url . '" });
                     } catch(e) {}
 
-                    // Block suspicious innerHTML/textContent writes
-                    try {
-                        const originalSetter = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML").set;
-                        Object.defineProperty(Element.prototype, "innerHTML", {
-                            set: function(v) {
-                                if (typeof v === "string" && /access denied|developer tools|embedding/i.test(v)) {
-                                    console.warn("Proxy: Blocked error message injection.");
-                                    return;
-                                }
-                                originalSetter.call(this, v);
+                    // Prevent error message injection via innerHTML
+                    const originalSet = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML").set;
+                    Object.defineProperty(Element.prototype, "innerHTML", {
+                        set: function(v) {
+                            if (typeof v === "string" && /access denied|developer tools|embedding/i.test(v)) {
+                                console.warn("Proxy: Suppressed security message.");
+                                return;
                             }
-                        });
-                    } catch(e) {}
-                    
-                    // Neutralize document.write for protection messages
-                    const oldWrite = document.write;
-                    document.write = function(v) {
-                        if (typeof v === "string" && /access denied|developer tools/i.test(v)) return;
-                        oldWrite.apply(document, arguments);
-                    };
+                            originalSet.call(this, v);
+                        }
+                    });
+
+                    // Neutralize alert/confirm if used for protection
+                    window.alert = function(m) { if (!/access denied|embedded/i.test(m)) console.log("Alert:", m); };
                 })();
             </script>';
+
+            $baseTag = '<base href="' . $baseHref . '">';
             
             if (stripos($html, '<head>') !== false) {
                 $html = preg_replace('/<head>/i', '<head>' . $baseTag . $survivalScript, $html, 1);
@@ -180,9 +175,10 @@ class HomeController extends Controller
                 $html = $baseTag . $survivalScript . $html;
             }
 
-            return response($html);
+            return response($html)->header('Content-Type', 'text/html');
+
         } catch (\Exception $e) {
-            return response('Preview error. <a href="'.$url.'" target="_blank">Open in tab.</a>', 500);
+            return response("Error: Unable to fetch external template. Link may be highly protected. (" . $e->getMessage() . ")", 500);
         }
     }
 
