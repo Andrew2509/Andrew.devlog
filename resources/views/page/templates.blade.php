@@ -105,9 +105,7 @@
                             </div>
                             <h3 class="text-2xl font-black text-gray-900 mb-3 tracking-tight">{{ $template->name }}</h3>
                             
-                            <div class="text-gray-500 text-sm leading-relaxed mb-8 line-clamp-3">
-                                {!! strip_tags($template->content) !!}
-                            </div>
+
                             
                             <div class="flex items-center justify-between pt-6 border-t border-gray-50">
                                 <div class="flex items-center gap-3">
