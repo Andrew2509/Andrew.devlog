@@ -116,10 +116,43 @@ class HomeController extends Controller
 
             $baseTag = '<base href="' . $baseHref . '">';
             
+            // 5. Inject a "Survival Script" that runs BEFORE any other script to kill protections globally
+            $survivalScript = '
+            <script>
+                (function() {
+                    // Force outer dimensions to match inner to bypass DevTools detection
+                    try {
+                        Object.defineProperty(window, "outerWidth", { get: function() { return window.innerWidth; } });
+                        Object.defineProperty(window, "outerHeight", { get: function() { return window.innerHeight; } });
+                    } catch(e) {}
+
+                    // Prevent scripts from clearing the page with "Access Denied" or other messages
+                    try {
+                        const originalSetter = Object.getOwnPropertyDescriptor(Element.prototype, "innerHTML").set;
+                        Object.defineProperty(Element.prototype, "innerHTML", {
+                            set: function(value) {
+                                if (typeof value === "string" && (
+                                    value.toLowerCase().includes("access denied") || 
+                                    value.toLowerCase().includes("developer tools") || 
+                                    value.toLowerCase().includes("embedding not allowed")
+                                )) {
+                                    console.warn("Bypass: Blocked attempt to clear page content.");
+                                    return;
+                                }
+                                originalSetter.call(this, value);
+                            }
+                        });
+                    } catch(e) {}
+
+                    // Neutralize window.top breakout attempts in JS
+                    window.top = window.self;
+                })();
+            </script>';
+            
             if (stripos($html, '<head>') !== false) {
-                $html = preg_replace('/<head>/i', '<head>' . $baseTag, $html, 1);
+                $html = preg_replace('/<head>/i', '<head>' . $baseTag . $survivalScript, $html, 1);
             } else {
-                $html = $baseTag . $html;
+                $html = $baseTag . $survivalScript . $html;
             }
 
             return response($html);
