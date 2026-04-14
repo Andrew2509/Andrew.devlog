@@ -5,11 +5,11 @@
 
 @section('admin_content')
 <div class="px-6 py-4" x-data="{ 
-    contentType: '{{ $template->content_type }}',
-    tags: @json(old('tags') ? json_decode(old('tags'), true) : ($template->tags ?? [])),
+    contentType: @js($template->content_type ?? 'link'),
+    tags: @js(old('tags') ? json_decode(old('tags'), true) : ($template->tags ?? [])),
     tagInput: '',
-    contentLink: '{{ old('content', $template->content) }}',
-    thumbUrl: '{{ old('thumbnail_url', $template->thumbnail_url) }}',
+    contentLink: @js(old('content', $template->content ?? '')),
+    thumbUrl: @js(old('thumbnail_url', $template->thumbnail_url ?? '')),
     imgLoaded: false,
     
     addTag() {
@@ -88,7 +88,9 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
                                 <i class="fas fa-link"></i>
                             </div>
-                            <input type="url" name="content_link" x-model="contentLink" placeholder="https://example.com" 
+                            <input type="url" name="content_link" x-model="contentLink" 
+                                   value="{{ old('content', $template->content) }}"
+                                   placeholder="https://example.com" 
                                    @input="imgLoaded = false"
                                    class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all font-mono text-sm tracking-tight @error('content') border-red-500 @enderror">
                         </div>
@@ -97,7 +99,9 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
                                 <i class="fas fa-image"></i>
                             </div>
-                            <input type="url" name="thumbnail_url" x-model="thumbUrl" placeholder="Link Gambar (Opsional)" 
+                            <input type="url" name="thumbnail_url" x-model="thumbUrl" 
+                                   value="{{ old('thumbnail_url', $template->thumbnail_url) }}"
+                                   placeholder="Link Gambar (Opsional)" 
                                    @input="imgLoaded = false"
                                    class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all text-sm tracking-tight @error('thumbnail_url') border-red-500 @enderror">
                         </div>
