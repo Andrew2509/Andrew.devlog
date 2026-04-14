@@ -70,10 +70,10 @@
                             {{-- Image handling - using random unplash based on category for now, or you could add image field to Template model later --}}
                             @php
                                 $placeholderImages = [
-                                    'company' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
+                                    'company_profile' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
                                     'ecommerce' => 'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2689&auto=format&fit=crop',
-                                    'landing' => 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop',
-                                    'portfolio' => 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2670&auto=format&fit=crop',
+                                    'landing_page' => 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop',
+                                    'personal_portfolio' => 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2670&auto=format&fit=crop',
                                     'other' => 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop'
                                 ];
                                 $imgUrl = $placeholderImages[$template->type] ?? $placeholderImages['other'];

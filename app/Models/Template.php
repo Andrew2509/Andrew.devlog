@@ -29,10 +29,10 @@ class Template extends Model
     public static function getTypes(): array
     {
         return [
-            'banner' => 'Banner / Promo',
-            'notification' => 'Notifikasi / Popup',
-            'page' => 'Elemen Halaman',
-            'button' => 'Tombol / CTA',
+            'company_profile' => 'Company Profile',
+            'ecommerce' => 'E-commerce',
+            'landing_page' => 'Landing Page',
+            'personal_portfolio' => 'Personal Portfolio',
             'other' => 'Lainnya',
         ];
     }
