@@ -53,7 +53,7 @@ class TemplateController extends Controller
 
         $content = $this->transformContent($request->input('content'), $request->input('content_type'));
 
-        Template::create([
+        $template = Template::create([
             'name' => $request->name,
             'type' => $request->type,
             'tags' => $tags,
@@ -64,7 +64,7 @@ class TemplateController extends Controller
             'is_new_tab' => $request->has('is_new_tab'),
         ]);
 
-        return redirect()->route('admin.templates.index')->with('success', 'Template berhasil ditambahkan.');
+        return redirect()->route('admin.templates.edit', $template->id)->with('success', 'Template berhasil ditambahkan dan data tetap tersimpan di form ini.');
     }
 
     /**
@@ -114,7 +114,7 @@ class TemplateController extends Controller
             'is_new_tab' => $request->has('is_new_tab'),
         ]);
 
-        return redirect()->route('admin.templates.index')->with('success', 'Template berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Perubahan berhasil disimpan dan data tetap nempel di form ini.');
     }
 
     /**

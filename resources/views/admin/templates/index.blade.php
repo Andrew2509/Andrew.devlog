@@ -41,7 +41,16 @@
                         <td class="px-6 py-5">
                             <div class="flex flex-col">
                                 <span class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{{ $template->name }}</span>
-                                <span class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest font-bold">Dibuat {{ $template->created_at->format('d M Y') }}</span>
+                                <div class="flex flex-wrap gap-1 mt-1.5">
+                                    @if($template->tags)
+                                        @foreach($template->tags as $tag)
+                                            <span class="text-[9px] bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-md font-bold uppercase tracking-wider border border-blue-500/10">{{ $tag }}</span>
+                                        @endforeach
+                                    @else
+                                        <span class="text-[9px] text-gray-600 italic">No tags</span>
+                                    @endif
+                                </div>
+                                <span class="text-[9px] text-gray-500 mt-2 uppercase tracking-widest font-bold opacity-50">Dibuat {{ $template->created_at->format('d M Y') }}</span>
                             </div>
                         </td>
                         <td class="px-6 py-5">
