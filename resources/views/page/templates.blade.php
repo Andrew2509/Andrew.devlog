@@ -28,6 +28,10 @@
     templateName: '',
     device: 'desktop',
     loading: false,
+    getSnapshotUrl() {
+        if (!this.previewUrl) return '';
+        return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(this.previewUrl)}?w=1280`;
+    },
     openPreview(url, type, name) {
         this.previewUrl = url;
         this.contentType = type;
@@ -280,23 +284,39 @@
                 </div>
 
                 <div 
-                    class="h-full transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative"
+                    class="h-full transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative overflow-hidden"
                     :class="{
                         'w-full max-w-none': device === 'desktop',
-                        'w-[768px] h-full max-h-[1024px] rounded-[2rem] border-[12px] border-gray-800 shadow-2xl overflow-hidden': device === 'tablet',
-                        'w-[375px] h-full max-h-[667px] rounded-[3rem] border-[12px] border-gray-800 shadow-2xl overflow-hidden': device === 'mobile'
+                        'w-[768px] h-full max-h-[1024px] rounded-[2rem] border-[12px] border-gray-800 shadow-2xl': device === 'tablet',
+                        'w-[375px] h-full max-h-[667px] rounded-[3rem] border-[12px] border-gray-800 shadow-2xl': device === 'mobile'
                     }"
                 >
-                    <iframe 
-                        :src="previewUrl" 
-                        class="w-full h-full bg-white"
-                        @load="loading = false"
-                        frameborder="0"
-                    ></iframe>
+                    <!-- Iframe for HTML Template -->
+                    <template x-if="contentType === 'html'">
+                        <iframe 
+                            :src="previewUrl" 
+                            class="w-full h-full bg-white"
+                            @load="loading = false"
+                            frameborder="0"
+                        ></iframe>
+                    </template>
+
+                    <!-- Snapshot for External Links (bypass iframe blocking) -->
+                    <template x-if="contentType === 'link'">
+                        <div class="w-full h-full bg-white overflow-y-auto custom-scrollbar">
+                            <img 
+                                :src="getSnapshotUrl()" 
+                                class="w-full h-auto min-h-full object-top"
+                                @load="loading = false"
+                                @error="loading = false"
+                            >
+                        </div>
+                    </template>
 
                     <!-- Reflection / Glass effect for devices -->
                     <div x-show="device !== 'desktop'" class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-30"></div>
                 </div>
+
             </div>
         </div>
     </template>
