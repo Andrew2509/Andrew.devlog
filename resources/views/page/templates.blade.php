@@ -30,7 +30,8 @@
     loading: false,
     getSnapshotUrl() {
         if (!this.previewUrl) return '';
-        return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(this.previewUrl)}?w=1280`;
+        // Using thum.io as it handles preloaders and frame-blocking better than mshots
+        return `https://image.thum.io/get/width/1200/crop/800/${this.previewUrl}`;
     },
     openPreview(url, type, name) {
         this.previewUrl = url;
