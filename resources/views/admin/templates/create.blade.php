@@ -109,8 +109,8 @@
                 <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
                     <i class="fas fa-eye text-orange-500"></i> Preview
                 </h3>
-                <div class="bg-black/20 rounded-2xl p-4 border border-white/5 min-h-[150px] flex items-center justify-center text-center">
-                    <div id="preview-area" class="text-gray-500 text-xs italic">
+                <div class="bg-black/20 rounded-2xl p-4 border border-white/5 min-h-[300px] flex items-center justify-center text-center overflow-hidden h-full">
+                    <div id="preview-area" class="text-gray-500 text-xs italic w-full h-full min-h-[250px]">
                         Input konten untuk melihat preview...
                     </div>
                 </div>
@@ -166,7 +166,11 @@
                 previewArea.innerHTML = val || 'Input konten untuk melihat preview...';
             } else if (type === 'link') {
                 val = linkInput.value;
-                previewArea.innerHTML = val ? `<a href="${val}" target="_blank" class="text-blue-500 underline">${val}</a>` : 'Input URL...';
+                if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
+                    previewArea.innerHTML = `<iframe src="${val}" class="w-full h-full border-0 rounded-lg min-h-[250px]" style="background: white;"></iframe>`;
+                } else {
+                    previewArea.innerHTML = val ? `<a href="${val}" target="_blank" class="text-blue-500 underline">${val}</a>` : 'Input URL...';
+                }
             }
             finalInput.value = val;
         }
