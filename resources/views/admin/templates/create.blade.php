@@ -79,6 +79,22 @@
                                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all @error('name') border-red-500 ring-1 ring-red-500 @enderror">
                         @error('name') <p class="text-red-500 text-[10px] mt-1 font-bold">{{ $message }}</p> @enderror
                     </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                            Jenis Template
+                            <span class="text-[8px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded-full font-black">WAJIB</span>
+                        </label>
+                        <select name="type" required
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all custom-select @error('type') border-red-500 ring-1 ring-red-500 @enderror">
+                            <option value="">-- Pilih Jenis --</option>
+                            @foreach(\App\Models\Template::getTypes() as $key => $value)
+                                <option value="{{ $key }}" {{ old('type') == $key ? 'selected' : '' }}>
+                                    {{ $value }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('type') <p class="text-red-500 text-[10px] mt-1 font-bold">{{ $message }}</p> @enderror
+                    </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Tag Template (Ketik & Enter/Spasi)</label>
                         <div class="bg-white/5 border border-white/10 rounded-2xl p-3 flex flex-wrap gap-2 focus-within:border-blue-500 transition-all min-h-[58px]">
@@ -100,9 +116,6 @@
                         </div>
                         <input type="hidden" name="tags" :value="JSON.stringify(tags)">
                         @error('tags') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
-                        
-                        <!-- Legacy fallback for 'type' column (using first tag or 'other') -->
-                        <input type="hidden" name="type" :value="tags.length > 0 ? tags[0].toLowerCase().replace(/ /g, '_') : 'other'">
                     </div>
                 </div>
 
