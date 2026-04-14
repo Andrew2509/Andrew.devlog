@@ -42,7 +42,8 @@ class TemplateController extends Controller
             'is_new_tab' => 'boolean',
         ]);
 
-        $tags = $request->tags ? json_decode($request->tags, true) : [];
+        $tagsInput = $request->tags;
+        $tags = is_string($tagsInput) ? (json_decode($tagsInput, true) ?? []) : (is_array($tagsInput) ? $tagsInput : []);
 
         if ($request->input('content_type') === 'link') {
             $request->validate(['content' => 'required|url']);
@@ -91,7 +92,8 @@ class TemplateController extends Controller
             'is_new_tab' => 'boolean',
         ]);
 
-        $tags = $request->tags ? json_decode($request->tags, true) : [];
+        $tagsInput = $request->tags;
+        $tags = is_string($tagsInput) ? (json_decode($tagsInput, true) ?? []) : (is_array($tagsInput) ? $tagsInput : []);
 
         if ($request->input('content_type') === 'link') {
             $request->validate(['content' => 'required|url']);

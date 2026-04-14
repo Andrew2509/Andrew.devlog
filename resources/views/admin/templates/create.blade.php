@@ -87,11 +87,11 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
                                 <i class="fas fa-link"></i>
                             </div>
-                            <input type="url" name="content_link" x-model="contentLink" 
-                                   value="{{ old('content') }}"
+                            <input type="url" name="content" x-model="contentLink" 
                                    placeholder="https://example.com" 
                                    @input="imgLoaded = false"
-                                   class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all font-mono text-sm tracking-tight @error('content') border-red-500 @enderror">
+                                   @keydown.tab="addTag()"
+                                   class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all font-mono text-sm tracking-tight @error('content') border-red-500 ring-1 ring-red-500 @enderror">
                         </div>
 
                         <div class="relative">
@@ -128,9 +128,8 @@
                     
                     @error('content') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
                     
-                    <!-- Hidden field to unify content -->
+                    <!-- Hidden field for content type -->
                     <input type="hidden" name="content_type" value="link">
-                    <input type="hidden" name="content" :value="contentLink">
                 </div>
             </div>
         </div>
