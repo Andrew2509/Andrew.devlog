@@ -327,37 +327,40 @@
                 </div>
 
                 <!-- Preview Area -->
-                <div class="flex-1 overflow-hidden bg-slate-100 flex items-center justify-center p-4">
+                <div 
+                    class="flex-1 overflow-hidden bg-slate-100 flex items-center justify-center transition-all duration-500"
+                    :class="device === 'desktop' ? 'p-0' : 'p-4 sm:p-8'"
+                >
                     <!-- Loading State -->
                     <template x-if="loading">
                         <div class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white">
-                            <div class="relative w-20 h-20 mb-6">
-                                <div class="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
+                            <div class="relative w-24 h-24 mb-6">
+                                <div class="absolute inset-0 border-4 border-primary/10 rounded-full"></div>
                                 <div class="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                             </div>
-                            <p class="text-slate-400 text-sm font-medium animate-pulse">Menghubungkan ke server demo...</p>
+                            <p class="text-slate-400 text-sm font-bold animate-pulse tracking-widest uppercase">Memuat Template...</p>
                         </div>
                     </template>
 
                     <!-- Viewport Simulation -->
                     <div 
-                        class="h-full transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative overflow-hidden bg-white shadow-2xl"
+                        class="h-full transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative overflow-hidden bg-white"
                         :class="{
-                            'w-full rounded-none': device === 'desktop',
-                            'w-[768px] h-full max-h-[95%] rounded-[2rem] border-[12px] border-slate-900': device === 'tablet',
-                            'w-[375px] h-full max-h-[85%] rounded-[3rem] border-[12px] border-slate-900': device === 'mobile'
+                            'w-full h-full rounded-none shadow-none': device === 'desktop',
+                            'w-[768px] h-full max-h-[95%] rounded-[2.5rem] border-[14px] border-slate-900 shadow-2xl': device === 'tablet',
+                            'w-[375px] h-full max-h-[90%] rounded-[3.5rem] border-[14px] border-slate-900 shadow-2xl': device === 'mobile'
                         }"
                     >
                         <iframe 
                             :src="previewUrl" 
-                            class="w-full h-full transition-opacity duration-300"
+                            class="w-full h-full transition-opacity duration-500 border-0"
                             :class="loading ? 'opacity-0' : 'opacity-100'"
                             x-on:load="loading = false"
-                            frameborder="0"
                         ></iframe>
 
-                        <!-- Speaker/Camera details for mobile/tablet -->
-                        <div x-show="device === 'mobile'" class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-2xl z-10"></div>
+                        <!-- Speaker/Camera details for mobile/tablet shapes only -->
+                        <div x-show="device === 'mobile'" class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-slate-900 rounded-b-3xl z-10"></div>
+                        <div x-show="device === 'tablet'" class="absolute -left-3.5 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-slate-800 rounded-r-md"></div>
                     </div>
                 </div>
             </div>
