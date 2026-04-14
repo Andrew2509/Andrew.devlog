@@ -63,23 +63,41 @@ class HomeController extends Controller
         if (!$url) return response('No URL provided', 400);
 
         try {
-            // Using Http facade to fetch content
-            $response = \Illuminate\Support\Facades\Http::get($url);
+            // Using Http facade to fetch content with a real User-Agent to avoid bot blocking
+            $response = \Illuminate\Support\Facades\Http::withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept-Language' => 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
+            ])->get($url);
+            
             $html = $response->body();
 
             // Inject <base> tag to fix relative links (images, css, js)
-            $baseUrl = parse_url($url);
-            $baseHref = $baseUrl['scheme'] . '://' . $baseUrl['host'] . (isset($baseUrl['path']) ? $baseUrl['path'] : '');
+            $baseUrlParts = parse_url($url);
+            $baseHref = ($baseUrlParts['scheme'] ?? 'https') . '://' . ($baseUrlParts['host'] ?? '');
             
-            // If the path ends with a filename, get the directory
-            if (preg_match('/\.[a-z0-9]+$/i', $baseHref)) {
-                $baseHref = dirname($baseHref) . '/';
+            if (isset($baseUrlParts['path'])) {
+                // If path is a file, get directory. If not, use path.
+                $path = $baseUrlParts['path'];
+                if (preg_match('/\.[a-z0-9]+$/i', $path)) {
+                    $baseHref .= dirname($path);
+                } else {
+                    $baseHref .= $path;
+                }
             }
+            $baseHref = rtrim($baseHref, '/') . '/';
+
+            // Sanitize HTML to prevent anti-iframe scripts
+            // 1. Remove scripts that check window.top or window.self
+            $html = preg_replace('/if\s*\(\s*window\.top\s*!==?\s*window\.self\s*\)\s*\{[^}]+\}/i', 'if(false){}', $html);
+            $html = preg_replace('/if\s*\(\s*self\s*!==?\s*top\s*\)\s*\{[^}]+\}/i', 'if(false){}', $html);
+            
+            // 2. Remove devtools/debugger detector scripts often found in HTML Codex
+            $html = str_replace(['debugger;', 'debugger'], '', $html);
 
             $baseTag = '<base href="' . $baseHref . '">';
             
-            if (strpos($html, '<head>') !== false) {
-                $html = str_replace('<head>', '<head>' . $baseTag, $html);
+            if (stripos($html, '<head>') !== false) {
+                $html = preg_replace('/<head>/i', '<head>' . $baseTag, $html, 1);
             } else {
                 $html = $baseTag . $html;
             }
@@ -89,7 +107,7 @@ class HomeController extends Controller
             return response('Could not load preview. <a href="'.$url.'" target="_blank">Click here to open in new tab.</a>', 500);
         }
     }
-
+}
 
     public function harga(Request $request)
     {
