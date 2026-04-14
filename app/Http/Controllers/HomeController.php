@@ -86,13 +86,23 @@ class HomeController extends Controller
             }
             $baseHref = rtrim($baseHref, '/') . '/';
 
-            // Sanitize HTML to prevent anti-iframe scripts
-            // 1. Remove scripts that check window.top or window.self
-            $html = preg_replace('/if\s*\(\s*window\.top\s*!==?\s*window\.self\s*\)\s*\{[^}]+\}/i', 'if(false){}', $html);
-            $html = preg_replace('/if\s*\(\s*self\s*!==?\s*top\s*\)\s*\{[^}]+\}/i', 'if(false){}', $html);
+            // Sanitize HTML to prevent anti-iframe and anti-copy scripts
+            // 1. Kill window.top/self checks and breakouts
+            $html = preg_replace('/if\s*\(\s*window\.top\s*!==?\s*window\.self\s*\)/i', 'if(false)', $html);
+            $html = preg_replace('/if\s*\(\s*self\s*!==?\s*top\s*\)/i', 'if(false)', $html);
+            $html = preg_replace('/window\.top\.location\s*=\s*window\.location\.href/i', 'console.log("no breakout")', $html);
             
-            // 2. Remove devtools/debugger detector scripts often found in HTML Codex
+            // 2. Kill DevTools/Browser width detection (Access Denied)
+            $html = preg_replace('/Math\.abs\s*\(\s*window\.outerWidth\s*-\s*window\.innerWidth\s*\)\s*>\s*[a-zA-Z0-9]+/i', 'false', $html);
+            $html = preg_replace('/Math\.abs\s*\(\s*window\.outerHeight\s*-\s*window\.innerHeight\s*\)\s*>\s*[a-zA-Z0-9]+/i', 'false', $html);
+
+            // 3. Remove specific protection messages
+            $html = str_ireplace(['Embedding not allowed', 'Access Denied'], ['Previewing...', 'Previewing...'], $html);
+            
+            // 4. Remove common copy protection and debugger scripts
             $html = str_replace(['debugger;', 'debugger'], '', $html);
+            $html = preg_replace('/oncontextmenu\s*=\s*[^;>]+/i', '', $html);
+            $html = preg_replace('/onselectstart\s*=\s*[^;>]+/i', '', $html);
 
             $baseTag = '<base href="' . $baseHref . '">';
             
