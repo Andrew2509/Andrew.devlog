@@ -30,6 +30,11 @@
             return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(this.contentLink)}?w=800`;
         }
         return '';
+    },
+    ensureProtocol() {
+        if (this.contentLink && !this.contentLink.startsWith('http://') && !this.contentLink.startsWith('https://') && this.contentLink.includes('.')) {
+            this.contentLink = 'https://' + this.contentLink;
+        }
     }
 }">
     <div class="mb-8 flex items-center gap-4">
@@ -42,16 +47,37 @@
         </div>
     </div>
 
+    @if ($errors->any())
+    <div class="mb-6 bg-red-500/10 border border-red-500/20 rounded-2xl p-4 animate-in fade-in slide-in-from-top-4 duration-500">
+        <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center text-red-500 shrink-0">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div>
+                <h5 class="text-red-500 font-bold text-sm mb-1">Terjadi Kesalahan!</h5>
+                <ul class="text-red-400/80 text-xs list-disc list-inside space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <form action="{{ route('admin.templates.store') }}" method="POST" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         @csrf
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Nama Template</label>
-                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Contoh: Banner Promo Lebaran" 
-                               class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all @error('name') border-red-500 @enderror">
-                        @error('name') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                            Nama Template
+                            <span class="text-[8px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded-full font-black">WAJIB</span>
+                        </label>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Contoh: Banner Promo Lebaran" required
+                               class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all @error('name') border-red-500 ring-1 ring-red-500 @enderror">
+                        @error('name') <p class="text-red-500 text-[10px] mt-1 font-bold">{{ $message }}</p> @enderror
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Tag Template (Ketik & Enter/Spasi)</label>
@@ -81,28 +107,36 @@
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Konten Template (Link Demo)</label>
-                    <div class="space-y-4">
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                        Konten Template (Link Demo)
+                        <span class="text-[8px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded-full font-black">WAJIB</span>
+                    </label>
+                    <div class="space-y-6">
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-blue-500 transition-colors">
                                 <i class="fas fa-link"></i>
                             </div>
-                            <input type="url" name="content" x-model="contentLink" 
+                            <input type="url" name="content" x-model="contentLink" required
                                    placeholder="https://example.com" 
                                    @input="imgLoaded = false"
+                                   @blur="ensureProtocol()"
                                    @keydown.tab="addTag()"
                                    class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all font-mono text-sm tracking-tight @error('content') border-red-500 ring-1 ring-red-500 @enderror">
+                            @error('content') <p class="text-red-500 text-[10px] mt-2 font-bold">{{ $message }}</p> @enderror
                         </div>
 
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
-                                <i class="fas fa-image"></i>
+                        <div class="pt-4 border-t border-white/5">
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Custom Thumbnail (Opsional)</label>
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-blue-500 transition-colors">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <input type="url" name="thumbnail_url" x-model="thumbUrl" 
+                                       placeholder="Tempel link gambar jika tidak ingin menggunakan snapshot otomatis" 
+                                       @input="imgLoaded = false"
+                                       class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all text-sm tracking-tight @error('thumbnail_url') border-red-500 ring-1 ring-red-500 @enderror">
+                                @error('thumbnail_url') <p class="text-red-500 text-[10px] mt-2 font-bold">{{ $message }}</p> @enderror
                             </div>
-                            <input type="url" name="thumbnail_url" x-model="thumbUrl" 
-                                   value="{{ old('thumbnail_url') }}"
-                                   placeholder="Link Gambar (Opsional)" 
-                                   @input="imgLoaded = false"
-                                   class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all text-sm tracking-tight @error('thumbnail_url') border-red-500 @enderror">
                         </div>
 
                         <!-- Info Box -->
