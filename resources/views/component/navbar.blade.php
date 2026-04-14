@@ -71,8 +71,8 @@
             </div>
 
             <a href="{{ url('/') }}" class="block px-4 py-3 rounded-xl {{ Request::is('/') ? 'bg-primary text-white font-bold shadow-lg shadow-primary/20' : 'text-gray-600 font-medium hover:bg-gray-100' }} transition-all">Beranda</a>
-            <a href="{{ url('/#layanan') }}" class="block px-4 py-3 rounded-xl text-gray-600 font-medium hover:bg-gray-100 transition-all">Layanan</a>
-            <a href="{{ url('/#proses-kerja') }}" class="block px-4 py-3 rounded-xl text-gray-600 font-medium hover:bg-gray-100 transition-all">Proses</a>
+            {{-- <a href="{{ url('/#layanan') }}" class="block px-4 py-3 rounded-xl text-gray-600 font-medium hover:bg-gray-100 transition-all">Layanan</a> --}}
+            {{-- <a href="{{ url('/#proses-kerja') }}" class="block px-4 py-3 rounded-xl text-gray-600 font-medium hover:bg-gray-100 transition-all">Proses</a> --}}
             <a href="{{ url('/#portofolio') }}" class="block px-4 py-3 rounded-xl text-gray-600 font-medium hover:bg-gray-100 transition-all">Portofolio</a>
             <a href="{{ route('templates') }}" class="block px-4 py-3 rounded-xl {{ Request::is('templates*') ? 'bg-primary text-white font-bold shadow-lg shadow-primary/20' : 'text-gray-600 font-medium hover:bg-gray-100' }} transition-all flex items-center justify-between">
                 <span>Template</span>

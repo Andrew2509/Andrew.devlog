@@ -1,11 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/portofolio', [App\Http\Controllers\HomeController::class, 'portfolio'])->name('portfolio');
 Route::get('/templates', [App\Http\Controllers\HomeController::class, 'templates'])->name('templates');
-Route::get('/template/preview/{id}', [App\Http\Controllers\HomeController::class, 'templatePreview'])->name('template.preview');
+
+// Template Live Preview Routes
+Route::get('/template/preview/{id}', [HomeController::class, 'templatePreview'])->name('template.preview');
+Route::get('/template/external-preview', [HomeController::class, 'externalPreview'])->name('template.external_preview');
 
 Route::get('/harga', [App\Http\Controllers\HomeController::class, 'harga'])->name('harga');
 Route::get('/pesan', [App\Http\Controllers\HomeController::class, 'pesan'])->name('pesan');

@@ -34,9 +34,9 @@
         return `https://image.thum.io/get/width/1200/crop/800/${this.previewUrl}`;
     },
     openPreview(url, type, name) {
-        this.previewUrl = url;
-        this.contentType = type;
         this.templateName = name;
+        this.contentType = type;
+        this.previewUrl = (type === 'link') ? '{{ route('template.external_preview') }}?url=' + encodeURIComponent(url) : url;
         this.isOpen = true;
         this.loading = true;
         this.device = 'desktop';
@@ -106,21 +106,12 @@
                             <img src="{{ $imgUrl }}" alt="{{ $template->name }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
                             
                             <div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-20">
-                                @if($template->content_type === 'link')
-                                    <button 
-                                        x-on:click="openPreview('{{ $template->content }}', 'link', '{{ $template->name }}')"
-                                        class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95"
-                                    >
-                                        <i class="fas fa-eye text-sm"></i> Live Preview
-                                    </button>
-                                @else
-                                    <button 
-                                        x-on:click="openPreview('{{ route('template.preview', $template->id) }}', 'html', '{{ $template->name }}')"
-                                        class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95"
-                                    >
-                                        <i class="fas fa-eye text-sm"></i> Detail Template
-                                    </button>
-                                @endif
+                                <button 
+                                    x-on:click="openPreview('{{ $template->content_type === 'link' ? $template->content : route('template.preview', $template->id) }}', '{{ $template->content_type }}', '{{ $template->name }}')"
+                                    class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95"
+                                >
+                                    <i class="fas fa-eye text-sm"></i> {{ $template->content_type === 'link' ? 'Live Preview' : 'Detail Template' }}
+                                </button>
                             </div>
 
                             
@@ -292,27 +283,14 @@
                         'w-[375px] h-full max-h-[667px] rounded-[3rem] border-[12px] border-gray-800 shadow-2xl': device === 'mobile'
                     }"
                 >
-                    <!-- Iframe for HTML Template -->
-                    <template x-if="contentType === 'html'">
-                        <iframe 
-                            :src="previewUrl" 
-                            class="w-full h-full bg-white"
-                            x-on:load="loading = false"
-                            frameborder="0"
-                        ></iframe>
-                    </template>
-
-                    <!-- Snapshot for External Links (bypass iframe blocking) -->
-                    <template x-if="contentType === 'link'">
-                        <div class="w-full h-full bg-white overflow-y-auto custom-scrollbar">
-                            <img 
-                                :src="getSnapshotUrl()" 
-                                class="w-full h-auto min-h-full object-top"
-                                x-on:load="loading = false"
-                                x-on:error="loading = false"
-                            >
-                        </div>
-                    </template>
+                    <!-- Iframe for ALL Content (Proxy handled in JS for links) -->
+                    <iframe 
+                        :src="previewUrl" 
+                        class="w-full h-full bg-white transition-opacity duration-300"
+                        :class="loading ? 'opacity-0' : 'opacity-100'"
+                        x-on:load="loading = false"
+                        frameborder="0"
+                    ></iframe>
 
                     <!-- Reflection / Glass effect for devices -->
                     <div x-show="device !== 'desktop'" class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-30"></div>
