@@ -59,4 +59,7 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::post('/sosmed/services', [App\Http\Controllers\Admin\SosmedController::class, 'updateServices'])->name('admin.sosmed.services.update');
     Route::get('/sosmed/links', [App\Http\Controllers\Admin\SosmedController::class, 'links'])->name('admin.sosmed.links');
     Route::post('/sosmed/links', [App\Http\Controllers\Admin\SosmedController::class, 'updateLinks'])->name('admin.sosmed.links.update');
+
+    // Template Management
+    Route::resource('templates', App\Http\Controllers\Admin\TemplateController::class)->names('admin.templates');
 });

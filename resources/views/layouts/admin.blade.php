@@ -186,6 +186,11 @@
                 <span class="font-bold text-xs tracking-tight">Blogger Artikels</span>
             </a>
 
+            <a href="{{ route('admin.templates.index') }}" class="flex items-center gap-3 px-3 py-3 rounded-xl transition-all {{ Request::is('admin/templates*') ? 'nav-link-active' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
+                <i class="fas fa-file-code w-4 text-sm"></i>
+                <span class="font-bold text-xs tracking-tight">Manajemen Template</span>
+            </a>
+
             <!-- Sosmed (Bio) Menu -->
             <div class="space-y-1">
                 <button type="button" onclick="toggleSosmedMenu()" class="w-full flex items-center justify-between gap-3 px-3 py-3 rounded-xl transition-all {{ Request::is('admin/sosmed*') ? 'nav-link-active' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
