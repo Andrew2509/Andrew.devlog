@@ -69,10 +69,6 @@
                             
                             {{-- Image handling - using WordPress MShots for automatic screenshots if it's a link --}}
                             @php
-                                $placeholderImages = [
-                                    'company_profile' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
-                                    'ecommerce' => 'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2689&auto=format&fit=crop',
-                                    'landing_page' => 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop',
                                 $thumbnail = '';
                                 if ($template->thumbnail_url) {
                                     $thumbnail = $template->thumbnail_url;
