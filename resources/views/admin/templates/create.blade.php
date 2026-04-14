@@ -8,6 +8,10 @@
     contentType: 'text', 
     tags: @json(old('tags') ? json_decode(old('tags'), true) : []), 
     tagInput: '',
+    contentLink: '{{ old('content') }}',
+    thumbUrl: '{{ old('thumbnail_url') }}',
+    imgLoaded: false,
+    
     addTag() {
         let val = this.tagInput.trim().replace(/,/g, '');
         if (val !== '') {
@@ -19,6 +23,13 @@
     },
     removeTag(index) {
         this.tags.splice(index, 1);
+    },
+    getFinalThumb() {
+        if (this.thumbUrl) return this.thumbUrl;
+        if (this.contentLink && (this.contentLink.startsWith('http://') || this.contentLink.startsWith('https://'))) {
+            return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(this.contentLink)}?w=800`;
+        }
+        return '';
     }
 }">
     <div class="mb-8 flex items-center gap-4">
@@ -76,7 +87,8 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
                                 <i class="fas fa-link"></i>
                             </div>
-                            <input type="url" name="content_link" id="content_link" value="{{ old('content') }}" placeholder="https://example.com" 
+                            <input type="url" name="content_link" x-model="contentLink" placeholder="https://example.com" 
+                                   @input="imgLoaded = false"
                                    class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all font-mono text-sm tracking-tight @error('content') border-red-500 @enderror">
                         </div>
 
@@ -84,7 +96,8 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
                                 <i class="fas fa-image"></i>
                             </div>
-                            <input type="url" name="thumbnail_url" id="thumbnail_url" value="{{ old('thumbnail_url') }}" placeholder="Link Gambar (Opsional)" 
+                            <input type="url" name="thumbnail_url" x-model="thumbUrl" placeholder="Link Gambar (Opsional)" 
+                                   @input="imgLoaded = false"
                                    class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all text-sm tracking-tight @error('thumbnail_url') border-red-500 @enderror">
                         </div>
 
@@ -113,7 +126,7 @@
                     
                     <!-- Hidden field to unify content -->
                     <input type="hidden" name="content_type" value="link">
-                    <input type="hidden" name="content" id="final_content">
+                    <input type="hidden" name="content" :value="contentLink">
                 </div>
             </div>
         </div>
@@ -138,9 +151,55 @@
                 <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
                     <i class="fas fa-eye text-orange-500"></i> Preview
                 </h3>
-                <div class="bg-black/20 rounded-2xl p-4 border border-white/5 min-h-[300px] flex items-center justify-center text-center overflow-hidden h-full">
-                    <div id="preview-area" class="text-gray-500 text-xs italic w-full h-full min-h-[250px]">
-                        Input konten untuk melihat preview...
+                <div class="bg-black/20 rounded-2xl p-4 border border-white/5 min-h-[350px] flex items-center justify-center text-center overflow-hidden h-full">
+                    <div id="preview-area" class="text-gray-500 text-xs italic w-full h-full min-h-[300px]">
+                        <template x-if="contentLink && (contentLink.startsWith('http://') || contentLink.startsWith('https://'))">
+                            <div class="w-full flex flex-col bg-white rounded-xl shadow-2xl overflow-hidden border border-white/10" style="height: 350px;">
+                                <div class="bg-gray-100 px-4 py-2 flex items-center gap-3 border-b">
+                                    <div class="flex gap-1.5">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                                    </div>
+                                    <div class="flex-1 bg-white px-3 py-1 rounded-lg text-[10px] text-gray-400 truncate border border-gray-200 shadow-sm text-left" x-text="contentLink">
+                                    </div>
+                                </div>
+                                <div class="flex-1 bg-gray-50 relative group">
+                                    <!-- Loader -->
+                                    <div x-show="!imgLoaded" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-10 transition-opacity duration-500">
+                                        <div class="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-3"></div>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest" x-text="thumbUrl ? 'Loading Image...' : 'Generating Snapshot...'"></p>
+                                    </div>
+
+                                    <!-- Tags Preview Overlay -->
+                                    <div class="absolute top-4 left-4 z-20 flex flex-wrap gap-2 max-w-[80%]">
+                                        <template x-for="tag in tags">
+                                            <span class="bg-blue-600 text-white text-[8px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest shadow-lg shadow-blue-500/20" x-text="tag"></span>
+                                        </template>
+                                        <template x-if="tags.length === 0">
+                                            <span class="bg-gray-400 text-white text-[8px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest shadow-lg shadow-gray-500/20 italic">No Tags</span>
+                                        </template>
+                                    </div>
+
+                                    <!-- Image -->
+                                    <img :src="getFinalThumb()" 
+                                         class="w-full h-full object-cover transition-opacity duration-1000"
+                                         :class="imgLoaded ? 'opacity-100' : 'opacity-0'"
+                                         @load="imgLoaded = true">
+                                    
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
+                                        <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center" x-text="thumbUrl ? 'Custom Image Link' : 'Snapshot Website'"></p>
+                                        <a :href="contentLink" target="_blank" class="px-4 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-bold shadow-lg shadow-blue-900/40">Buka Link Asli</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template x-if="!contentLink || (!contentLink.startsWith('http://') && !contentLink.startsWith('https://'))">
+                            <div class="flex flex-col items-center gap-2">
+                                <span class="text-gray-500 italic text-[10px]">Input URL untuk melihat preview...</span>
+                                <span class="text-blue-500 font-mono text-[10px]" x-text="contentLink"></span>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -159,65 +218,5 @@
     option { background-color: #1a1a1a; color: white; }
 </style>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const linkInput = document.getElementById('content_link');
-        const thumbInput = document.getElementById('thumbnail_url');
-        const previewArea = document.getElementById('preview-area');
-        const finalInput = document.getElementById('final_content');
-        const form = document.querySelector('form');
 
-        function updatePreview() {
-            const val = linkInput.value;
-            const thumbVal = thumbInput.value;
-            
-            if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
-                let displayImg = thumbVal ? thumbVal : `https://s.wordpress.com/mshots/v1/${encodeURIComponent(val)}?w=800`;
-                let isScreenshot = !thumbVal;
-
-                previewArea.innerHTML = `
-                    <div class="w-full flex flex-col bg-white rounded-xl shadow-2xl overflow-hidden border border-white/10" style="height: 350px;">
-                        <div class="bg-gray-100 px-4 py-2 flex items-center gap-3 border-b">
-                            <div class="flex gap-1.5">
-                                <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-                            </div>
-                            <div class="flex-1 bg-white px-3 py-1 rounded-lg text-[10px] text-gray-400 truncate border border-gray-200 shadow-sm">
-                                ${val}
-                            </div>
-                        </div>
-                        <div class="flex-1 bg-gray-50 relative group">
-                            <div id="snapshot-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-10 transition-opacity duration-500">
-                                <div class="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-3"></div>
-                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">${isScreenshot ? 'Generating Snapshot...' : 'Loading Image...'}</p>
-                            </div>
-                            <img src="${displayImg}" 
-                                 class="w-full h-full object-cover transition-opacity duration-1000 opacity-0"
-                                 onload="this.classList.remove('opacity-0'); document.getElementById('snapshot-loader').classList.add('opacity-0'); setTimeout(() => document.getElementById('snapshot-loader').remove(), 500);">
-                            
-                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
-                                <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center">${isScreenshot ? 'Snapshot Website' : 'Custom Image Link'}</p>
-                                <a href="${val}" target="_blank" class="px-4 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-bold shadow-lg shadow-blue-900/40">Buka Link Asli</a>
-                            </div>
-                        </div>
-                    </div>`;
-            } else {
-                previewArea.innerHTML = val ? `<a href="${val}" target="_blank" class="text-blue-500 underline text-xs font-mono">${val}</a>` : '<span class="text-gray-500 italic text-[10px]">Input URL untuk melihat preview...</span>';
-            }
-            finalInput.value = val;
-        }
-
-        linkInput.addEventListener('input', updatePreview);
-        linkInput.addEventListener('blur', updatePreview);
-        thumbInput.addEventListener('input', updatePreview);
-
-        form.addEventListener('submit', function() {
-            finalInput.value = linkInput.value;
-        });
-
-        // Initial sync
-        updatePreview();
-    });
-</script>
 @endsection
