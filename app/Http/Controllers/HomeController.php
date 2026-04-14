@@ -40,6 +40,21 @@ class HomeController extends Controller
         return view('page.templates', compact('templates'));
     }
 
+    public function templatePreview($id)
+    {
+        $template = Template::findOrFail($id);
+        
+        // If it's a link, we can just return a redirect or show an error
+        // But for modal, we already handle links directly.
+        // This is mainly for HTML templates.
+        if ($template->content_type === 'link') {
+            return redirect($template->content);
+        }
+
+        return response($template->content);
+    }
+
+
     public function harga(Request $request)
     {
         $currentCategory = null;

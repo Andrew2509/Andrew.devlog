@@ -2,7 +2,48 @@
 
 @section('title', 'Katalog Template Website - ' . setting('site_name', 'Andrew.Devlog'))
 
+@section('head')
+    <!-- Alpine.js for interactive Modal -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .preview-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .device-mobile { width: 375px; height: 667px; margin: 0 auto; border-radius: 32px; ring: 8px solid #1f2937; }
+        .device-tablet { width: 768px; height: 1024px; margin: 0 auto; border-radius: 24px; ring: 6px solid #1f2937; }
+        .device-desktop { width: 100%; height: 100%; border-radius: 0; }
+    </style>
+@endsection
+
 @section('content')
+<div x-data="{ 
+    isOpen: false, 
+    previewUrl: '', 
+    contentType: 'link', 
+    templateName: '',
+    device: 'desktop',
+    loading: false,
+    openPreview(url, type, name) {
+        this.previewUrl = url;
+        this.contentType = type;
+        this.templateName = name;
+        this.isOpen = true;
+        this.loading = true;
+        this.device = 'desktop';
+        document.body.style.overflow = 'hidden';
+    },
+    closePreview() {
+        this.isOpen = false;
+        document.body.style.overflow = 'auto';
+        this.previewUrl = '';
+    }
+}" @keydown.escape.window="closePreview()">
+
     <!-- Hero Section -->
     <header class="pt-32 pb-24 bg-gradient-to-b from-primary-50 to-white overflow-hidden relative">
         <div class="absolute top-20 right-[-10%] w-[40%] h-[40%] bg-primary-100/50 rounded-full blur-3xl -z-10 animate-pulse-soft"></div>
@@ -61,15 +102,22 @@
                             
                             <div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-20">
                                 @if($template->content_type === 'link')
-                                    <a href="{{ $template->content }}" target="{{ $template->is_new_tab ? '_blank' : '_self' }}" class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all">
+                                    <button 
+                                        @click="openPreview('{{ $template->content }}', 'link', '{{ $template->name }}')"
+                                        class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95"
+                                    >
                                         <i class="fas fa-eye text-sm"></i> Live Preview
-                                    </a>
+                                    </button>
                                 @else
-                                    <button onclick="window.location.hash = '#hubungi'" class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all">
-                                        <i class="fas fa-info-circle text-sm"></i> Detail Template
+                                    <button 
+                                        @click="openPreview('{{ route('template.preview', $template->id) }}', 'html', '{{ $template->name }}')"
+                                        class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95"
+                                    >
+                                        <i class="fas fa-eye text-sm"></i> Detail Template
                                     </button>
                                 @endif
                             </div>
+
                             
                             @if($loop->first)
                             <div class="absolute top-6 left-6 z-20">
@@ -176,6 +224,84 @@
             </div>
         </div>
     </section>
+
+    <!-- Premium Preview Modal -->
+    <template x-teleport="body">
+        <div 
+            x-show="isOpen" 
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-[100] flex flex-col bg-gray-900/90 backdrop-blur-md"
+            x-cloak
+            @click.away="closePreview()"
+        >
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 bg-white/10 backdrop-blur-md border-b border-white/10">
+                <div class="flex items-center gap-4">
+                    <button @click="closePreview()" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-red-500 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div>
+                        <h4 class="text-white font-bold leading-none" x-text="templateName"></h4>
+                        <p class="text-white/50 text-[10px] font-bold uppercase tracking-widest mt-1">Sistem Live Preview</p>
+                    </div>
+                </div>
+
+                <!-- Device Controls -->
+                <div class="hidden md:flex items-center gap-2 bg-black/20 p-1.5 rounded-2xl border border-white/5">
+                    <button @click="device = 'desktop'" :class="device === 'desktop' ? 'bg-primary text-white' : 'text-white/40 hover:text-white'" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all">
+                        <i class="fas fa-desktop"></i>
+                    </button>
+                    <button @click="device = 'tablet'" :class="device === 'tablet' ? 'bg-primary text-white' : 'text-white/40 hover:text-white'" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all">
+                        <i class="fas fa-tablet-alt"></i>
+                    </button>
+                    <button @click="device = 'mobile'" :class="device === 'mobile' ? 'bg-primary text-white' : 'text-white/40 hover:text-white'" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all">
+                        <i class="fas fa-mobile-alt"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a :href="previewUrl" target="_blank" class="px-6 py-2.5 rounded-xl bg-white text-gray-900 text-xs font-bold hover:bg-primary hover:text-white transition-all flex items-center gap-2">
+                        Buka Tab Baru <i class="fas fa-external-link-alt text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="flex-1 relative overflow-hidden flex items-center justify-center p-4 md:p-8">
+                <!-- Loading State -->
+                <div x-show="loading" class="absolute inset-0 flex flex-col items-center justify-center z-10">
+                    <div class="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4"></div>
+                    <p class="text-white/50 font-bold text-xs uppercase tracking-widest animate-pulse">Menyiapkan Preview...</p>
+                </div>
+
+                <div 
+                    class="h-full transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative"
+                    :class="{
+                        'w-full max-w-none': device === 'desktop',
+                        'w-[768px] h-full max-h-[1024px] rounded-[2rem] border-[12px] border-gray-800 shadow-2xl overflow-hidden': device === 'tablet',
+                        'w-[375px] h-full max-h-[667px] rounded-[3rem] border-[12px] border-gray-800 shadow-2xl overflow-hidden': device === 'mobile'
+                    }"
+                >
+                    <iframe 
+                        :src="previewUrl" 
+                        class="w-full h-full bg-white"
+                        @load="loading = false"
+                        frameborder="0"
+                    ></iframe>
+
+                    <!-- Reflection / Glass effect for devices -->
+                    <div x-show="device !== 'desktop'" class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-30"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
+
 
     <style>
         .animate-pulse-soft {
