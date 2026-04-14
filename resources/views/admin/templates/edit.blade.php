@@ -207,21 +207,7 @@
         const form = document.querySelector('form');
 
         function transformUrl(url) {
-            if (!url) return url;
-            
-            // If it's already a demo link with item or template, don't transform again
-            if (url.includes('htmlcodex.com/demo/')) {
-                return url;
-            }
-
-            // HTML Codex transformation
-            // Robust Pattern: matches any slug that looks like a product page
-            const codexRegex = /htmlcodex\.com\/([^\/?]+)\/?$/i;
-            const match = url.match(codexRegex);
-            if (match) {
-                const slug = match[1].replace('-website-template', '');
-                return `https://htmlcodex.com/demo/?template=${slug}`;
-            }
+            // We no longer transform on frontend to allow backend to scrape the landing page for real ID
             return url;
         }
 
