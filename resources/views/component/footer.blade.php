@@ -77,6 +77,12 @@
                     <li><a href="{{ url('/portofolio') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">Portofolio</a></li>
                     <li><a href="{{ url('/harga') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">Daftar Harga</a></li>
                     <li><a href="{{ url('/pesan') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">Pesan Sekarang</a></li>
+                    <li>
+                        <a href="http://localhost:3000" target="_blank" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">
+                            AI Sticker Studio
+                            <span class="px-1.5 py-0.5 rounded text-[8px] bg-primary/10 text-primary border border-primary/20 leading-none">NEW</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
 

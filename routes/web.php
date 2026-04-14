@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/portofolio', [App\Http\Controllers\HomeController::class, 'portfolio'])->name('portfolio');
+Route::get('/templates', [App\Http\Controllers\HomeController::class, 'templates'])->name('templates');
 Route::get('/harga', [App\Http\Controllers\HomeController::class, 'harga'])->name('harga');
 Route::get('/pesan', [App\Http\Controllers\HomeController::class, 'pesan'])->name('pesan');
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');

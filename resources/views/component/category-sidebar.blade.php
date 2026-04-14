@@ -23,7 +23,7 @@
 
             <div class="group">
                 <!-- Parent Link -->
-                <a href="{{ route('harga', ['category' => $category->slug]) }}" 
+                <a href="{{ route('harga', ['category' => $category->slug]) }}"
                    class="flex items-center justify-between px-5 py-4 rounded-2xl transition-all duration-300 {{ $isActive ? 'bg-primary/5 text-primary border-r-4 border-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                     <div class="flex items-center gap-4">
                         <div class="w-8 h-8 rounded-lg flex items-center justify-center {{ $isActive ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-gray-100 text-gray-400 group-hover:bg-primary/10 group-hover:text-primary' }} transition-colors">
@@ -36,11 +36,11 @@
                     @endif
                 </a>
 
-                <!-- Children List -->
+                <!-- Children List --> 
                 @if($hasChildren && $isActive)
                     <div class="mt-2 ml-14 space-y-3 py-2">
                         @foreach($category->children as $child)
-                            <a href="{{ route('harga', ['category' => $child->slug]) }}" 
+                            <a href="{{ route('harga', ['category' => $child->slug]) }}"
                                class="flex items-center gap-3 text-xs font-semibold {{ $currentCategory && $currentCategory->id == $child->id ? 'text-gray-900' : 'text-gray-400 hover:text-gray-700' }} transition-colors group/child">
                                 <span class="w-1.5 h-1.5 rounded-full {{ $currentCategory && $currentCategory->id == $child->id ? 'bg-primary' : 'bg-gray-200 group-hover/child:bg-gray-400' }} transition-colors"></span>
                                 {{ $child->name }}

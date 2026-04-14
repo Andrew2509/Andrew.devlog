@@ -33,6 +33,11 @@ class HomeController extends Controller
         return view('page.portofolio', compact('portfolios'));
     }
 
+    public function templates()
+    {
+        return view('page.templates');
+    }
+
     public function harga(Request $request)
     {
         $currentCategory = null;
