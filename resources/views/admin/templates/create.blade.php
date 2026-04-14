@@ -167,7 +167,32 @@
             } else if (type === 'link') {
                 val = linkInput.value;
                 if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
-                    previewArea.innerHTML = `<iframe src="${val}" class="w-full h-full border-0 rounded-lg min-h-[250px]" style="background: white;"></iframe>`;
+                    previewArea.innerHTML = `
+                        <div class="w-full flex flex-col bg-white rounded-xl shadow-2xl overflow-hidden border border-white/10" style="height: 350px;">
+                            <div class="bg-gray-100 px-4 py-2 flex items-center gap-3 border-b">
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                                </div>
+                                <div class="flex-1 bg-white px-3 py-1 rounded-lg text-[10px] text-gray-400 truncate border border-gray-200 shadow-sm">
+                                    ${val}
+                                </div>
+                                <a href="${val}" target="_blank" class="text-blue-500 hover:text-blue-700">
+                                    <i class="fas fa-external-link-alt text-[10px]"></i>
+                                </a>
+                            </div>
+                            <div class="flex-1 bg-gray-50 relative group">
+                                <img src="https://s.wordpress.com/mshots/v1/${encodeURIComponent(val)}?w=800" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
+                                    <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center">Snapshot Website</p>
+                                    <a href="${val}" target="_blank" class="px-4 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-bold shadow-lg shadow-blue-900/40">Buka Link Asli</a>
+                                </div>
+                                <div class="absolute bottom-2 left-2 right-2 p-2 bg-yellow-500/90 text-black text-[9px] font-bold rounded-lg border border-yellow-600 shadow-lg">
+                                    <i class="fas fa-info-circle mr-1"></i> Beberapa situs memblokir preview live demi keamanan.
+                                </div>
+                            </div>
+                        </div>`;
                 } else {
                     previewArea.innerHTML = val ? `<a href="${val}" target="_blank" class="text-blue-500 underline">${val}</a>` : 'Input URL...';
                 }
