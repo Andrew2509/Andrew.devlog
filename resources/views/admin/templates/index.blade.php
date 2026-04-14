@@ -78,6 +78,14 @@
                         </td>
                         <td class="px-6 py-5 text-right">
                             <div class="flex items-center justify-end gap-2 text-sm">
+                                <a 
+                                    href="{{ $template->content_type === 'link' ? $template->content : route('template.preview', $template->id) }}" 
+                                    target="_blank" 
+                                    class="w-9 h-9 flex items-center justify-center bg-blue-500/10 hover:bg-blue-500 text-blue-400 hover:text-white rounded-xl transition-all"
+                                    title="Lihat Demo"
+                                >
+                                    <i class="fas fa-external-link-alt text-xs"></i>
+                                </a>
                                 <a href="{{ route('admin.templates.edit', $template->id) }}" class="w-9 h-9 flex items-center justify-center bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl transition-all">
                                     <i class="fas fa-edit"></i>
                                 </a>

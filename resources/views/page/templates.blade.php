@@ -22,51 +22,8 @@
 
 @section('content')
 <div x-data="{ 
-    isOpen: false, 
-    previewUrl: '', 
-    contentType: 'link', 
-    templateName: '',
-    device: 'desktop',
-    loading: false,
-    isFullscreen: false,
-    openPreview(url, type, name) {
-        this.templateName = name;
-        this.contentType = type;
-        this.previewUrl = (type === 'link') ? '{{ route('template.external_preview') }}?url=' + encodeURIComponent(url) : url;
-        this.isOpen = true;
-        this.loading = true;
-        this.device = 'desktop';
-        this.isFullscreen = false;
-        document.body.style.overflow = 'hidden';
-    },
-    closePreview() {
-        this.isOpen = false;
-        document.body.style.overflow = 'auto';
-        this.previewUrl = '';
-        if (this.isFullscreen) this.toggleFullscreen();
-    },
-    toggleFullscreen() {
-        const elem = document.getElementById('preview-container');
-        if (!this.isFullscreen) {
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
-        }
-        this.isFullscreen = !this.isFullscreen;
-    }
-}" x-on:keydown.escape.window="closePreview()">
+    device: 'desktop'
+}">
 
     <!-- Hero Section -->
     <header class="pt-32 pb-24 bg-gradient-to-b from-primary-50 to-white overflow-hidden relative">
@@ -125,12 +82,14 @@
                             <img src="{{ $imgUrl }}" alt="{{ $template->name }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
                             
                             <div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-20">
-                                <button 
-                                    x-on:click="openPreview('{{ $template->content_type === 'link' ? $template->content : route('template.preview', $template->id) }}', '{{ $template->content_type }}', '{{ $template->name }}')"
-                                    class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95"
+                                <a 
+                                    href="{{ $template->content_type === 'link' ? $template->content : route('template.preview', $template->id) }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95 no-underline"
                                 >
-                                    <i class="fas fa-eye text-sm"></i> {{ $template->content_type === 'link' ? 'Live Preview' : 'Detail Template' }}
-                                </button>
+                                    <i class="fas fa-external-link-alt text-sm"></i> {{ $template->content_type === 'link' ? 'Live Preview' : 'Detail Template' }}
+                                </a>
                             </div>
 
                             
@@ -240,132 +199,7 @@
         </div>
     </section>
 
-    <!-- Scalar Style Modal (Live Preview) -->
-    <template x-if="isOpen">
-        <div 
-            class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 lg:p-10"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-        >
-            <!-- Backdrop -->
-            <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-md" x-on:click="closePreview()"></div>
-
-            <!-- Modal Content -->
-            <div 
-                id="preview-container"
-                class="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-2xl relative w-full h-full max-w-7xl flex flex-col transition-all duration-500"
-                x-transition:enter="transition ease-out duration-500"
-                x-transition:enter-start="opacity-0 scale-95 translate-y-10"
-                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                :class="isFullscreen ? 'max-w-none rounded-none' : ''"
-            >
-                <!-- Controls Header (Scalar Style) -->
-                <div class="absolute top-6 left-0 right-0 z-[120] px-6 flex items-center justify-between pointer-events-none">
-                    <!-- Left: Close -->
-                    <button 
-                        x-on:click="closePreview()"
-                        class="pointer-events-auto bg-white/90 backdrop-blur-sm border border-slate-200 p-3 rounded-2xl text-slate-600 hover:text-red-500 transition-all shadow-lg hover:shadow-xl group"
-                    >
-                        <i class="fas fa-times group-hover:rotate-90 transition-transform"></i>
-                    </button>
-
-                    <!-- Center: Device Switcher -->
-                    <div class="pointer-events-auto flex items-center gap-1 p-1.5 bg-white/90 backdrop-blur-sm border border-slate-200 rounded-2xl shadow-lg">
-                        <button 
-                            x-on:click="device = 'desktop'"
-                            class="w-10 h-10 flex items-center justify-center rounded-xl transition-all"
-                            :class="device === 'desktop' ? 'bg-primary text-white shadow-md' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'"
-                        >
-                            <i class="fas fa-desktop text-xs"></i>
-                        </button>
-                        <button 
-                            x-on:click="device = 'tablet'"
-                            class="w-10 h-10 flex items-center justify-center rounded-xl transition-all"
-                            :class="device === 'tablet' ? 'bg-primary text-white shadow-md' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'"
-                        >
-                            <i class="fas fa-tablet-alt text-xs"></i>
-                        </button>
-                        <button 
-                            x-on:click="device = 'mobile'"
-                            class="w-10 h-10 flex items-center justify-center rounded-xl transition-all"
-                            :class="device === 'mobile' ? 'bg-primary text-white shadow-md' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'"
-                        >
-                            <i class="fas fa-mobile-alt text-xs"></i>
-                        </button>
-                    </div>
-
-                    <!-- Right: Fullscreen & New Tab -->
-                    <div class="pointer-events-auto flex items-center gap-3">
-                        <button 
-                            x-on:click="toggleFullscreen()"
-                            class="bg-white/90 backdrop-blur-sm border border-slate-200 p-3 rounded-2xl text-slate-600 hover:text-primary transition-all shadow-lg hover:shadow-xl"
-                            title="Penuhi Layar"
-                        >
-                            <i class="fas" :class="isFullscreen ? 'fa-compress' : 'fa-expand'"></i>
-                        </button>
-                        <a 
-                            :href="previewUrl" 
-                            target="_blank"
-                            class="bg-primary text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
-                        >
-                            <span class="text-xs">Buka Tab Baru</span>
-                            <i class="fas fa-external-link-alt text-[10px]"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Template Info Floating Label -->
-                <div class="absolute bottom-6 left-6 z-[120]">
-                    <div class="bg-slate-900/80 backdrop-blur-md text-white px-5 py-2.5 rounded-2xl border border-white/10 shadow-2xl flex items-center gap-3">
-                        <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-                        <span class="text-xs font-bold tracking-wide" x-text="templateName"></span>
-                    </div>
-                </div>
-
-                <!-- Preview Area -->
-                <div 
-                    class="flex-1 overflow-hidden bg-slate-100 flex items-center justify-center transition-all duration-500"
-                    :class="device === 'desktop' ? 'p-0' : 'p-4 sm:p-8'"
-                >
-                    <!-- Loading State -->
-                    <template x-if="loading">
-                        <div class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white">
-                            <div class="relative w-24 h-24 mb-6">
-                                <div class="absolute inset-0 border-4 border-primary/10 rounded-full"></div>
-                                <div class="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-                            </div>
-                            <p class="text-slate-400 text-sm font-bold animate-pulse tracking-widest uppercase">Memuat Template...</p>
-                        </div>
-                    </template>
-
-                    <!-- Viewport Simulation -->
-                    <div 
-                        class="h-full transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative overflow-hidden bg-white"
-                        :class="{
-                            'w-full h-full rounded-none shadow-none': device === 'desktop',
-                            'w-[768px] h-full max-h-[95%] rounded-[2.5rem] border-[14px] border-slate-900 shadow-2xl': device === 'tablet',
-                            'w-[375px] h-full max-h-[90%] rounded-[3.5rem] border-[14px] border-slate-900 shadow-2xl': device === 'mobile'
-                        }"
-                    >
-                        <iframe 
-                            :src="previewUrl" 
-                            class="w-full h-full transition-opacity duration-500 border-0"
-                            :class="loading ? 'opacity-0' : 'opacity-100'"
-                            x-on:load="loading = false"
-                        ></iframe>
-
-                        <!-- Speaker/Camera details for mobile/tablet shapes only -->
-                        <div x-show="device === 'mobile'" class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-slate-900 rounded-b-3xl z-10"></div>
-                        <div x-show="device === 'tablet'" class="absolute -left-3.5 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-slate-800 rounded-r-md"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </template>
+    <!-- Modal retired in favor of direct links -->
 </div>
 
 

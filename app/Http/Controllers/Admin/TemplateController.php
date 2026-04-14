@@ -141,45 +141,7 @@ class TemplateController extends Controller
             }
         }
 
-        // If it's any HTML Codex demo link (item or template), try to extract the direct source
-        if (str_contains($finalUrl, 'htmlcodex.com/demo/')) {
-            try {
-                $context = stream_context_create([
-                    'http' => [
-                        'method' => "GET",
-                        'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36\r\n" .
-                                   "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\n" .
-                                   "Referer: " . $content . "\r\n",
-                        'timeout' => 10
-                    ]
-                ]);
-                $response = @file_get_contents($finalUrl, false, $context);
-
-                $iframeRegex = '/<iframe[^>]+(?:id|name)=["\'](?:preview-frame|demo-iframe|preview-iframe|main-iframe)["\'][^>]+src=["\']([^"\']+)["\']/i';
-                if ($response && preg_match($iframeRegex, $response, $iframeMatches)) {
-                    $iframeSrc = $iframeMatches[1];
-                    
-                    // Resolve relative URLs
-                    if (!filter_var($iframeSrc, FILTER_VALIDATE_URL)) {
-                        $parsedUrl = parse_url($finalUrl);
-                        $domain = ($parsedUrl['scheme'] ?? 'https') . '://' . ($parsedUrl['host'] ?? '');
-                        if (str_starts_with($iframeSrc, '/')) {
-                            $iframeSrc = $domain . $iframeSrc;
-                        } else {
-                            $path = dirname($parsedUrl['path'] ?? '/');
-                            $iframeSrc = $domain . rtrim($path, '/') . '/' . $iframeSrc;
-                        }
-                    }
-                    
-                    if (filter_var($iframeSrc, FILTER_VALIDATE_URL)) {
-                        $finalUrl = $iframeSrc;
-                    }
-                }
-            } catch (\Exception $e) {
-                // Silent catch
-            }
-        }
-
+        // Return the best found URL (landing page, item ID, or slug-based demo)
         return $finalUrl;
     }
 
