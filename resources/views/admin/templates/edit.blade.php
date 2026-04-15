@@ -99,7 +99,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-                            Jenis Template
+                            Kategori Template
                             <span class="text-[8px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded-full font-black">WAJIB</span>
                         </label>
                         <select name="type" required
