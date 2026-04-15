@@ -21,7 +21,7 @@
 @endsection
 
 @section('content')
-<div x-data="{ 
+<div x-data="{
     device: 'desktop'
 }">
 
@@ -29,7 +29,7 @@
     <header class="pt-32 pb-24 bg-gradient-to-b from-primary-50 to-white overflow-hidden relative">
         <div class="absolute top-20 right-[-10%] w-[40%] h-[40%] bg-primary-100/50 rounded-full blur-3xl -z-10 animate-pulse-soft"></div>
         <div class="absolute bottom-[-10%] left-[-5%] w-[30%] h-[30%] bg-primary-100/30 rounded-full blur-3xl -z-10"></div>
-        
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold mb-6 tracking-wider uppercase backdrop-blur-sm border border-primary/20">
                 <i class="fas fa-sparkles"></i> Premium Website Templates
@@ -40,15 +40,6 @@
             <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
                 Koleksi template premium yang responsif, modern, dan dioptimalkan untuk performa tinggi. Siap pakai untuk meningkatkan konversi.
             </p>
-            
-            <!-- Category Filter (Static for now) -->
-            <div class="flex flex-wrap justify-center gap-3 md:gap-4 max-w-4xl mx-auto">
-                <button class="px-6 py-3 rounded-2xl bg-primary text-white font-bold shadow-lg shadow-primary/20 transition-all">Semua Template</button>
-                <button class="px-6 py-3 rounded-2xl bg-white border border-gray-100 text-gray-600 font-medium hover:border-primary/50 hover:text-primary transition-all">Company Profile</button>
-                <button class="px-6 py-3 rounded-2xl bg-white border border-gray-100 text-gray-600 font-medium hover:border-primary/50 hover:text-primary transition-all">E-Commerce</button>
-                <button class="px-6 py-3 rounded-2xl bg-white border border-gray-100 text-gray-600 font-medium hover:border-primary/50 hover:text-primary transition-all">Landing Page</button>
-                <button class="px-6 py-3 rounded-2xl bg-white border border-gray-100 text-gray-600 font-medium hover:border-primary/50 hover:text-primary transition-all">Personal Portfolio</button>
-            </div>
         </div>
     </header>
 
@@ -56,7 +47,7 @@
     <section class="py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-                
+
                 @forelse($templates as $template)
                     @php
                         $types = \App\Models\Template::getTypes();
@@ -66,7 +57,7 @@
                     <div class="group bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] transition-all duration-700 hover:-translate-y-4">
                         <div class="relative overflow-hidden aspect-[4/3]">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-                            
+
                             {{-- Image handling - using WordPress MShots for automatic screenshots if it's a link --}}
                             @php
                                 $thumbnail = '';
@@ -86,9 +77,9 @@
                             @endphp
 
                             <img src="{{ $thumbnail }}" alt="{{ $template->name }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                            
+
                             <div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-20">
-                                <a 
+                                <a
                                     href="{{ $template->content_type === 'link' ? $template->content : route('template.preview', $template->id) }}"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -98,7 +89,7 @@
                                 </a>
                             </div>
 
-                            
+
                             @if($loop->first)
                             <div class="absolute top-6 left-6 z-20">
                                 <span class="bg-primary text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-primary/20">Terbaru</span>
@@ -114,9 +105,9 @@
                                 @endif
                             </div>
                             <h3 class="text-2xl font-black text-gray-900 mb-3 tracking-tight">{{ $template->name }}</h3>
-                            
 
-                            
+
+
                             <div class="flex items-center justify-between pt-6 border-t border-gray-50">
                                 <div class="flex items-center gap-3">
                                     <div class="flex -space-x-2">
