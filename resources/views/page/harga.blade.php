@@ -55,32 +55,56 @@
     <section class="pb-24 bg-white min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <!-- Category Navigation -->
-            <div class="sticky top-20 z-30 bg-white/95 backdrop-blur-md py-6 mb-16 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 border-b border-gray-100/50">
-                <!-- Parent Categories -->
-                <div class="flex overflow-x-auto sm:flex-wrap justify-start sm:justify-center gap-3 hide-scrollbar pb-1 sm:pb-0">
+            <!-- Category Cards Selection -->
+            <div class="mb-16">
+                <!-- Parent Categories Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+                    <!-- Semua Layanan Card -->
                     <a href="{{ route('harga') }}" 
-                       class="whitespace-nowrap px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 border {{ !$currentCategory ? 'bg-primary text-white shadow-xl shadow-primary/20 border-primary' : 'bg-gray-50 text-gray-500 border-transparent hover:bg-primary/5 hover:text-primary hover:border-primary/20' }}">
-                        Semua Layanan
+                       class="group relative bg-white p-6 rounded-[2rem] border transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 {{ !$currentCategory ? 'border-primary ring-1 ring-primary/20 bg-primary/5' : 'border-gray-100' }}">
+                        <div class="flex flex-col h-full">
+                            <div class="w-12 h-12 rounded-2xl mb-4 flex items-center justify-center transition-all duration-500 {{ !$currentCategory ? 'bg-primary text-white' : 'bg-gray-50 text-primary group-hover:bg-primary group-hover:text-white' }}">
+                                <i class="fas fa-th-large text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-gray-900 mb-1 group-hover:text-primary transition-colors">Semua Layanan</h3>
+                            <p class="text-xs text-gray-400 mb-4">Lihat seluruh paket layanan kami</p>
+                            <div class="mt-auto flex items-center text-xs font-bold {{ !$currentCategory ? 'text-primary' : 'text-gray-400 group-hover:text-primary' }}">
+                                <span>Lihat</span>
+                                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
                     </a>
+
                     @foreach($categories as $category)
-                        <a href="{{ route('harga', ['category' => $category->slug]) }}" 
-                           class="whitespace-nowrap flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 border {{ $activeParent && $activeParent->id == $category->id ? 'bg-primary text-white shadow-xl shadow-primary/20 border-primary' : 'bg-gray-50 text-gray-500 border-transparent hover:bg-primary/5 hover:text-primary hover:border-primary/20' }}">
-                            <i class="{{ $category->icon ?? 'fas fa-th-large' }} {{ $activeParent && $activeParent->id == $category->id ? 'text-white' : 'text-primary/40' }}"></i>
-                            {{ $category->name }}
-                        </a>
+                    <a href="{{ route('harga', ['category' => $category->slug]) }}" 
+                       class="group relative bg-white p-6 rounded-[2rem] border transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 {{ $activeParent && $activeParent->id == $category->id ? 'border-primary ring-1 ring-primary/20 bg-primary/5' : 'border-gray-100' }}">
+                        <div class="flex flex-col h-full">
+                            <div class="w-12 h-12 rounded-2xl mb-4 flex items-center justify-center transition-all duration-500 {{ $activeParent && $activeParent->id == $category->id ? 'bg-primary text-white' : 'bg-gray-50 text-primary group-hover:bg-primary group-hover:text-white' }}">
+                                <i class="{{ $category->icon ?? 'fas fa-rocket' }} text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-gray-900 mb-1 group-hover:text-primary transition-colors">{{ $category->name }}</h3>
+                            <p class="text-xs text-gray-400 mb-4">{{ $category->prices_count ?? 'Berbagai' }} Paket Pilihan</p>
+                            <div class="mt-auto flex items-center text-xs font-bold {{ $activeParent && $activeParent->id == $category->id ? 'text-primary' : 'text-gray-400 group-hover:text-primary' }}">
+                                <span>Lihat</span>
+                                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </a>
                     @endforeach
                 </div>
 
                 <!-- Child Categories (Sub-menu) -->
                 @if($activeParent && $activeParent->children->count() > 0)
-                <div class="flex overflow-x-auto sm:flex-wrap justify-start sm:justify-center gap-2 mt-4 pb-2 p-2 rounded-2xl border border-dashed border-gray-100 bg-gray-50/30 hide-scrollbar">
-                    @foreach($activeParent->children as $child)
-                        <a href="{{ route('harga', ['category' => $child->slug]) }}" 
-                           class="whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 border {{ $currentCategory && $currentCategory->id == $child->id ? 'bg-white text-primary border-primary/20 shadow-md' : 'text-gray-400 border-transparent hover:text-gray-600' }}">
-                            {{ $child->name }}
-                        </a>
-                    @endforeach
+                <div class="mt-8 flex flex-col items-center">
+                    <div class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-4">Filter Kategori</div>
+                    <div class="flex overflow-x-auto w-full sm:w-auto sm:flex-wrap justify-start sm:justify-center gap-2 hide-scrollbar pb-2">
+                        @foreach($activeParent->children as $child)
+                            <a href="{{ route('harga', ['category' => $child->slug]) }}" 
+                               class="whitespace-nowrap px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 border {{ $currentCategory && $currentCategory->id == $child->id ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' : 'bg-white text-gray-500 border-gray-100 hover:border-primary/30 hover:text-primary' }}">
+                                {{ $child->name }}
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
                 @endif
             </div>
