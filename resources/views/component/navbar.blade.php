@@ -24,7 +24,7 @@
                         Template
                         <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-primary text-white leading-none">New</span>
                     </a>
-                    <a href="{{ url('/harga') }}" class="{{ Request::is('harga') ? 'text-primary-600 border-b-2 border-primary font-bold' : 'text-gray-600 hover:text-primary font-medium' }} transition-all px-1 py-1 text-sm whitespace-nowrap">Harga</a>
+                    <a href="{{ url('/harga') }}" class="{{ Request::is('harga*') ? 'text-primary-600 border-b-2 border-primary font-bold' : 'text-gray-600 hover:text-primary font-medium' }} transition-all px-1 py-1 text-sm whitespace-nowrap">Harga</a>
                     <a href="{{ route('blog') }}" class="{{ Request::is('blog*') ? 'text-primary-600 border-b-2 border-primary font-bold' : 'text-gray-600 hover:text-primary font-medium' }} transition-all px-1 py-1 text-sm whitespace-nowrap">Blog</a>
                     {{-- <a href="{{ url('/#testimoni') }}" class="text-gray-600 hover:text-primary font-medium transition-colors text-sm whitespace-nowrap">Testimoni</a> --}}
                 </div>
@@ -78,7 +78,7 @@
                 <span>Template</span>
                 <span class="px-2 py-1 rounded-lg text-[10px] font-bold bg-white text-primary shadow-sm">NEW</span>
             </a>
-            <a href="{{ url('/harga') }}" class="block px-4 py-3 rounded-xl {{ Request::is('harga') ? 'bg-primary text-white font-bold shadow-lg shadow-primary/20' : 'text-gray-600 font-medium hover:bg-gray-100' }} transition-all">Harga</a>
+            <a href="{{ url('/harga') }}" class="block px-4 py-3 rounded-xl {{ Request::is('harga*') ? 'bg-primary text-white font-bold shadow-lg shadow-primary/20' : 'text-gray-600 font-medium hover:bg-gray-100' }} transition-all">Harga</a>
             <a href="{{ route('blog') }}" class="block px-4 py-3 rounded-xl {{ Request::is('blog*') ? 'bg-primary text-white font-bold shadow-lg shadow-primary/20' : 'text-gray-600 font-medium hover:bg-gray-100' }} transition-all">Blog</a>
             <a href="{{ url('/#testimoni') }}" class="block px-4 py-3 rounded-xl text-gray-600 font-medium hover:bg-gray-100 transition-all">Testimoni</a>
 
