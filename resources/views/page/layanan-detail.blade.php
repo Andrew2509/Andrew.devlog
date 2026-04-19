@@ -84,9 +84,7 @@
                     <!-- Card Header with Image -->
                     <div class="relative h-56 overflow-hidden">
                         @php
-                            $imageUrl = $price->image 
-                                ? asset('storage/' . $price->image)
-                                : "https://images.unsplash.com/featured/?" . strtolower(str_replace(' ', ',', $currentCategory->name . ' ' . $price->service_name));
+                            $imageUrl = $price->image ?: "https://images.unsplash.com/featured/?" . strtolower(str_replace(' ', ',', $currentCategory->name . ' ' . $price->service_name));
                         @endphp
                         <img src="{{ $imageUrl }}" alt="{{ $price->service_name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         

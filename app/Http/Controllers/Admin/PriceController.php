@@ -34,7 +34,7 @@ class PriceController extends Controller
             'features' => 'required|string',
             'button_text' => 'required|string|max:255',
             'button_link' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|string|max:1000',
         ]);
 
         $features = array_filter(array_map('trim', explode("\n", $request->features)));
@@ -49,11 +49,8 @@ class PriceController extends Controller
             'is_popular' => $request->has('is_popular'),
             'is_visible_home' => $request->has('is_visible_home'),
             'is_visible_pricing' => $request->has('is_visible_pricing'),
+            'image' => $request->image,
         ];
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('pricing', 'public');
-        }
 
         Price::create($data);
 
@@ -75,7 +72,7 @@ class PriceController extends Controller
             'features' => 'required|string',
             'button_text' => 'required|string|max:255',
             'button_link' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|string|max:1000',
         ]);
 
         $features = array_filter(array_map('trim', explode("\n", $request->features)));
@@ -90,15 +87,8 @@ class PriceController extends Controller
             'is_popular' => $request->has('is_popular'),
             'is_visible_home' => $request->has('is_visible_home'),
             'is_visible_pricing' => $request->has('is_visible_pricing'),
+            'image' => $request->image,
         ];
-
-        if ($request->hasFile('image')) {
-            // Delete old image
-            if ($pricing->image) {
-                Storage::disk('public')->delete($pricing->image);
-            }
-            $data['image'] = $request->file('image')->store('pricing', 'public');
-        }
 
         $pricing->update($data);
 
@@ -120,9 +110,6 @@ class PriceController extends Controller
 
     public function destroy(Price $pricing)
     {
-        if ($pricing->image) {
-            Storage::disk('public')->delete($pricing->image);
-        }
         $pricing->delete();
         return redirect()->route('admin.pricing.index')->with('success', 'Paket harga berhasil dihapus.');
     }
