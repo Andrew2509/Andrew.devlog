@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Price;
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PriceController extends Controller
 {
@@ -33,11 +34,12 @@ class PriceController extends Controller
             'features' => 'required|string',
             'button_text' => 'required|string|max:255',
             'button_link' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $features = array_filter(array_map('trim', explode("\n", $request->features)));
-
-        Price::create([
+        
+        $data = [
             'service_category_id' => $request->service_category_id,
             'service_name' => $request->service_name,
             'price' => $request->price,
@@ -47,7 +49,13 @@ class PriceController extends Controller
             'is_popular' => $request->has('is_popular'),
             'is_visible_home' => $request->has('is_visible_home'),
             'is_visible_pricing' => $request->has('is_visible_pricing'),
-        ]);
+        ];
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('pricing', 'public');
+        }
+
+        Price::create($data);
 
         return redirect()->route('admin.pricing.index')->with('success', 'Paket harga berhasil ditambahkan.');
     }
@@ -67,11 +75,12 @@ class PriceController extends Controller
             'features' => 'required|string',
             'button_text' => 'required|string|max:255',
             'button_link' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $features = array_filter(array_map('trim', explode("\n", $request->features)));
 
-        $pricing->update([
+        $data = [
             'service_category_id' => $request->service_category_id,
             'service_name' => $request->service_name,
             'price' => $request->price,
@@ -81,7 +90,17 @@ class PriceController extends Controller
             'is_popular' => $request->has('is_popular'),
             'is_visible_home' => $request->has('is_visible_home'),
             'is_visible_pricing' => $request->has('is_visible_pricing'),
-        ]);
+        ];
+
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($pricing->image) {
+                Storage::disk('public')->delete($pricing->image);
+            }
+            $data['image'] = $request->file('image')->store('pricing', 'public');
+        }
+
+        $pricing->update($data);
 
         return redirect()->route('admin.pricing.index')->with('success', 'Paket harga berhasil diperbarui.');
     }
@@ -101,6 +120,9 @@ class PriceController extends Controller
 
     public function destroy(Price $pricing)
     {
+        if ($pricing->image) {
+            Storage::disk('public')->delete($pricing->image);
+        }
         $pricing->delete();
         return redirect()->route('admin.pricing.index')->with('success', 'Paket harga berhasil dihapus.');
     }

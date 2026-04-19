@@ -38,9 +38,13 @@
                 <tr class="group hover:bg-white/[0.02] transition-colors">
                     <td class="px-4 py-4">
                         <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black text-xs">
-                                {{ substr($price->service_name, 0, 1) }}
-                            </div>
+                            @if($price->image)
+                                <img src="{{ asset('storage/' . $price->image) }}" alt="" class="w-10 h-10 rounded-xl object-cover shadow-lg border border-white/10">
+                            @else
+                                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black text-xs">
+                                    {{ substr($price->service_name, 0, 1) }}
+                                </div>
+                            @endif
                             <span class="text-sm font-bold text-white uppercase tracking-tight">{{ $price->service_name }}</span>
                         </div>
                     </td>
