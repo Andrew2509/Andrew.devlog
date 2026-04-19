@@ -47,49 +47,72 @@
     <!-- Category Selection Portal -->
     <section class="pb-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="category-grid">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="category-grid">
                 @foreach($categories as $category)
                 <a href="{{ route('harga.layanan', $category->slug) }}" 
                    data-name="{{ strtolower($category->name) }}"
-                   class="category-card group flex flex-col h-full bg-white p-8 rounded-[2.5rem] border border-gray-100 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 relative overflow-hidden">
+                   class="category-card group flex flex-col h-full bg-white rounded-[2.5rem] border border-gray-100 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 relative overflow-hidden">
                     
-                    <!-- Hover Glow -->
-                    <div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+                    <!-- Card Header with Image -->
+                    <div class="relative h-64 overflow-hidden">
+                        @php
+                            $imageUrl = "https://images.unsplash.com/featured/?" . strtolower(str_replace(' ', ',', $category->name));
+                        @endphp
+                        <img src="{{ $imageUrl }}" alt="{{ $category->name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        
+                        <!-- Dark Overlay Gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        
+                        <!-- Title Overlay -->
+                        <div class="absolute bottom-6 left-8 right-8">
+                            <h3 class="text-3xl font-black text-white uppercase tracking-tighter leading-tight">
+                                {{ $category->name }}
+                            </h3>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Eksplor Layanan</span>
+                                <i class="fas fa-arrow-right text-[10px] text-primary transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
 
-                    <div class="w-16 h-16 rounded-2xl mb-6 bg-gray-50 border border-gray-100 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white group-hover:shadow-xl group-hover:shadow-primary/30 transition-all duration-500">
-                        <i class="{{ $category->icon ?? 'fas fa-th-large' }} text-2xl"></i>
+                        <!-- Icon Badge -->
+                        <div class="absolute top-6 left-8 w-12 h-12 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-white">
+                            <i class="{{ $category->icon ?? 'fas fa-th-large' }} text-xl"></i>
+                        </div>
                     </div>
 
-                    <h3 class="text-2xl font-black text-gray-900 mb-2 group-hover:text-primary transition-colors">{{ $category->name }}</h3>
-                    <p class="text-gray-500 text-sm font-medium leading-relaxed mb-8 flex-grow">
-                        {{ $category->description ?? 'Lihat berbagai pilihan paket ' . strtolower($category->name) . ' yang kami sediakan.' }}
-                    </p>
-
-                    <div class="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
-                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 group-hover:text-primary transition-colors">Lihat Layanan</span>
-                        <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-primary group-hover:text-white transition-all">
-                            <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                    <div class="p-8 grow flex flex-col bg-white">
+                        <p class="text-gray-500 text-sm font-medium leading-relaxed mb-6">
+                            {{ $category->description ?? 'Lihat berbagai pilihan paket ' . strtolower($category->name) . ' profesional yang kami sediakan untuk kebutuhan Anda.' }}
+                        </p>
+                        
+                        <div class="mt-auto flex items-center justify-between pt-6 border-t border-gray-50">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest group-hover:text-primary transition-colors">Lihat Detail</span>
+                            <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-primary group-hover:text-white transition-all">
+                                <i class="fas fa-chevron-right text-xs"></i>
+                            </div>
                         </div>
                     </div>
                 </a>
                 @endforeach
 
                 <!-- Custom Request Portal Card -->
-                <div class="category-card group flex flex-col h-full bg-gray-950 p-8 rounded-[2.5rem] text-white relative overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2" data-name="kustom custom khusus">
+                <div class="category-card group flex flex-col h-full bg-[#0b0f1a] rounded-[2.5rem] text-white relative overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2" data-name="kustom custom khusus">
                     <div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl"></div>
                     
-                    <div class="w-16 h-16 rounded-2xl mb-6 bg-white/10 backdrop-blur-md flex items-center justify-center text-primary">
-                        <i class="fas fa-magic text-2xl"></i>
+                    <div class="p-10 flex flex-col h-full relative z-10">
+                        <div class="w-16 h-16 rounded-2xl mb-8 bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-magic text-2xl"></i>
+                        </div>
+
+                        <h3 class="text-3xl font-black mb-4">Request Kustom</h3>
+                        <p class="text-gray-400 text-sm font-medium leading-relaxed mb-10 grow">
+                            Punya kebutuhan spesifik yang tidak ada di daftar? Kami siap membantu membangun solusi digital kustom yang dipersonalisasi khusus untuk bisnis Anda.
+                        </p>
+
+                        <a href="{{ url('/#kontak') }}" class="w-full py-5 bg-primary text-white font-black text-center rounded-[1.5rem] hover:bg-white hover:text-primary transition-all uppercase tracking-widest text-sm shadow-lg shadow-primary/20">
+                            Mulai Konsultasi
+                        </a>
                     </div>
-
-                    <h3 class="text-2xl font-black mb-2">Request Kustom</h3>
-                    <p class="text-gray-400 text-sm font-medium leading-relaxed mb-8 flex-grow">
-                        Punya kebutuhan spesifik yang tidak ada di daftar? Kami siap membantu membangun solusi kustom untuk Anda.
-                    </p>
-
-                    <a href="{{ url('/#kontak') }}" class="mt-auto w-full py-4 bg-primary text-white font-black text-center rounded-2xl hover:bg-white hover:text-primary transition-all uppercase tracking-widest text-xs shadow-lg shadow-primary/20">
-                        Hubungi Kami
-                    </a>
                 </div>
             </div>
         </div>

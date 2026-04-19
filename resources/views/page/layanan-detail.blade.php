@@ -80,41 +80,66 @@
             <!-- Pricing Grid -->
             <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($prices as $price)
-                <div class="pricing-card group bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full relative overflow-hidden" data-name="{{ strtolower($price->service_name) }}">
-                    <!-- Popular Badge -->
-                    @if($price->is_popular)
-                    <div class="absolute top-0 right-0">
-                        <div class="bg-primary text-white text-[10px] font-black uppercase tracking-[0.2em] px-10 py-1.5 rotate-45 translate-x-[40px] translate-y-[20px] shadow-sm">
+                <div class="pricing-card group bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col h-full relative overflow-hidden" data-name="{{ strtolower($price->service_name) }}">
+                    <!-- Card Header with Image -->
+                    <div class="relative h-56 overflow-hidden">
+                        @php
+                            // Search-related image tags based on category or service name
+                            $imageTag = strtolower(str_replace(' ', ',', $currentCategory->name . ' ' . $price->service_name));
+                            $imageUrl = "https://images.unsplash.com/featured/?" . $imageTag;
+                        @endphp
+                        <img src="{{ $imageUrl }}" alt="{{ $price->service_name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        
+                        <!-- Dark Overlay Gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        
+                        <!-- Title Overlay -->
+                        <div class="absolute bottom-6 left-8 right-8">
+                            <h4 class="text-2xl font-black text-white uppercase tracking-tighter leading-tight drop-shadow-lg">
+                                {{ $price->service_name }}
+                            </h4>
+                        </div>
+
+                        <!-- Popular Badge -->
+                        @if($price->is_popular)
+                        <div class="absolute top-4 right-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
                             Best Sell
                         </div>
+                        @endif
                     </div>
-                    @endif
 
-                    <div class="mb-2">
-                        <h4 class="text-2xl font-black text-gray-900 group-hover:text-primary transition-colors leading-tight">{{ $price->service_name }}</h4>
-                    </div>
-                    
-                    <div class="mb-8">
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Mulai</span>
-                            <span class="text-3xl font-black text-gray-900">Rp {{ number_format($price->price, 0, ',', '.') }}</span>
+                    <!-- Card Body -->
+                    <div class="p-8 grow flex flex-col">
+                        <div class="mb-4">
+                            <p class="text-gray-500 text-sm font-medium leading-relaxed">
+                                {{ $price->subtitle ?? 'Layanan profesional dengan standar kualitas terbaik untuk mendukung pertumbuhan digital Anda.' }}
+                            </p>
                         </div>
-                        <span class="text-[10px] font-bold text-primary/60 uppercase tracking-widest block mt-2 px-3 py-1 bg-primary/5 rounded-full w-fit italic">Satu kali pengerjaan</span>
+                        
+                        <div class="mb-8">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Mulai</span>
+                                <span class="text-3xl font-black text-gray-950">Rp {{ number_format($price->price, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+
+                        <ul class="space-y-4 mb-10">
+                            @foreach($price->features as $feature)
+                            <li class="flex items-start gap-4 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
+                                <div class="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary transition-colors">
+                                    <i class="fas fa-check text-[10px] text-primary group-hover:text-white transition-colors"></i>
+                                </div>
+                                <span class="leading-snug">{{ $feature }}</span>
+                            </li>
+                            @endforeach
+                        </ul>
+
+                        <div class="mt-auto">
+                            <a href="{{ route('pesan', ['package' => $price->service_name, 'category_id' => $price->service_category_id]) }}" class="w-full flex items-center justify-center py-5 bg-primary text-white rounded-[2rem] font-black text-lg hover:bg-primary-dark transition-all shadow-xl shadow-primary/20 transform active:scale-95 uppercase tracking-widest">
+                                Pesan Sekarang
+                            </a>
+                        </div>
                     </div>
-
-                    <ul class="space-y-4 mb-10 grow">
-                        @foreach($price->features as $feature)
-                        <li class="flex items-start gap-3 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">
-                            <i class="fas fa-check-circle text-primary mt-0.5 opacity-40 group-hover:opacity-100 transition-opacity"></i> 
-                            <span>{{ $feature }}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-
-                    <a href="{{ route('pesan', ['package' => $price->service_name, 'category_id' => $price->service_category_id]) }}" class="w-full flex items-center justify-center gap-3 py-5 bg-gray-950 text-white rounded-2xl font-bold group-hover:bg-primary transition-all shadow-xl shadow-gray-200 group-hover:shadow-primary/30">
-                        Pesan Sekarang
-                        <i class="fas fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
-                    </a>
                 </div>
                 @empty
                 <div class="col-span-full py-20 text-center">
