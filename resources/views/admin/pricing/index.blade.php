@@ -38,6 +38,7 @@
                 <tr class="group hover:bg-white/[0.02] transition-colors">
                     <td class="px-4 py-4">
                         <div class="flex items-center gap-4">
+                            @if($price->image)
                                 <img src="{{ $price->image }}" class="w-12 h-12 rounded-xl object-cover border border-white/10 shadow-lg">
                             @else
                                 <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black text-xs">
