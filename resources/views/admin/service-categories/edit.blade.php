@@ -77,6 +77,27 @@
                 @error('order') <p class="text-red-500 text-[10px] mt-1 font-bold uppercase tracking-tight">{{ $message }}</p> @enderror
             </div>
 
+            <!-- Image URL -->
+            <div class="space-y-3 md:col-span-2">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                    <i class="fas fa-image text-primary"></i>
+                    Link Gambar Kategori
+                </label>
+                <div class="flex gap-4 items-start">
+                    <div class="flex-1">
+                        <input type="url" name="image" id="category_image_input" placeholder="https://example.com/image.jpg" 
+                            class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold"
+                            value="{{ old('image', $serviceCategory->image) }}">
+                        <p class="text-[10px] text-gray-500 font-medium mt-2">Masukkan link gambar (Unsplash, Pinterest, etc). Gambar ini akan muncul di halaman detail layanan.</p>
+                        @error('image') <p class="text-red-500 text-[10px] mt-1 font-bold uppercase tracking-tight">{{ $message }}</p> @enderror
+                    </div>
+                    <div id="image_preview_container" class="w-32 h-20 rounded-xl bg-white/5 border border-white/5 overflow-hidden flex items-center justify-center shrink-0">
+                        <i class="fas fa-image text-white/20 text-xl" id="placeholder_icon"></i>
+                        <img id="image_preview" src="{{ $serviceCategory->image }}" alt="Preview" class="w-full h-full object-cover {{ $serviceCategory->image ? '' : 'hidden' }}">
+                    </div>
+                </div>
+            </div>
+
             <!-- Description -->
             <div class="space-y-3 md:col-span-2">
                 <label class="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
@@ -97,4 +118,29 @@
         </div>
     </form>
 </div>
+
+@push('scripts')
+<script>
+    const imageInput = document.getElementById('category_image_input');
+    const imagePreview = document.getElementById('image_preview');
+    const previewContainer = document.getElementById('image_preview_container');
+    const placeholderIcon = document.getElementById('placeholder_icon');
+
+    function updatePreview() {
+        const url = imageInput.value;
+        if (url) {
+            imagePreview.src = url;
+            imagePreview.classList.remove('hidden');
+            placeholderIcon.classList.add('hidden');
+        } else {
+            imagePreview.classList.add('hidden');
+            placeholderIcon.classList.remove('hidden');
+        }
+    }
+
+    imageInput.addEventListener('input', updatePreview);
+    // Initial preview if data exists
+    updatePreview();
+</script>
+@endpush
 @endsection

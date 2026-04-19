@@ -39,6 +39,7 @@ class ServiceCategoryController extends Controller
             'parent_id' => 'nullable|exists:service_categories,id',
             'icon' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'image' => 'nullable|string|max:1000',
             'order' => 'nullable|integer|min:0',
         ]);
 
@@ -72,6 +73,7 @@ class ServiceCategoryController extends Controller
             'parent_id' => 'nullable|exists:service_categories,id',
             'icon' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'image' => 'nullable|string|max:1000',
             'order' => 'nullable|integer|min:0',
         ]);
 

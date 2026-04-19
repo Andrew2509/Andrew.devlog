@@ -35,17 +35,24 @@
             </thead>
             <tbody class="divide-y divide-white/2">
                 @forelse($prices as $price)
-                <tr class="group hover:bg-white/[0.02] transition-colors">
+                <tr class="group hover:bg-white/2 transition-colors">
                     <td class="px-4 py-4">
                         <div class="flex items-center gap-4">
-                            @if($price->image)
-                                <img src="{{ $price->image }}" class="w-12 h-12 rounded-xl object-cover border border-white/10 shadow-lg">
+                            @if($price->category && $price->category->image)
+                                <img src="{{ $price->category->image }}" class="w-12 h-12 rounded-xl object-cover border border-white/10 shadow-lg">
+                            @elseif($price->category && $price->category->icon)
+                                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                                    <i class="{{ $price->category->icon }} text-lg"></i>
+                                </div>
                             @else
-                                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black text-xs">
-                                    {{ substr($price->service_name, 0, 1) }}
+                                <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-700 border border-white/5">
+                                    <i class="fas fa-tag text-lg"></i>
                                 </div>
                             @endif
-                            <span class="text-sm font-bold text-white uppercase tracking-tight">{{ $price->service_name }}</span>
+                            <div class="flex flex-col">
+                                <span class="text-sm font-bold text-white uppercase tracking-tight">{{ $price->service_name }}</span>
+                                <span class="text-[9px] font-black text-primary uppercase tracking-widest mt-0.5 opacity-70">{{ $price->category->name ?? 'Tanpa Kategori' }}</span>
+                            </div>
                         </div>
                     </td>
                     <td class="px-4 py-4 text-sm font-bold text-white tracking-widest">
@@ -87,14 +94,14 @@
                     </td>
                     <td class="px-4 py-4">
                         <div class="flex items-center justify-end gap-3">
-                            <a href="{{ route('admin.pricing.edit', $price) }}" 
+                            <a href="{{ route('admin.pricing.edit', $price) }}"
                                 class="w-10 h-10 rounded-xl bg-white/2 border border-white/5 text-gray-400 flex items-center justify-center hover:bg-white/5 hover:text-white transition-all shadow-sm">
                                 <i class="fas fa-edit text-xs"></i>
                             </a>
                             <form action="{{ route('admin.pricing.destroy', $price) }}" method="POST" onsubmit="return confirm('Hapus paket ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" 
+                                <button type="submit"
                                     class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm">
                                     <i class="fas fa-trash-alt text-xs"></i>
                                 </button>

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Price;
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class PriceController extends Controller
 {
@@ -15,7 +14,7 @@ class PriceController extends Controller
      */
     public function index()
     {
-        $prices = Price::orderBy('price')->get();
+        $prices = Price::with('category')->orderBy('price')->get();
         return view('admin.pricing.index', compact('prices'));
     }
 
@@ -34,7 +33,6 @@ class PriceController extends Controller
             'features' => 'required|string',
             'button_text' => 'required|string|max:255',
             'button_link' => 'required|string|max:255',
-            'image' => 'nullable|string|max:1000',
         ]);
 
         $features = array_filter(array_map('trim', explode("\n", $request->features)));
@@ -49,7 +47,6 @@ class PriceController extends Controller
             'is_popular' => $request->has('is_popular'),
             'is_visible_home' => $request->has('is_visible_home'),
             'is_visible_pricing' => $request->has('is_visible_pricing'),
-            'image' => $request->image,
         ];
 
         Price::create($data);
@@ -72,7 +69,6 @@ class PriceController extends Controller
             'features' => 'required|string',
             'button_text' => 'required|string|max:255',
             'button_link' => 'required|string|max:255',
-            'image' => 'nullable|string|max:1000',
         ]);
 
         $features = array_filter(array_map('trim', explode("\n", $request->features)));
@@ -87,7 +83,6 @@ class PriceController extends Controller
             'is_popular' => $request->has('is_popular'),
             'is_visible_home' => $request->has('is_visible_home'),
             'is_visible_pricing' => $request->has('is_visible_pricing'),
-            'image' => $request->image,
         ];
 
         $pricing->update($data);

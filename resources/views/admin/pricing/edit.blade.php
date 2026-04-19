@@ -43,60 +43,6 @@
                     @enderror
                 </div>
 
-                <!-- Preview & Link Gambar -->
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-gray-500 text-[10px] font-black uppercase tracking-widest mb-3 ml-1">Pratinjau Gambar</label>
-                        <div class="relative group">
-                            <div class="w-full aspect-video rounded-3xl overflow-hidden bg-white/5 border border-white/5 shadow-2xl">
-                                @if($pricing->image)
-                                    <img src="{{ $pricing->image }}" id="image-preview" class="w-full h-full object-cover">
-                                @else
-                                    <div id="image-placeholder" class="w-full h-full flex flex-col items-center justify-center text-gray-600 gap-4">
-                                        <i class="fa-solid fa-image text-5xl"></i>
-                                        <p class="text-[10px] font-black uppercase tracking-widest">Tidak ada gambar</p>
-                                    </div>
-                                @endif
-                                <img id="image-new-preview" class="hidden w-full h-full object-cover">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="block text-gray-500 text-[10px] font-black uppercase tracking-widest mb-3 ml-1">Link Gambar Paket (URL)</label>
-                        <div class="relative">
-                            <i class="fa-solid fa-link absolute left-6 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="url" name="image" id="image-url-input" placeholder="https://example.com/image.jpg" 
-                                   value="{{ old('image', $pricing->image) }}"
-                                   class="w-full pl-14 pr-6 py-4 bg-white border {{ $errors->has('image') ? 'border-red-500/50' : 'border-white/5' }} text-gray-900 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-medium">
-                        </div>
-                        <p class="mt-2 text-[10px] text-gray-500 italic ml-1">Gunakan link langsung ke gambar (Unsplash, Pinterest, etc.)</p>
-                        @error('image')
-                            <p class="mt-2 text-red-500 text-[10px] font-bold ml-1 uppercase">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <script>
-                    document.getElementById('image-url-input').addEventListener('input', function(e) {
-                        const url = e.target.value;
-                        const preview = document.getElementById('image-preview');
-                        const newPreview = document.getElementById('image-new-preview');
-                        const placeholder = document.getElementById('image-placeholder');
-
-                        if (url) {
-                            if (preview) preview.src = url;
-                            if (newPreview) {
-                                newPreview.src = url;
-                                newPreview.classList.remove('hidden');
-                            }
-                            if (placeholder) placeholder.classList.add('hidden');
-                        } else {
-                            if (newPreview) newPreview.classList.add('hidden');
-                            if (placeholder) placeholder.classList.remove('hidden');
-                        }
-                    });
-                </script>
 
                 <div>
                     <label class="block text-gray-500 text-[10px] font-black uppercase tracking-widest mb-3 ml-1" for="price">Harga (Numeric)</label>

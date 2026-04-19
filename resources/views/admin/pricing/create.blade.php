@@ -42,19 +42,6 @@
                     @enderror
                 </div>
 
-                <!-- Gambar Header -->
-                <div class="space-y-2">
-                    <label class="block text-gray-500 text-[10px] font-black uppercase tracking-widest mb-3 ml-1">Link Gambar Paket (URL)</label>
-                    <div class="relative">
-                        <i class="fa-solid fa-link absolute left-6 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                        <input type="url" name="image" placeholder="https://example.com/image.jpg" value="{{ old('image') }}"
-                               class="w-full pl-14 pr-6 py-4 bg-white border {{ $errors->has('image') ? 'border-red-500/50' : 'border-white/5' }} text-gray-900 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-medium">
-                    </div>
-                    <p class="mt-2 text-[10px] text-gray-500 italic ml-1">Gunakan link langsung ke gambar (Unsplash, Pinterest, etc.)</p>
-                    @error('image')
-                        <p class="mt-2 text-red-500 text-[10px] font-bold ml-1 uppercase">{{ $message }}</p>
-                    @enderror
-                </div>
 
                 <div>
                     <label class="block text-gray-500 text-[10px] font-black uppercase tracking-widest mb-3 ml-1" for="price">Harga (Numeric)</label>

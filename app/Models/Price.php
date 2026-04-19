@@ -19,7 +19,6 @@ class Price extends Model
         'is_visible_pricing',
         'button_text',
         'button_link',
-        'image',
         'order',
     ];
 
