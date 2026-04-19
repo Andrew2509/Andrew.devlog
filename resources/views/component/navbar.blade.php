@@ -17,16 +17,16 @@
             <div class="hidden md:flex flex-1 justify-center">
                 <div class="flex items-center gap-6">
                     <a href="{{ url('/') }}" class="{{ Request::is('/') ? 'text-primary-600 border-b-2 border-primary font-bold' : 'text-gray-600 hover:text-primary font-medium' }} transition-all px-1 py-1 text-sm whitespace-nowrap">Beranda</a>
-                    <a href="{{ url('/#layanan') }}" class="text-gray-600 hover:text-primary font-medium transition-colors text-sm whitespace-nowrap">Layanan</a>
-                    <a href="{{ url('/#proses-kerja') }}" class="text-gray-600 hover:text-primary font-medium transition-colors text-sm whitespace-nowrap">Proses</a>
-                    <a href="{{ url('/#portofolio') }}" class="text-gray-600 hover:text-primary transition-colors font-medium text-sm whitespace-nowrap">Portofolio</a>
+                    {{-- <a href="{{ url('/#layanan') }}" class="text-gray-600 hover:text-primary font-medium transition-colors text-sm whitespace-nowrap">Layanan</a> --}}
+                    {{-- <a href="{{ url('/#proses-kerja') }}" class="text-gray-600 hover:text-primary font-medium transition-colors text-sm whitespace-nowrap">Proses</a> --}}
+                    <a href="{{ url('/#portofolio') }}" class="text-gray-600 hover:text-primary transition-colors font-medium text-sm whitespace-nowrap">Proyek</a>
                     <a href="{{ route('templates') }}" class="{{ Request::is('templates*') ? 'text-primary-600 border-b-2 border-primary font-bold' : 'text-gray-600 hover:text-primary font-medium' }} transition-all px-1 py-1 text-sm whitespace-nowrap flex items-center gap-1">
                         Template
                         <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-primary text-white leading-none">New</span>
                     </a>
                     <a href="{{ url('/harga') }}" class="{{ Request::is('harga') ? 'text-primary-600 border-b-2 border-primary font-bold' : 'text-gray-600 hover:text-primary font-medium' }} transition-all px-1 py-1 text-sm whitespace-nowrap">Harga</a>
                     <a href="{{ route('blog') }}" class="{{ Request::is('blog*') ? 'text-primary-600 border-b-2 border-primary font-bold' : 'text-gray-600 hover:text-primary font-medium' }} transition-all px-1 py-1 text-sm whitespace-nowrap">Blog</a>
-                    <a href="{{ url('/#testimoni') }}" class="text-gray-600 hover:text-primary font-medium transition-colors text-sm whitespace-nowrap">Testimoni</a>
+                    {{-- <a href="{{ url('/#testimoni') }}" class="text-gray-600 hover:text-primary font-medium transition-colors text-sm whitespace-nowrap">Testimoni</a> --}}
                 </div>
             </div>
 
