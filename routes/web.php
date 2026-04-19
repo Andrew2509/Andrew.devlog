@@ -12,6 +12,7 @@ Route::get('/template/preview/{id}', [HomeController::class, 'templatePreview'])
 Route::get('/template/external-preview', [HomeController::class, 'externalPreview'])->name('template.external_preview');
 
 Route::get('/harga', [App\Http\Controllers\HomeController::class, 'harga'])->name('harga');
+Route::get('/harga/{category}', [App\Http\Controllers\HomeController::class, 'layanan'])->name('harga.layanan');
 Route::get('/pesan', [App\Http\Controllers\HomeController::class, 'pesan'])->name('pesan');
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{id}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');

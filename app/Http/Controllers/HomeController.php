@@ -182,21 +182,27 @@ class HomeController extends Controller
         }
     }
 
-    public function harga(Request $request)
+    public function harga()
     {
-        $currentCategory = null;
-        $prices = Price::where('is_visible_pricing', true);
+        // Category data is handled by the block in the Blade view, 
+        // but it's cleaner to keep the method simple for the portal.
+        return view('page.harga');
+    }
 
-        if ($request->has('category')) {
-            $currentCategory = ServiceCategory::where('slug', $request->category)->first();
-            if ($currentCategory) {
-                // Filter by category ID
-                $prices->where('service_category_id', $currentCategory->id);
-            }
-        }
+    public function layanan($slug)
+    {
+        $currentCategory = ServiceCategory::where('slug', $slug)->firstOrFail();
+        
+        // Get this category and all its children to show all related prices
+        $categoryIds = [$currentCategory->id];
+        $categoryIds = array_merge($categoryIds, $currentCategory->children()->pluck('id')->toArray());
 
-        $prices = $prices->orderBy('price')->get();
-        return view('page.harga', compact('prices', 'currentCategory'));
+        $prices = Price::where('is_visible_pricing', true)
+            ->whereIn('service_category_id', $categoryIds)
+            ->orderBy('price')
+            ->get();
+
+        return view('page.layanan-detail', compact('prices', 'currentCategory'));
     }
 
     public function pesan()

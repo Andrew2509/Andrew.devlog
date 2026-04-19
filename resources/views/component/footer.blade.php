@@ -53,7 +53,7 @@
                 <ul class="space-y-4">
                     @forelse($footerCategories as $category)
                         <li>
-                            <a href="{{ route('harga', ['category' => $category->slug]) }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">
+                            <a href="{{ route('harga.layanan', $category->slug) }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">
                                 <span class="w-0 group-hover/link:w-3 h-px bg-primary transition-all"></span>
                                 {{ $category->name }}
                             </a>
