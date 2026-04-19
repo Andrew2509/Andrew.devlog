@@ -118,7 +118,7 @@
     </form>
 </div>
 
-@push('scripts')
+@section('scripts')
 <script>
     const imageInput = document.getElementById('category_image_input');
     const imagePreview = document.getElementById('image_preview');
@@ -141,5 +141,5 @@
     // Initial preview if data exists
     updatePreview();
 </script>
-@endpush
+@endsection
 @endsection

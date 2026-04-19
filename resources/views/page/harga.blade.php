@@ -56,7 +56,7 @@
                     <!-- Card Header with Image -->
                     <div class="relative h-64 overflow-hidden">
                         @php
-                            $imageUrl = "https://images.unsplash.com/featured/?" . strtolower(str_replace(' ', ',', $category->name));
+                            $imageUrl = $category->image ?: "https://images.unsplash.com/featured/?" . strtolower(str_replace(' ', ',', $category->name));
                         @endphp
                         <img src="{{ $imageUrl }}" alt="{{ $category->name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         
