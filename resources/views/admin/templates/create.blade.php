@@ -4,14 +4,14 @@
 @section('header_subtitle', 'Buat konten baru untuk sistem.')
 
 @section('admin_content')
-<div class="px-6 py-4" x-data="{ 
-    contentType: @js(old('content_type', 'link')), 
-    tags: [], 
+<div class="px-6 py-4" x-data="{
+    contentType: @js(old('content_type', 'link')),
+    tags: [],
     tagInput: '',
     contentLink: @js(old('content', '')),
     thumbUrl: @js(old('thumbnail_url', '')),
     imgLoaded: false,
-    
+
     init() {
         // If there's old data for tags, override
         let oldTags = @js(old('tags'));
@@ -23,7 +23,7 @@
             }
         }
     },
-    
+
     addTag() {
         let val = this.tagInput.trim().replace(/,/g, '');
         if (val !== '') {
@@ -85,10 +85,10 @@
     <form action="{{ route('admin.templates.store') }}" method="POST" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         @csrf
         <div class="lg:col-span-2 space-y-6">
-            <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
+            <div class="bg-white/3 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 items-center gap-2">
                             Nama Template
                             <span class="text-[8px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded-full font-black">WAJIB</span>
                         </label>
@@ -123,12 +123,12 @@
                                     </button>
                                 </span>
                             </template>
-                            <input type="text" x-model="tagInput" 
-                                   @keydown.enter.prevent="addTag()" 
-                                   @keydown.space.prevent="addTag()" 
-                                   @keydown.comma.prevent="addTag()" 
+                            <input type="text" x-model="tagInput"
+                                   @keydown.enter.prevent="addTag()"
+                                   @keydown.space.prevent="addTag()"
+                                   @keydown.comma.prevent="addTag()"
                                    @blur="addTag()"
-                                   placeholder="Contoh: Modern, Portfolio, Business..." 
+                                   placeholder="Contoh: Modern, Portfolio, Business..."
                                    class="bg-transparent border-none focus:ring-0 focus:outline-none text-white text-sm flex-1 min-w-[200px] py-1 placeholder:text-gray-600">
                         </div>
                         <input type="hidden" name="tags" :value="JSON.stringify(tags)">
@@ -148,7 +148,7 @@
                             </div>
                             <input type="url" name="content" x-model="contentLink" required
                                    value="{{ old('content') }}"
-                                   placeholder="https://example.com" 
+                                   placeholder="https://example.com"
                                    @input="imgLoaded = false"
                                    @blur="ensureProtocol()"
                                    @keydown.tab="addTag()"
@@ -162,9 +162,9 @@
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-blue-500 transition-colors">
                                     <i class="fas fa-image"></i>
                                 </div>
-                                <input type="url" name="thumbnail_url" x-model="thumbUrl" 
+                                <input type="url" name="thumbnail_url" x-model="thumbUrl"
                                        value="{{ old('thumbnail_url') }}"
-                                       placeholder="Tempel link gambar jika tidak ingin menggunakan snapshot otomatis" 
+                                       placeholder="Tempel link gambar jika tidak ingin menggunakan snapshot otomatis"
                                        @input="imgLoaded = false"
                                        class="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all text-sm tracking-tight @error('thumbnail_url') border-red-500 ring-1 ring-red-500 @enderror">
                                 @error('thumbnail_url') <p class="text-red-500 text-[10px] mt-2 font-bold">{{ $message }}</p> @enderror
@@ -191,9 +191,9 @@
                             <label for="is_new_tab" class="text-sm text-gray-400 cursor-pointer">Buka pratinjau di tab baru</label>
                         </div>
                     </div>
-                    
+
                     @error('content') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
-                    
+
                     <!-- Hidden field for content type -->
                     <input type="hidden" name="content_type" value="link">
                 </div>
@@ -251,12 +251,12 @@
                                     </div>
 
                                     <!-- Image -->
-                                    <img :src="getFinalThumb()" 
+                                    <img :src="getFinalThumb()"
                                          class="w-full h-full object-cover transition-opacity duration-1000"
                                          :class="imgLoaded ? 'opacity-100' : 'opacity-0'"
                                          @load="imgLoaded = true"
                                          x-on:error="imgLoaded = true; $el.src='https://placehold.co/800x600/1a1a1a/444?text=Preview+Not+Available'">
-                                    
+
                                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 backdrop-blur-sm">
                                         <p class="text-white text-[10px] font-bold uppercase tracking-widest px-4 text-center" x-text="thumbUrl ? 'Custom Image Link' : 'Snapshot Website'"></p>
                                         <a :href="contentLink" target="_blank" x-show="contentLink" class="px-4 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-bold shadow-lg shadow-blue-900/40">Buka Link Asli</a>

@@ -68,7 +68,7 @@
                     <i class="fas fa-search text-xs"></i>
                 </button>
                 
-                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="group w-10 h-10 sm:w-14 sm:h-14 flex flex-col items-center justify-center gap-1 sm:gap-1.5 rounded-xl sm:rounded-[1.25rem] bg-slate-950 text-white shadow-xl shadow-slate-900/10 transition-all duration-500 active:scale-90">
+                                <button id="mobile-menu-btn" class="group w-10 h-10 sm:w-14 sm:h-14 flex flex-col items-center justify-center gap-1 sm:gap-1.5 rounded-xl sm:rounded-[1.25rem] bg-slate-950 text-white shadow-xl shadow-slate-900/10 transition-all duration-500 active:scale-90">
                     <span class="block w-5 sm:w-6 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:rotate-45 group-[.open]:translate-y-2"></span>
                     <span class="block w-3 sm:w-4 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:opacity-0 self-start ml-2.5 sm:ml-4"></span>
                     <span class="block w-5 sm:w-6 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:-rotate-45 group-[.open]:-translate-y-2"></span>
@@ -93,7 +93,6 @@
                 @foreach($links as $index => $link)
                     <a href="{{ $link['url'] }}"
                        class="mobile-link group flex items-center justify-between text-5xl sm:text-7xl font-black text-slate-900 opacity-0 translate-y-10 transition-all duration-700 hover:text-primary"
-                       onclick="toggleMobileMenu()"
                        style="transition-delay: {{ 100 + ($index * 50) }}ms">
                         <span>{{ $link['label'] }}</span>
                         <i class="fas fa-arrow-right text-2xl opacity-0 -translate-x-10 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500"></i>
@@ -117,7 +116,7 @@
                     </div>
                 </div>
 
-                <a href="{{ url('/#kontak') }}" onclick="toggleMobileMenu()" class="block w-full text-center bg-slate-950 text-white py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-slate-900/20 opacity-0 translate-y-10 transition-all duration-700 delay-700 mobile-footer-item hover:bg-primary transition-colors">
+                <a href="{{ url('/#kontak') }}" class="block w-full text-center bg-slate-950 text-white py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-slate-900/20 opacity-0 translate-y-10 transition-all duration-700 delay-700 mobile-footer-item hover:bg-primary transition-colors">
                     Konsultasi Gratis
                 </a>
             </div>
@@ -125,73 +124,5 @@
     </div>
 </nav>
 
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const nav = document.getElementById('main-nav');
-        const pill = document.getElementById('nav-pill');
-        const links = document.querySelectorAll('.nav-link');
-
-        // 1. Pill Logic with smoother spring effect
-        const updatePill = (element) => {
-            if (!element) {
-                pill.style.opacity = '0';
-                pill.style.transform = 'scale(0.8)';
-                return;
-            }
-            const rect = element.getBoundingClientRect();
-            const parentRect = element.parentElement.getBoundingClientRect();
-
-            pill.style.width = `${rect.width}px`;
-            pill.style.left = `${rect.left - parentRect.left}px`;
-            pill.style.opacity = '1';
-            pill.style.transform = 'scale(1)';
-        };
-
-        // Initialize pill for active link
-        const activeLink = document.querySelector('.nav-link[data-active="true"]');
-        if (activeLink) {
-            setTimeout(() => updatePill(activeLink), 300);
-        }
-
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => updatePill(link));
-            link.addEventListener('mouseleave', () => {
-                const currentActive = document.querySelector('.nav-link[data-active="true"]');
-                updatePill(currentActive);
-            });
-        });
-
-        // 2. Scroll Logic with throttling
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.scrollY;
-
-            if (currentScroll > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-
-            lastScroll = currentScroll;
-        });
-    });
-
-    function toggleMobileMenu() {
-        const body = document.body;
-        const btn = document.getElementById('mobile-menu-btn');
-        body.classList.toggle('mobile-menu-open');
-        btn.classList.toggle('open');
-    }
-
-    // Fallback if openSearch is not defined
-    if (typeof window.openSearch === 'undefined') {
-        window.openSearch = function() {
-            console.log('Search clicked');
-            // You can add search modal logic here or ensure it's loaded from another file
-        };
-    }
-</script>
 
 
