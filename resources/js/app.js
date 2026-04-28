@@ -1,6 +1,7 @@
 // Andrew.Devlog - Production Build Sync
 import './bootstrap';
-window.VITE_SYNC_VERSION = Date.now();
+window.VITE_SYNC_VERSION = "2026-04-28-12-05"; // Force new hash
+console.log('Vite Build Active:', window.VITE_SYNC_VERSION);
 
 document.addEventListener('DOMContentLoaded', () => {
     // Mobile Menu Toggle
