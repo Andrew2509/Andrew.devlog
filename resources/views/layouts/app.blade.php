@@ -46,6 +46,19 @@
 
     @yield('head')
     <style>
+        /* FORCE SCROLL FIX */
+        html, body {
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh !important;
+            position: relative !important;
+        }
+        
+        body.mobile-menu-open {
+            overflow: hidden !important;
+            height: 100vh !important;
+        }
+
         /* Reduced Motion Support */
         @media (prefers-reduced-motion: reduce) {
             *, ::before, ::after {

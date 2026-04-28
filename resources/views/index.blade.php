@@ -52,7 +52,7 @@
 @endsection
 
 @section('content')
-    <div class="relative min-h-screen bg-[#F8FAFC] overflow-x-hidden">
+    <div class="relative min-h-screen bg-[#F8FAFC] overflow-x-clip">
         <!-- Background Grid & Decorative Blobs -->
         <div class="absolute inset-0 z-[-10]">
             <div class="absolute inset-0" style="background-image: radial-gradient(circle at 50% 50%, rgba(24, 119, 242, 0.05), transparent 70%);"></div>
