@@ -1,5 +1,8 @@
 <!-- Navbar -->
-<nav id="main-nav" class="fixed top-0 left-0 right-0 z-[100] py-6 transition-all duration-700 ease-in-out">
+<nav id="main-nav" 
+     x-data="{ mobileMenuOpen: false }" 
+     class="fixed top-0 left-0 right-0 z-[100] py-6 transition-all duration-700 ease-in-out"
+     :class="{ 'mobile-menu-open': mobileMenuOpen }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="nav-container" class="relative flex justify-between items-center transition-all duration-700 rounded-[2.5rem] border border-white/40 bg-white/10 backdrop-blur-md px-6 sm:px-10 h-20 shadow-2xl shadow-primary/5">
 
@@ -68,7 +71,10 @@
                     <i class="fas fa-search text-xs"></i>
                 </button>
                 
-                                <button id="mobile-menu-btn" class="group w-10 h-10 sm:w-14 sm:h-14 flex flex-col items-center justify-center gap-1 sm:gap-1.5 rounded-xl sm:rounded-[1.25rem] bg-slate-950 text-white shadow-xl shadow-slate-900/10 transition-all duration-500 active:scale-90">
+                <button id="mobile-menu-btn" 
+                        @click="mobileMenuOpen = !mobileMenuOpen"
+                        class="group w-10 h-10 sm:w-14 sm:h-14 flex flex-col items-center justify-center gap-1 sm:gap-1.5 rounded-xl sm:rounded-[1.25rem] bg-slate-950 text-white shadow-xl shadow-slate-900/10 transition-all duration-500 active:scale-90"
+                        :class="{ 'open': mobileMenuOpen }">
                     <span class="block w-5 sm:w-6 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:rotate-45 group-[.open]:translate-y-2"></span>
                     <span class="block w-3 sm:w-4 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:opacity-0 self-start ml-2.5 sm:ml-4"></span>
                     <span class="block w-5 sm:w-6 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:-rotate-45 group-[.open]:-translate-y-2"></span>
@@ -78,7 +84,10 @@
     </div>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-overlay" class="fixed inset-0 bg-white z-[90] translate-x-full transition-transform duration-700 cubic-bezier(0.85, 0, 0.15, 1) pointer-events-none opacity-0">
+    <div id="mobile-overlay" 
+         class="fixed inset-0 bg-white z-[90] transition-all duration-700 cubic-bezier(0.85, 0, 0.15, 1)"
+         :class="mobileMenuOpen ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0 pointer-events-none'">
+        
         <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-[0.03] pointer-events-none">
             <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +101,9 @@
                 <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Navigasi Utama</span>
                 @foreach($links as $index => $link)
                     <a href="{{ $link['url'] }}"
-                       class="mobile-link group flex items-center justify-between text-5xl sm:text-7xl font-black text-slate-900 opacity-0 translate-y-10 transition-all duration-700 hover:text-primary"
+                       @click="mobileMenuOpen = false"
+                       class="mobile-link group flex items-center justify-between text-5xl sm:text-7xl font-black text-slate-900 transition-all duration-700 hover:text-primary"
+                       :class="mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
                        style="transition-delay: {{ 100 + ($index * 50) }}ms">
                         <span>{{ $link['label'] }}</span>
                         <i class="fas fa-arrow-right text-2xl opacity-0 -translate-x-10 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500"></i>
@@ -101,7 +112,8 @@
             </div>
 
             <div class="mt-auto pt-16 space-y-10">
-                <div class="grid grid-cols-2 gap-8 opacity-0 translate-y-10 transition-all duration-700 delay-500 mobile-footer-item">
+                <div class="grid grid-cols-2 gap-8 transition-all duration-700 delay-500 mobile-footer-item"
+                     :class="mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
                     <div class="flex flex-col gap-3">
                         <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Media Sosial</span>
                         <div class="flex gap-4">
@@ -116,13 +128,15 @@
                     </div>
                 </div>
 
-                <a href="{{ url('/#kontak') }}" class="block w-full text-center bg-slate-950 text-white py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-slate-900/20 opacity-0 translate-y-10 transition-all duration-700 delay-700 mobile-footer-item hover:bg-primary transition-colors">
+                <a href="{{ url('/#kontak') }}" 
+                   @click="mobileMenuOpen = false"
+                   class="block w-full text-center bg-slate-950 text-white py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-slate-900/20 transition-all duration-700 delay-700 mobile-footer-item hover:bg-primary transition-colors"
+                   :class="mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
                     Konsultasi Gratis
                 </a>
             </div>
         </div>
     </div>
-</nav>
 
 
 
