@@ -182,6 +182,11 @@
                 <span class="font-bold text-xs tracking-tight">Pricing Paket</span>
             </a>
 
+            <a href="{{ route('admin.joki.index') }}" class="flex items-center gap-3 px-3 py-3 rounded-xl transition-all {{ Request::is('admin/joki*') ? 'nav-link-active' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
+                <i class="fas fa-keyboard w-4 text-sm"></i>
+                <span class="font-bold text-xs tracking-tight">Layanan Joki</span>
+            </a>
+
             <a href="{{ route('admin.blogger.index') }}" class="flex items-center gap-3 px-3 py-3 rounded-xl transition-all {{ Request::is('admin/blogger*') ? 'nav-link-active' : 'hover:bg-white/5 text-gray-400 hover:text-white' }}">
                 <i class="fab fa-blogger-b w-4 text-sm"></i>
                 <span class="font-bold text-xs tracking-tight">Blogger Artikels</span>
