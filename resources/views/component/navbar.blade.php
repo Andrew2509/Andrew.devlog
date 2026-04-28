@@ -49,27 +49,23 @@
                 </div>
             </div>
 
-            <!-- Actions Section -->
-            <div class="hidden md:flex items-center gap-4 relative z-10">
-                <button onclick="openSearch()" class="group flex items-center justify-center w-12 h-12 rounded-full bg-white/50 hover:bg-white border border-slate-200 hover:border-primary/30 transition-all duration-500 shadow-sm active:scale-90" title="Cari (Ctrl+K)">
+            <!-- Actions Section (Search always visible, Consult only on desktop) -->
+            <div class="flex items-center gap-2 sm:gap-4 relative z-10">
+                <button onclick="openSearch()" class="group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/50 hover:bg-white border border-slate-200 hover:border-primary/30 transition-all duration-500 shadow-sm active:scale-90" title="Cari (Ctrl+K)">
                     <i class="fas fa-search text-slate-500 group-hover:text-primary transition-colors text-sm"></i>
                 </button>
 
-                <a href="{{ url('/#kontak') }}" class="relative group px-8 py-3.5 rounded-full font-black text-[11px] tracking-[0.15em] uppercase transition-all duration-500 active:scale-95 overflow-hidden">
-                    <!-- Background Layers -->
+                <a href="{{ url('/#kontak') }}" class="hidden md:flex relative group px-8 py-3.5 rounded-full font-black text-[11px] tracking-[0.15em] uppercase transition-all duration-500 active:scale-95 overflow-hidden">
                     <div class="absolute inset-0 bg-slate-950 transition-all duration-500 group-hover:bg-primary"></div>
                     <div class="absolute inset-0 bg-gradient-to-r from-primary to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
                     <span class="relative z-10 text-white">Konsultasi Gratis</span>
                 </a>
-            </div>
 
-            <!-- Mobile Menu Toggle -->
-            <div class="lg:hidden flex items-center gap-3 relative z-10">
-                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="group w-14 h-14 flex flex-col items-center justify-center gap-1.5 rounded-[1.25rem] bg-slate-950 text-white shadow-xl shadow-slate-900/10 transition-all duration-500 active:scale-90">
-                    <span class="block w-6 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:rotate-45 group-[.open]:translate-y-2"></span>
-                    <span class="block w-4 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:opacity-0 self-start ml-4"></span>
-                    <span class="block w-6 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:-rotate-45 group-[.open]:-translate-y-2"></span>
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden group w-10 h-10 sm:w-14 sm:h-14 flex flex-col items-center justify-center gap-1 sm:gap-1.5 rounded-xl sm:rounded-[1.25rem] bg-slate-950 text-white shadow-xl shadow-slate-900/10 transition-all duration-500 active:scale-90">
+                    <span class="block w-5 sm:w-6 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:rotate-45 group-[.open]:translate-y-2"></span>
+                    <span class="block w-3 sm:w-4 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:opacity-0 self-start ml-2.5 sm:ml-4"></span>
+                    <span class="block w-5 sm:w-6 h-0.5 bg-current rounded-full transition-all duration-500 group-[.open]:-rotate-45 group-[.open]:-translate-y-2"></span>
                 </button>
             </div>
         </div>
