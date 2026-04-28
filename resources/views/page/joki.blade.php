@@ -3,7 +3,10 @@
 @section('title', 'Joki Development - Layanan Pengerjaan Proyek Koding')
 @section('meta_description', 'Layanan joki koding profesional untuk tugas kuliah, mini project, hingga pengembangan aplikasi enterprise dengan harga transparan.')
 
-@section('header_extra')
+@section('head')
+<!-- Alpine.js (Wajib untuk interaktivitas) -->
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 <style>
     .service-card-active {
         border-color: #0066FF !important;
@@ -22,11 +25,13 @@
         background: white;
         box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.05);
     }
+    /* Sembunyikan element Alpine sebelum inisialisasi untuk mencegah flash of unstyled content */
+    [x-cloak] { display: none !important; }
 </style>
 @endsection
 
 @section('content')
-<div x-data="jokiData()" class="min-h-screen bg-slate-50 pt-32 pb-20">
+<div x-data="jokiData()" x-cloak class="min-h-screen bg-slate-50 pt-32 pb-20">
 
     <!-- Stepper Modern -->
     <div class="max-w-xl mx-auto px-6 mb-16">
@@ -61,8 +66,9 @@
         @include('page.joki.steps.confirmation')
     </main>
 </div>
+@endsection
 
-@push('scripts')
+@section('scripts')
 <script>
 function jokiData() {
     return {
@@ -164,6 +170,4 @@ function jokiData() {
     };
 }
 </script>
-@endpush
-
 @endsection
