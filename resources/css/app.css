@@ -34,3 +34,33 @@
         100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); transform: scale(1); }
     }
 }
+
+/* Navbar Custom Styles */
+#main-nav.scrolled #nav-container {
+    @apply shadow-2xl shadow-primary/10;
+    height: 76px;
+    border-color: rgba(255, 255, 255, 1);
+}
+
+#main-nav.scrolled #nav-glass {
+    opacity: 1;
+}
+
+/* Mobile Menu Entrance */
+.mobile-menu-open #mobile-overlay {
+    transform: translateX(0);
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.mobile-menu-open .mobile-link,
+.mobile-menu-open .mobile-footer-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Prevent Scroll when Mobile Menu is Open */
+body.mobile-menu-open {
+    overflow: hidden;
+}
+

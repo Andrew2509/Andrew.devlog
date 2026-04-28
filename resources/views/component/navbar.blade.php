@@ -125,45 +125,7 @@
     </div>
 </nav>
 
-<style>
-    /* Sliding Pill Interaction */
-    .nav-link[data-active="true"] {
-        color: #1877F2;
-    }
 
-    #main-nav.scrolled {
-        padding-top: 1.25rem;
-        padding-bottom: 1.25rem;
-    }
-
-    #main-nav.scrolled #nav-container {
-        @apply shadow-2xl shadow-primary/10;
-        height: 76px;
-        border-color: rgba(255, 255, 255, 1);
-    }
-
-    #main-nav.scrolled #nav-glass {
-        opacity: 1;
-    }
-
-    /* Mobile Menu Entrance */
-    .mobile-menu-open #mobile-overlay {
-        transform: translateX(0);
-        pointer-events: auto;
-        opacity: 1;
-    }
-
-    .mobile-menu-open .mobile-link,
-    .mobile-menu-open .mobile-footer-item {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    /* Prevent Scroll when Mobile Menu is Open */
-    body.mobile-menu-open {
-        overflow: hidden;
-    }
-</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
