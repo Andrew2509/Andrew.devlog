@@ -182,7 +182,7 @@
 
     <!-- Mobile Category Menu (Only HP) -->
     @if($siblings->count() > 0 || $currentCategory->parent_id)
-    <div class="fixed bottom-8 right-8 z-50 md:hidden">
+    <div class="fixed bottom-8 right-8 z-50 lg:hidden">
         <button id="category-menu-toggle" class="w-16 h-16 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center text-xl transform active:scale-90 transition-all border-4 border-white animate-bounce-subtle">
             <i class="fas fa-th-large"></i>
         </button>
@@ -190,7 +190,7 @@
 
     <!-- Mobile Category Drawer -->
     <div id="category-overlay" class="fixed inset-0 z-40 hidden bg-black/60 backdrop-blur-md transition-all duration-300 opacity-0"></div>
-    <div id="category-drawer" class="fixed bottom-0 left-0 right-0 z-50 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden">
+    <div id="category-drawer" class="fixed bottom-0 left-0 right-0 z-50 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] lg:hidden">
         <div class="bg-white rounded-t-[3rem] p-8 pb-12 shadow-2xl border-t border-gray-100 max-h-[80vh] overflow-y-auto">
             <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-10"></div>
             
