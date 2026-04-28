@@ -49,13 +49,20 @@
 /* Mobile Menu Entrance Handled by Tailwind/Alpine */
 
 
-/* Prevent Scroll when Mobile Menu is Open */
+/* Global Scroll Fix */
+html, body {
+    height: auto !important;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+}
+
 body.mobile-menu-open {
-    overflow: hidden;
+    overflow: hidden !important;
+    height: 100vh !important;
 }
 
 [x-cloak] { display: none !important; }
-
 
 @theme {
     /* Custom Colors */
