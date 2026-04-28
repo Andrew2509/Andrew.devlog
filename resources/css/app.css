@@ -46,23 +46,16 @@
     opacity: 1;
 }
 
-/* Mobile Menu Entrance */
-.mobile-menu-open #mobile-overlay {
-    transform: translateX(0);
-    pointer-events: auto;
-    opacity: 1;
-}
+/* Mobile Menu Entrance Handled by Tailwind/Alpine */
 
-.mobile-menu-open .mobile-link,
-.mobile-menu-open .mobile-footer-item {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 /* Prevent Scroll when Mobile Menu is Open */
 body.mobile-menu-open {
     overflow: hidden;
 }
+
+[x-cloak] { display: none !important; }
+
 
 @theme {
     /* Custom Colors */

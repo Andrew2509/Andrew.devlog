@@ -1,26 +1,16 @@
 // Andrew.Devlog - Production Build Sync
 import './bootstrap';
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+Alpine.start();
+
 window.VITE_SYNC_VERSION = "2026-04-28-12-07"; // New hash v1207
 console.log('Vite Build Active:', window.VITE_SYNC_VERSION);
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
-    const mobileBtn = document.getElementById('mobile-menu-btn');
-    if (mobileBtn) {
-        mobileBtn.addEventListener('click', () => {
-            document.body.classList.toggle('mobile-menu-open');
-            mobileBtn.classList.toggle('open');
-        });
-    }
+    // Mobile Menu Toggle handled by Alpine.js in navbar component
 
-    // Close menu when clicking links
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            document.body.classList.remove('mobile-menu-open');
-            if (mobileBtn) mobileBtn.classList.remove('open');
-        });
-    });
 
     // Pill Logic for Desktop
     const pill = document.getElementById('nav-pill');

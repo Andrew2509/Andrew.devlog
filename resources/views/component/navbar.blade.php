@@ -85,8 +85,9 @@
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-overlay" 
-         class="fixed inset-0 bg-white z-[90] transition-all duration-700 cubic-bezier(0.85, 0, 0.15, 1) translate-x-full opacity-0 pointer-events-none lg:hidden"
-         :class="mobileMenuOpen ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0 pointer-events-none'">
+         class="fixed inset-0 bg-white z-[90] transition-all duration-700 cubic-bezier(0.85, 0, 0.15, 1) lg:hidden"
+         :class="mobileMenuOpen ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0 pointer-events-none'"
+         x-cloak>
         
         <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-[0.03] pointer-events-none">
