@@ -236,6 +236,17 @@ class HomeController extends Controller
     public function joki()
     {
         $services = JokiService::where('is_active', true)->with('packages')->orderBy('order')->get();
-        return view('page.joki', compact('services'));
+        
+        $services_json = $services->map(fn($s) => [
+            'id' => $s->id,
+            'title' => $s->title,
+            'desc' => $s->desc,
+            'icon' => $s->icon,
+            'price' => $s->price
+        ])->toJson();
+
+        $services_raw_json = $services->toJson();
+
+        return view('page.joki', compact('services_json', 'services_raw_json'));
     }
 }

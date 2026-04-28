@@ -66,13 +66,7 @@
         name: '',
         whatsapp: ''
     },
-    services: @json($services->map(fn($s) => [
-        'id' => $s->id,
-        'title' => $s->title,
-        'desc' => $s->desc,
-        'icon' => $s->icon,
-        'price' => $s->price
-    ])),
+    services: {!! $services_json !!},
     packages: [],
     updatePackages(serviceId) {
         const service = this.services_raw.find(s => s.id === serviceId);
@@ -84,7 +78,7 @@
             price: p.price
         })) : [];
     },
-    services_raw: @json($services),
+    services_raw: {!! $services_raw_json !!},
     getSelectedServiceTitle() {
         const s = this.services.find(i => i.id === this.selectedService);
         return s ? s.title : '';
