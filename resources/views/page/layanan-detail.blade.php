@@ -39,24 +39,7 @@
                 </div>
             </div>
 
-            <!-- Sub-categories / Siblings Filter -->
-            @if($siblings->count() > 0 || $currentCategory->parent_id)
-            <div class="mt-12 flex flex-col items-center md:items-start">
-                <div class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-4">Varian Layanan</div>
-                <div class="flex flex-wrap justify-center md:justify-start gap-3">
-                    <a href="{{ route('harga.layanan', $activeParent->slug) }}" 
-                       class="px-6 py-3 rounded-2xl text-xs font-bold transition-all border {{ $currentCategory->id == $activeParent->id ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-white text-gray-500 border-gray-100 hover:border-primary/30 hover:text-primary' }}">
-                        Semua {{ $activeParent->name }}
-                    </a>
-                    @foreach($siblings as $sibling)
-                    <a href="{{ route('harga.layanan', $sibling->slug) }}" 
-                       class="px-6 py-3 rounded-2xl text-xs font-bold transition-all border {{ $currentCategory->id == $sibling->id ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' : 'bg-white text-gray-500 border-gray-100 hover:border-primary/30 hover:text-primary' }}">
-                        {{ $sibling->name }}
-                    </a>
-                    @endforeach
-                </div>
-            </div>
-            @endif
+            <!-- Mobile-only Floating Menu Button (Moved to bottom of file for better structure) -->
         </div>
     </header>
 
@@ -197,6 +180,51 @@
         </div>
     </div>
 
+    <!-- Mobile Category Menu (Only HP) -->
+    @if($siblings->count() > 0 || $currentCategory->parent_id)
+    <div class="fixed bottom-8 right-8 z-50 md:hidden">
+        <button id="category-menu-toggle" class="w-16 h-16 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center text-xl transform active:scale-90 transition-all border-4 border-white animate-bounce-subtle">
+            <i class="fas fa-th-large"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Category Drawer -->
+    <div id="category-overlay" class="fixed inset-0 z-40 hidden bg-black/60 backdrop-blur-md transition-all duration-300 opacity-0"></div>
+    <div id="category-drawer" class="fixed bottom-0 left-0 right-0 z-50 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden">
+        <div class="bg-white rounded-t-[3rem] p-8 pb-12 shadow-2xl border-t border-gray-100 max-h-[80vh] overflow-y-auto">
+            <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-10"></div>
+            
+            <div class="text-center mb-8">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-2 block">Menu Layanan</span>
+                <h3 class="text-2xl font-black text-gray-900 uppercase tracking-tighter">{{ $activeParent->name }}</h3>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3">
+                <a href="{{ route('harga.layanan', $activeParent->slug) }}" 
+                   class="flex items-center justify-between p-5 rounded-3xl text-sm font-black transition-all border {{ $currentCategory->id == $activeParent->id ? 'bg-primary/5 text-primary border-primary/20' : 'bg-gray-50 text-gray-500 border-gray-100' }}">
+                    <span>SEMUA LAYANAN</span>
+                    @if($currentCategory->id == $activeParent->id)
+                    <i class="fas fa-check-circle"></i>
+                    @endif
+                </a>
+                @foreach($siblings as $sibling)
+                <a href="{{ route('harga.layanan', $sibling->slug) }}" 
+                   class="flex items-center justify-between p-5 rounded-3xl text-sm font-black transition-all border {{ $currentCategory->id == $sibling->id ? 'bg-primary/5 text-primary border-primary/20' : 'bg-gray-50 text-gray-500 border-gray-100' }}">
+                    <span>{{ strtoupper($sibling->name) }}</span>
+                    @if($currentCategory->id == $sibling->id)
+                    <i class="fas fa-check-circle"></i>
+                    @endif
+                </a>
+                @endforeach
+            </div>
+
+            <button id="close-category-drawer" class="w-full mt-8 py-4 text-gray-400 font-bold text-xs uppercase tracking-widest hover:text-gray-600 transition-colors">
+                Tutup Menu
+            </button>
+        </div>
+    </div>
+    @endif
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('pricing-search');
@@ -216,11 +244,49 @@
                     });
                 });
             }
+
+            // Mobile Category Toggle Logic
+            const toggleBtn = document.getElementById('category-menu-toggle');
+            const closeBtn = document.getElementById('close-category-drawer');
+            const overlay = document.getElementById('category-overlay');
+            const drawer = document.getElementById('category-drawer');
+
+            if (toggleBtn && overlay && drawer) {
+                const openDrawer = () => {
+                    overlay.classList.remove('hidden');
+                    setTimeout(() => {
+                        overlay.classList.add('opacity-100');
+                        drawer.classList.remove('translate-y-full');
+                    }, 10);
+                    document.body.style.overflow = 'hidden';
+                };
+
+                const closeDrawer = () => {
+                    overlay.classList.remove('opacity-100');
+                    drawer.classList.add('translate-y-full');
+                    setTimeout(() => {
+                        overlay.classList.add('hidden');
+                    }, 500);
+                    document.body.style.overflow = '';
+                };
+
+                toggleBtn.addEventListener('click', openDrawer);
+                if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+                overlay.addEventListener('click', closeDrawer);
+            }
         });
     </script>
 
     <style>
         .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-bounce-subtle {
+            animation: bounce-subtle 3s infinite ease-in-out;
+        }
     </style>
 @endsection
