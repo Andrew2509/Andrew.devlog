@@ -239,6 +239,7 @@ class HomeController extends Controller
         
         $services_json = $services->map(fn($s) => [
             'id' => $s->id,
+            'slug' => $s->slug,
             'title' => $s->title,
             'desc' => $s->desc,
             'icon' => $s->icon,

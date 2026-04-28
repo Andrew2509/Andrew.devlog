@@ -1,131 +1,32 @@
 @extends('layouts.app')
 
-@section('title', 'Order Joki - ' . setting('site_name', 'Andrew.Devlog'))
+@section('title', 'Joki Development - Layanan Pengerjaan Proyek Koding')
+@section('meta_description', 'Layanan joki koding profesional untuk tugas kuliah, mini project, hingga pengembangan aplikasi enterprise dengan harga transparan.')
 
-@section('head')
-<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+@section('header_extra')
 <style>
-    [x-cloak] { display: none !important; }
-
-    .glass-card {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(226, 232, 240, 0.8);
-    }
-
-    .step-active-bg {
-        background: linear-gradient(135deg, #1877F2 0%, #0052cc 100%);
-    }
-
     .service-card-active {
-        border-color: #1877F2;
-        background: linear-gradient(145deg, #ffffff 0%, #f0f7ff 100%);
-        box-shadow: 0 10px 25px -5px rgba(24, 119, 242, 0.1), 0 8px 10px -6px rgba(24, 119, 242, 0.1);
+        border-color: #0066FF !important;
+        background: white !important;
+        box-shadow: 0 20px 40px -15px rgba(0, 102, 255, 0.1) !important;
+        transform: translateY(-5px);
     }
-
-    input:focus, select:focus, textarea:focus {
-        box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.1);
+    .step-active-bg { background: linear-gradient(135deg, #0066FF 0%, #0052CC 100%); }
+    .glass-input {
+        background: white;
+        border: 2px solid #F1F5F9;
+        transition: all 0.3s ease;
     }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
+    .glass-input:focus {
+        border-color: #0066FF;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.05);
     }
 </style>
 @endsection
 
 @section('content')
-<div x-data="{
-    step: 1,
-    selectedService: null,
-    selectedPackage: null,
-    formData: {
-        title: '',
-        description: '',
-        deadline: '',
-        urgency: '',
-        designType: '',
-        designScope: '',
-        apiType: '',
-        endpointCount: '',
-        mobilePlatform: '',
-        screenCount: '',
-        budget: '',
-        tech: '',
-        name: '',
-        whatsapp: ''
-    },
-    services: {!! $services_json !!},
-    packages: [],
-    updatePackages(serviceId) {
-        const service = this.services_raw.find(s => s.id === serviceId);
-        this.packages = service ? service.packages.map(p => ({
-            id: p.id,
-            title: p.title,
-            desc: p.desc,
-            features: p.features,
-            price: p.price
-        })) : [];
-    },
-    services_raw: {!! $services_raw_json !!},
-    getSelectedServiceTitle() {
-        const s = this.services.find(i => i.id === this.selectedService);
-        return s ? s.title : '';
-    },
-    getSelectedPackageTitle() {
-        if(!this.selectedPackage) return '';
-        const p = this.packages.find(i => i.id === this.selectedPackage);
-        return p ? p.title : '';
-    },
-    canContinue() {
-        if(!this.selectedService) return false;
-        if(this.packages.length > 0 && !this.selectedPackage) return false;
-        return true;
-    },
-    isStep2Valid() {
-        if(!this.formData.title || !this.formData.description) return false;
-        if(this.selectedService === 2 && !this.formData.urgency) return false;
-        if(this.selectedService === 3 && (!this.formData.designType || !this.formData.designScope)) return false;
-        if(this.selectedService === 4 && (!this.formData.apiType || !this.formData.endpointCount)) return false;
-        if(this.selectedService === 5 && (!this.formData.mobilePlatform || !this.formData.screenCount)) return false;
-        if(this.selectedService !== 2 && !this.formData.deadline) return false;
-        return true;
-    },
-    sendOrder() {
-        let msg = `*ORDER JOKI DEVELOPMENT*%0A%0A` +
-                   `🔹 *Layanan:* ${this.getSelectedServiceTitle()}%0A`;
-
-        if(this.selectedPackage) {
-            msg += `📦 *Paket:* ${this.getSelectedPackageTitle()}%0A`;
-        }
-
-        if(this.selectedService === 2) msg += `⚡ *Urgensi:* ${this.formData.urgency}%0A`;
-        if(this.selectedService === 3) msg += `🎨 *Desain:* ${this.formData.designType} (${this.formData.designScope})%0A`;
-        if(this.selectedService === 4) msg += `🔌 *API:* ${this.formData.apiType} (${this.formData.endpointCount})%0A`;
-        if(this.selectedService === 5) msg += `📱 *Platform:* ${this.formData.mobilePlatform} (${this.formData.screenCount})%0A`;
-
-        msg += `📝 *Judul:* ${this.formData.title}%0A` +
-               (this.selectedService !== 2 ? `📅 *Deadline:* ${this.formData.deadline}%0A` : '') +
-               `🛠️ *Tech:* ${this.formData.tech || '-'}%0A` +
-               `💰 *Budget:* ${this.formData.budget || '-'}%0A%0A` +
-               `💬 *Deskripsi:*%0A${this.formData.description}%0A%0A` +
-               `👤 *Nama:* ${this.formData.name}%0A` +
-               `📞 *WhatsApp:* ${this.formData.whatsapp}`;
-
-        window.open(`https://wa.me/{{ setting('site_whatsapp', '628123456789') }}?text=${msg}`, '_blank');
-    }
-}" class="min-h-screen bg-[#F8FAFC] pt-36 pb-20">
+<div x-data="jokiData()" class="min-h-screen bg-[#F8FAFC] pt-36 pb-20">
 
     <!-- Stepper Modern -->
     <div class="max-w-xl mx-auto px-6 mb-16">
@@ -165,13 +66,13 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <template x-for="service in services" :key="service.id">
-                    <div @click="selectedService = service.id; updatePackages(service.id); selectedPackage = null"
+                    <div @click="selectService(service)"
                         :class="selectedService === service.id ? 'service-card-active' : 'bg-white border-slate-200 hover:border-primary/40'"
                         class="cursor-pointer p-6 rounded-[2rem] border-2 transition-all duration-300 group flex flex-col items-start text-left">
 
                         <div :class="selectedService === service.id ? 'bg-primary text-white' : 'bg-slate-50 text-slate-400 group-hover:bg-primary/10 group-hover:text-primary'"
                             class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-colors duration-300">
-                            <i :class="service.icon" class="text-2xl"></i>
+                            <i :class="'fas ' + service.icon" class="text-2xl"></i>
                         </div>
 
                         <h3 class="text-lg font-black text-slate-900 mb-2" x-text="service.title"></h3>
@@ -203,263 +104,294 @@
                             <!-- Active Badge -->
                             <div x-show="selectedPackage === pkg.id" class="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-2xl text-[10px] font-black uppercase tracking-widest">Selected</div>
 
-                            <h3 class="text-xl font-black text-slate-900 mb-2" x-text="pkg.title"></h3>
-                            <p class="text-slate-500 text-xs leading-relaxed mb-6" x-text="pkg.desc"></p>
+                            <h4 class="text-xl font-black text-slate-900 mb-2" x-text="pkg.title"></h4>
+                            <p class="text-slate-500 text-xs mb-6" x-text="pkg.desc"></p>
 
-                            <ul class="space-y-4 mb-8">
+                            <div class="space-y-3 mb-8">
                                 <template x-for="feature in pkg.features" :key="feature">
-                                    <li class="flex items-center gap-3">
-                                        <div class="w-5 h-5 rounded-full bg-green-50 flex items-center justify-center">
-                                            <i class="fas fa-check text-[8px] text-green-500"></i>
-                                        </div>
-                                        <span class="text-[11px] font-bold text-slate-600" x-text="feature"></span>
-                                    </li>
+                                    <div class="flex items-center gap-3 text-xs font-medium text-slate-600">
+                                        <i class="fas fa-check-circle text-primary"></i>
+                                        <span x-text="feature"></span>
+                                    </div>
                                 </template>
-                            </ul>
+                            </div>
 
-                            <div class="mt-auto">
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Investasi</p>
-                                <p class="text-2xl font-black text-primary" x-text="pkg.price"></p>
+                            <div class="pt-6 border-t border-slate-50 flex items-center justify-between">
+                                <span class="text-lg font-black text-slate-900" x-text="pkg.price"></span>
+                                <i class="fas fa-arrow-right text-slate-300 group-hover:text-primary transition-colors"></i>
                             </div>
                         </div>
                     </template>
                 </div>
             </div>
 
-            <!-- Button Next Step 1 -->
             <div class="flex justify-center pt-10">
-                <button @click="if(canContinue()) { step = 2; window.scrollTo(0,0); }"
+                <button
+                    @click="if(canContinue()) step = 2"
                     :disabled="!canContinue()"
-                    :class="canContinue() ? 'bg-primary text-white shadow-xl shadow-primary/30 hover:-translate-y-1' : 'bg-slate-200 text-slate-400 cursor-not-allowed'"
-                    class="group flex items-center gap-4 px-12 py-5 rounded-2xl font-black text-sm transition-all duration-300">
-                    Lanjutkan Detail Proyek
-                    <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    :class="canContinue() ? 'bg-slate-900 hover:bg-black shadow-xl shadow-slate-900/10' : 'bg-slate-200 cursor-not-allowed'"
+                    class="px-12 py-5 rounded-3xl text-white font-black text-sm uppercase tracking-widest transition-all">
+                    Lanjutkan ke Detail Proyek
                 </button>
             </div>
         </div>
 
-        <!-- Step 2: Detail Proyek -->
-        <div x-show="step === 2" x-cloak x-transition class="max-w-4xl mx-auto">
-            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
-                <div class="bg-slate-900 p-10 text-white flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div>
-                        <h2 class="text-2xl font-black mb-1">Detail Spesifikasi</h2>
-                        <p class="text-slate-400 text-sm italic">"Semakin detail, semakin akurat pengerjaan kami."</p>
-                    </div>
-                    <div class="bg-white/10 px-5 py-3 rounded-2xl backdrop-blur-md">
-                        <p class="text-[10px] font-bold text-slate-300 uppercase mb-1">Layanan Terpilih</p>
-                        <p class="text-sm font-black" x-text="getSelectedServiceTitle()"></p>
-                    </div>
+        <!-- Step 2: Form Detail -->
+        <div x-show="step === 2" x-transition class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-[3rem] p-8 md:p-16 shadow-2xl shadow-slate-200/50 border border-slate-100">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-black text-slate-900 mb-2">Ceritakan Proyekmu</h2>
+                    <p class="text-slate-500">Berikan detail sebanyak mungkin agar kami bisa memberikan estimasi terbaik.</p>
                 </div>
 
-                <div class="p-8 md:p-12 space-y-10">
-                    <!-- Basic Info -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-3">
-                            <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                <i class="fas fa-tag text-primary/60"></i> Judul Project
-                            </label>
-                            <input type="text" x-model="formData.title" placeholder="e.g. Sistem Absensi QR Code"
-                                class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:border-primary outline-none font-semibold text-slate-900 transition-all">
-                        </div>
-                        <div class="space-y-3">
-                            <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                <i class="fas fa-layer-group text-primary/60"></i> Tech Stack (Opsional)
-                            </label>
-                            <input type="text" x-model="formData.tech" placeholder="e.g. Laravel, React, Python"
-                                class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:border-primary outline-none font-semibold text-slate-900 transition-all">
-                        </div>
-                    </div>
-
-                    <!-- Dynamic Fields based on Service -->
-                    <div class="p-8 bg-primary/[0.02] border-2 border-dashed border-primary/10 rounded-3xl space-y-8">
-
-                        <!-- Bantuan Tugas (ID 2) -->
-                        <div x-show="selectedService === 2" x-transition class="space-y-3">
-                            <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">Urgensi Pengerjaan</label>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <template x-for="opt in ['Sangat Mendesak (1-2 hari)', 'Normal (3-7 hari)', 'Fleksibel (1-2 minggu)']">
-                                    <button @click="formData.urgency = opt"
-                                        :class="formData.urgency === opt ? 'bg-primary text-white border-primary' : 'bg-white text-slate-600 border-slate-200 hover:border-primary/40'"
-                                        class="px-4 py-3 rounded-xl border-2 text-[11px] font-black transition-all" x-text="opt"></button>
-                                </template>
-                            </div>
-                        </div>
-
-                        <!-- UI/UX (ID 3) -->
-                        <div x-show="selectedService === 3" x-transition class="grid md:grid-cols-2 gap-8">
-                            <div class="space-y-3">
-                                <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">Jenis Desain</label>
-                                <select x-model="formData.designType" class="w-full px-6 py-4 bg-white border border-slate-200 rounded-2xl outline-none font-semibold">
-                                    <option value="">Pilih Jenis</option>
-                                    <option>Web Application</option>
-                                    <option>Mobile App</option>
-                                    <option>Landing Page</option>
-                                </select>
-                            </div>
-                            <div class="space-y-3">
-                                <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">Scope Desain</label>
-                                <select x-model="formData.designScope" class="w-full px-6 py-4 bg-white border border-slate-200 rounded-2xl outline-none font-semibold">
-                                    <option value="">Pilih Scope</option>
-                                    <option>Wireframe Saja</option>
-                                    <option>Interactive Prototype</option>
-                                    <option>Full Design System</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- API / Mobile (ID 4 & 5) - Menggunakan logic serupa -->
-                        <div x-show="selectedService === 4" x-transition class="grid md:grid-cols-2 gap-8">
-                             <div class="space-y-3">
-                                <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">Jenis API</label>
-                                <select x-model="formData.apiType" class="w-full px-6 py-4 bg-white border border-slate-200 rounded-2xl outline-none font-semibold">
-                                    <option value="">Pilih Tipe</option>
-                                    <option>REST API</option>
-                                    <option>GraphQL</option>
-                                </select>
-                            </div>
-                            <div class="space-y-3">
-                                <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">Jumlah Endpoint</label>
-                                <input type="text" x-model="formData.endpointCount" placeholder="e.g. 10 Endpoints" class="w-full px-6 py-4 bg-white border border-slate-200 rounded-2xl outline-none font-semibold">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Deadline & Budget -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div x-show="selectedService !== 2" class="space-y-3">
-                            <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                <i class="fas fa-calendar-check text-primary/60"></i> Target Deadline
-                            </label>
-                            <input type="date" x-model="formData.deadline" class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none font-semibold">
-                        </div>
-                        <div class="space-y-3" :class="selectedService === 2 ? 'col-span-2' : ''">
-                            <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                <i class="fas fa-wallet text-primary/60"></i> Estimasi Budget (Opsional)
-                            </label>
-                            <div class="relative">
-                                <span class="absolute left-6 top-1/2 -translate-y-1/2 font-bold text-slate-400">Rp</span>
-                                <input type="text" x-model="formData.budget" placeholder="1.000.000" class="w-full pl-14 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none font-semibold">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Description -->
+                <div class="space-y-8">
+                    <!-- Judul Proyek -->
                     <div class="space-y-3">
-                        <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                            <i class="fas fa-align-left text-primary/60"></i> Deskripsi Kebutuhan
-                        </label>
-                        <textarea rows="5" x-model="formData.description" placeholder="Jelaskan alur aplikasi, fitur utama, atau lampirkan link referensi jika ada..."
-                            class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:border-primary outline-none font-semibold text-slate-900 transition-all resize-none"></textarea>
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Judul Proyek / Aplikasi</label>
+                        <input type="text" x-model="formData.title" placeholder="Misal: Aplikasi Marketplace Sampah"
+                            class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                    </div>
+
+                    <!-- Input Khusus Berdasarkan Layanan -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Deadline (Semua kecuali tugas mendadak) -->
+                        <div x-show="selectedServiceSlug !== 'bantuan-tugas-koding'" class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Kapan Harus Selesai?</label>
+                            <input type="date" x-model="formData.deadline"
+                                class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                        </div>
+
+                        <!-- Urgensi (Tugas Kuliah) -->
+                        <div x-show="selectedServiceSlug === 'bantuan-tugas-koding'" class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Seberapa Mendesak?</label>
+                            <select x-model="formData.urgency" class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900 appearance-none bg-no-repeat bg-[right_1.5rem_center]">
+                                <option value="">Pilih Tingkat Urgensi</option>
+                                <option value="Sangat Mendesak (Hari Ini)">⚡ Sangat Mendesak (Hari Ini)</option>
+                                <option value="Mendesak (1-2 Hari)">⏳ Mendesak (1-2 Hari)</option>
+                                <option value="Santai (>3 Hari)">🌱 Santai (>3 Hari)</option>
+                            </select>
+                        </div>
+
+                        <!-- Tech Stack Preference -->
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Pilihan Teknologi (Opsional)</label>
+                            <input type="text" x-model="formData.tech" placeholder="Misal: Laravel, React, Flutter"
+                                class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                        </div>
+                    </div>
+
+                    <!-- Desain UI/UX Fields -->
+                    <div x-show="selectedServiceSlug === 'desain-uiux-aplikasi'" class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Tipe Desain</label>
+                            <select x-model="formData.designType" class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                                <option value="">Pilih Tipe</option>
+                                <option value="Redesign (Existing)">Redesign (Aplikasi Lama)</option>
+                                <option value="Brand New (Dari Nol)">Brand New (Dari Nol)</option>
+                            </select>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Jumlah Screen (Estimasi)</label>
+                            <input type="number" x-model="formData.designScope" placeholder="Misal: 10"
+                                class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                        </div>
+                    </div>
+
+                    <!-- API Backend Fields -->
+                    <div x-show="selectedServiceSlug === 'pengembangan-api-backend'" class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Tipe API</label>
+                            <select x-model="formData.apiType" class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                                <option value="">Pilih Tipe</option>
+                                <option value="RESTful API">RESTful API</option>
+                                <option value="GraphQL">GraphQL</option>
+                            </select>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Estimasi Endpoint</label>
+                            <input type="number" x-model="formData.endpointCount" placeholder="Misal: 15"
+                                class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                        </div>
+                    </div>
+
+                    <!-- Mobile App Fields -->
+                    <div x-show="selectedServiceSlug === 'pembuatan-aplikasi-mobile'" class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Platform</label>
+                            <select x-model="formData.mobilePlatform" class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                                <option value="">Pilih Platform</option>
+                                <option value="Android Only">Android Only</option>
+                                <option value="iOS Only">iOS Only</option>
+                                <option value="Cross-Platform (Android & iOS)">Cross-Platform (Android & iOS)</option>
+                            </select>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Estimasi Jumlah Screen</label>
+                            <input type="number" x-model="formData.screenCount" placeholder="Misal: 20"
+                                class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                        </div>
+                    </div>
+
+                    <!-- Deskripsi Lengkap -->
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Deskripsi & Fitur Utama</label>
+                        <textarea x-model="formData.description" rows="6" placeholder="Jelaskan alur aplikasi atau fitur apa saja yang wajib ada..."
+                            class="w-full px-6 py-5 rounded-3xl glass-input outline-none font-bold text-slate-900 resize-none"></textarea>
+                    </div>
+
+                    <!-- Budget Range -->
+                    <div class="space-y-3">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Estimasi Budget (Opsional)</label>
+                        <input type="text" x-model="formData.budget" placeholder="Misal: Rp 2jt - 5jt"
+                            class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900">
                     </div>
                 </div>
-            </div>
 
-            <!-- Footer Buttons Step 2 -->
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mt-12">
-                <button @click="step = 1; window.scrollTo(0,0);" class="flex items-center gap-2 text-slate-400 font-black hover:text-primary transition-colors group">
-                    <i class="fas fa-chevron-left text-[10px] group-hover:-translate-x-1 transition-transform"></i> Kembali Pilih Layanan
-                </button>
-                <button @click="if(isStep2Valid()) { step = 3; window.scrollTo(0,0); }"
-                    :disabled="!isStep2Valid()"
-                    :class="isStep2Valid() ? 'bg-slate-900 text-white shadow-2xl shadow-slate-900/20 hover:scale-[1.02]' : 'bg-slate-200 text-slate-400 cursor-not-allowed'"
-                    class="px-16 py-5 rounded-2xl font-black text-sm transition-all duration-300">
-                    Konfirmasi Order
-                </button>
+                <div class="flex items-center gap-4 pt-12">
+                    <button @click="step = 1" class="px-8 py-5 rounded-2xl bg-slate-50 text-slate-400 font-black text-xs uppercase tracking-widest hover:bg-slate-100 transition-all">Kembali</button>
+                    <button
+                        @click="if(isStep2Valid()) step = 3"
+                        :disabled="!isStep2Valid()"
+                        :class="isStep2Valid() ? 'bg-primary hover:bg-primary-dark shadow-xl shadow-primary/20' : 'bg-slate-200 cursor-not-allowed'"
+                        class="flex-1 py-5 rounded-3xl text-white font-black text-sm uppercase tracking-widest transition-all">
+                        Lanjut ke Konfirmasi
+                    </button>
+                </div>
             </div>
         </div>
 
         <!-- Step 3: Konfirmasi -->
-        <div x-show="step === 3" x-cloak x-transition class="max-w-5xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-
-                <!-- Summary Column -->
-                <div class="lg:col-span-5 space-y-6">
-                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                        <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8 border-b border-slate-50 pb-4">Order Summary</h4>
-
-                        <div class="space-y-6">
-                            <div class="flex justify-between items-start">
-                                <span class="text-[10px] font-bold text-slate-400 uppercase">Layanan</span>
-                                <span class="text-xs font-black text-slate-900 text-right" x-text="getSelectedServiceTitle()"></span>
-                            </div>
-                            <div x-show="selectedPackage" class="flex justify-between items-start">
-                                <span class="text-[10px] font-bold text-slate-400 uppercase">Paket</span>
-                                <span class="text-xs font-black text-primary text-right" x-text="getSelectedPackageTitle()"></span>
-                            </div>
-                            <div class="flex justify-between items-start">
-                                <span class="text-[10px] font-bold text-slate-400 uppercase">Judul</span>
-                                <span class="text-xs font-bold text-slate-700 text-right max-w-[150px] truncate" x-text="formData.title"></span>
-                            </div>
-                            <div x-show="formData.deadline" class="flex justify-between items-start">
-                                <span class="text-[10px] font-bold text-slate-400 uppercase">Estimasi Selesai</span>
-                                <span class="text-xs font-black text-slate-900 text-right" x-text="formData.deadline"></span>
-                            </div>
-                        </div>
-
-                        <div class="mt-8 pt-8 border-t border-slate-50 bg-slate-50/50 -mx-8 px-8 rounded-b-[2.5rem]">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-600">
-                                    <i class="fas fa-shield-halved"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] font-black text-slate-900 uppercase">Jaminan Kualitas</p>
-                                    <p class="text-[9px] text-slate-500 font-medium italic">Revisi sampai puas & support deployment.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div x-show="step === 3" x-transition class="max-w-xl mx-auto">
+            <div class="bg-white rounded-[3rem] p-12 shadow-2xl border border-slate-100 text-center">
+                <div class="w-20 h-20 bg-green-50 text-green-500 rounded-[2rem] flex items-center justify-center mx-auto mb-8">
+                    <i class="fas fa-paper-plane text-3xl"></i>
                 </div>
 
-                <!-- Personal Info Column -->
-                <div class="lg:col-span-7">
-                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-8">
-                        <div>
-                            <h2 class="text-2xl font-black text-slate-900 mb-2">Data Pemesan</h2>
-                            <p class="text-slate-500 text-sm">Sedikit lagi! Isi kontakmu agar tim kami bisa langsung menghubungi.</p>
-                        </div>
+                <h2 class="text-3xl font-black text-slate-900 mb-4">Siap Dikirim!</h2>
+                <p class="text-slate-500 mb-10">Data akan diteruskan ke tim konsultan kami via WhatsApp untuk review teknis dan penawaran harga resmi.</p>
 
-                        <div class="space-y-6">
-                            <div class="space-y-2">
-                                <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Panggilan</label>
-                                <div class="relative">
-                                    <i class="fas fa-user absolute left-6 top-1/2 -translate-y-1/2 text-slate-300"></i>
-                                    <input type="text" x-model="formData.name" placeholder="Siapa nama kamu?"
-                                        class="w-full pl-14 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:border-primary outline-none font-semibold transition-all">
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">No. WhatsApp Aktif</label>
-                                <div class="relative">
-                                    <i class="fab fa-whatsapp absolute left-6 top-1/2 -translate-y-1/2 text-slate-300"></i>
-                                    <input type="tel" x-model="formData.whatsapp" placeholder="e.g. 081234567XXX"
-                                        class="w-full pl-14 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:border-primary outline-none font-semibold transition-all">
-                                </div>
-                            </div>
-                        </div>
+                <div class="space-y-4 mb-10">
+                    <input type="text" x-model="formData.name" placeholder="Nama Lengkap Anda"
+                        class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900 text-center">
+                    <input type="text" x-model="formData.whatsapp" placeholder="Nomor WhatsApp (Aktif)"
+                        class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900 text-center">
+                </div>
 
-                        <button @click="sendOrder()"
-                            :disabled="!formData.name || !formData.whatsapp"
-                            :class="formData.name && formData.whatsapp ? 'bg-[#25D366] text-white shadow-xl shadow-green-500/20 hover:scale-[1.02]' : 'bg-slate-200 text-slate-400 cursor-not-allowed'"
-                            class="w-full py-6 rounded-3xl font-black flex items-center justify-center gap-4 transition-all text-lg group">
-                            <i class="fab fa-whatsapp text-2xl group-hover:rotate-12 transition-transform"></i>
-                            Kirim ke WhatsApp
-                        </button>
-
-                        <div class="text-center">
-                            <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">Respons admin biasanya <span class="text-green-500">di bawah 15 menit</span></p>
-                        </div>
-                    </div>
-
-                    <button @click="step = 2; window.scrollTo(0,0);" class="mt-8 flex items-center gap-2 text-slate-400 font-black hover:text-primary transition-colors group mx-auto">
-                        <i class="fas fa-chevron-left text-[10px] group-hover:-translate-x-1 transition-transform"></i> Edit Detail Project
+                <div class="space-y-4">
+                    <button @click="sendOrder()" class="w-full py-5 rounded-3xl bg-[#25D366] hover:bg-[#1fb355] text-white font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-green-500/20 flex items-center justify-center gap-3">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                        Kirim via WhatsApp
                     </button>
+                    <button @click="step = 2" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">Periksa Kembali Detail</button>
                 </div>
-
             </div>
         </div>
 
     </main>
-
 </div>
+
+@push('scripts')
+<script>
+function jokiData() {
+    return {
+        step: 1,
+        selectedService: null,
+        selectedServiceSlug: null,
+        selectedPackage: null,
+        formData: {
+            title: '',
+            description: '',
+            deadline: '',
+            urgency: '',
+            designType: '',
+            designScope: '',
+            apiType: '',
+            endpointCount: '',
+            mobilePlatform: '',
+            screenCount: '',
+            budget: '',
+            tech: '',
+            name: '',
+            whatsapp: ''
+        },
+        services: {!! $services_json !!},
+        services_raw: {!! $services_raw_json !!},
+        packages: [],
+        
+        selectService(service) {
+            this.selectedService = service.id;
+            this.selectedServiceSlug = service.slug;
+            this.selectedPackage = null;
+            
+            // Update packages list
+            const raw = this.services_raw.find(s => s.id === service.id);
+            this.packages = raw ? raw.packages.map(p => ({
+                id: p.id,
+                title: p.title,
+                desc: p.desc,
+                features: p.features,
+                price: p.price
+            })) : [];
+        },
+        
+        getSelectedServiceTitle() {
+            const s = this.services.find(i => i.id === this.selectedService);
+            return s ? s.title : '';
+        },
+        
+        getSelectedPackageTitle() {
+            if(!this.selectedPackage) return '';
+            const p = this.packages.find(i => i.id === this.selectedPackage);
+            return p ? p.title : '';
+        },
+        
+        canContinue() {
+            if(!this.selectedService) return false;
+            if(this.packages.length > 0 && !this.selectedPackage) return false;
+            return true;
+        },
+        
+        isStep2Valid() {
+            if(!this.formData.title || !this.formData.description) return false;
+            
+            // Logic validation based on SLUG
+            if(this.selectedServiceSlug === 'bantuan-tugas-koding' && !this.formData.urgency) return false;
+            if(this.selectedServiceSlug === 'desain-uiux-aplikasi' && (!this.formData.designType || !this.formData.designScope)) return false;
+            if(this.selectedServiceSlug === 'pengembangan-api-backend' && (!this.formData.apiType || !this.formData.endpointCount)) return false;
+            if(this.selectedServiceSlug === 'pembuatan-aplikasi-mobile' && (!this.formData.mobilePlatform || !this.formData.screenCount)) return false;
+            
+            // Deadline is mandatory except for tugas koding (which uses urgency)
+            if(this.selectedServiceSlug !== 'bantuan-tugas-koding' && !this.formData.deadline) return false;
+            
+            return true;
+        },
+        
+        sendOrder() {
+            let msg = `*ORDER JOKI DEVELOPMENT*%0A%0A` +
+                       `🔹 *Layanan:* ${this.getSelectedServiceTitle()}%0A`;
+
+            if(this.selectedPackage) {
+                msg += `📦 *Paket:* ${this.getSelectedPackageTitle()}%0A`;
+            }
+
+            if(this.selectedServiceSlug === 'bantuan-tugas-koding') msg += `⚡ *Urgensi:* ${this.formData.urgency}%0A`;
+            if(this.selectedServiceSlug === 'desain-uiux-aplikasi') msg += `🎨 *Desain:* ${this.formData.designType} (${this.formData.designScope})%0A`;
+            if(this.selectedServiceSlug === 'pengembangan-api-backend') msg += `🔌 *API:* ${this.formData.apiType} (${this.formData.endpointCount})%0A`;
+            if(this.selectedServiceSlug === 'pembuatan-aplikasi-mobile') msg += `📱 *Platform:* ${this.formData.mobilePlatform} (${this.formData.screenCount})%0A`;
+
+            msg += `📝 *Judul:* ${this.formData.title}%0A` +
+                   (this.selectedServiceSlug !== 'bantuan-tugas-koding' ? `📅 *Deadline:* ${this.formData.deadline}%0A` : '') +
+                   `🛠️ *Tech:* ${this.formData.tech || '-'}%0A` +
+                   `💰 *Budget:* ${this.formData.budget || '-'}%0A%0A` +
+                   `💬 *Deskripsi:*%0A${this.formData.description}%0A%0A` +
+                   `👤 *Nama:* ${this.formData.name}%0A` +
+                   `📞 *WhatsApp:* ${this.formData.whatsapp}`;
+
+            window.open(`https://wa.me/{{ setting('site_whatsapp', '628123456789') }}?text=${msg}`, '_blank');
+        }
+    };
+}
+</script>
+@endpush
+
 @endsection

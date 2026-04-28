@@ -8,6 +8,7 @@ class JokiService extends Model
 {
     protected $fillable = [
         'title',
+        'slug',
         'desc',
         'icon',
         'price',

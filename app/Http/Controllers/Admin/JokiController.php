@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JokiService;
 use App\Models\JokiPackage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class JokiController extends Controller
 {
@@ -30,7 +31,10 @@ class JokiController extends Controller
             'order' => 'required|integer',
         ]);
 
-        JokiService::create($request->all());
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->title);
+
+        JokiService::create($data);
 
         return redirect()->route('admin.joki.index')->with('success', 'Layanan Joki berhasil ditambahkan.');
     }
@@ -50,7 +54,10 @@ class JokiController extends Controller
             'order' => 'required|integer',
         ]);
 
-        $service->update($request->all());
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->title);
+
+        $service->update($data);
 
         return redirect()->route('admin.joki.index')->with('success', 'Layanan Joki berhasil diperbarui.');
     }
