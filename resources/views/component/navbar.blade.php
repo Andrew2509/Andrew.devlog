@@ -72,7 +72,7 @@
     </div>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-overlay" class="fixed inset-0 bg-white z-[60] translate-x-full transition-transform duration-700 cubic-bezier(0.85, 0, 0.15, 1) hidden">
+    <div id="mobile-overlay" class="fixed inset-0 bg-white z-[90] translate-x-full transition-transform duration-700 cubic-bezier(0.85, 0, 0.15, 1) pointer-events-none opacity-0">
         <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-[0.03] pointer-events-none">
             <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -81,7 +81,7 @@
             </svg>
         </div>
 
-        <div class="relative flex flex-col h-full p-10 pt-32 overflow-y-auto">
+        <div class="relative flex flex-col h-full p-10 pt-32 overflow-y-auto pointer-events-auto">
             <div class="flex flex-col space-y-4">
                 <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Navigasi Utama</span>
                 @foreach($links as $index => $link)
@@ -142,8 +142,9 @@
 
     /* Mobile Menu Entrance */
     .mobile-menu-open #mobile-overlay {
-        display: block;
         transform: translateX(0);
+        pointer-events: auto;
+        opacity: 1;
     }
 
     .mobile-menu-open .mobile-link,
@@ -212,24 +213,16 @@
     function toggleMobileMenu() {
         const body = document.body;
         const btn = document.getElementById('mobile-menu-btn');
-        const overlay = document.getElementById('mobile-overlay');
-
-        const isOpen = body.classList.toggle('mobile-menu-open');
+        body.classList.toggle('mobile-menu-open');
         btn.classList.toggle('open');
+    }
 
-        if (isOpen) {
-            overlay.classList.remove('hidden');
-            // Trigger reflow
-            overlay.offsetHeight;
-            overlay.classList.remove('translate-x-full');
-        } else {
-            overlay.classList.add('translate-x-full');
-            setTimeout(() => {
-                if (!body.classList.contains('mobile-menu-open')) {
-                    overlay.classList.add('hidden');
-                }
-            }, 700);
-        }
+    // Fallback if openSearch is not defined
+    if (typeof window.openSearch === 'undefined') {
+        window.openSearch = function() {
+            console.log('Search clicked');
+            // You can add search modal logic here or ensure it's loaded from another file
+        };
     }
 </script>
 
