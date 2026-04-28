@@ -5,6 +5,9 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
+// Fail-safe: Ensure body is scrollable on load
+document.body.classList.remove('mobile-menu-open');
+
 window.VITE_SYNC_VERSION = "2026-04-28-12-07"; // New hash v1207
 console.log('Vite Build Active:', window.VITE_SYNC_VERSION);
 
