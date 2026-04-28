@@ -26,7 +26,7 @@
 @endsection
 
 @section('content')
-<div x-data="jokiData()" class="min-h-screen bg-[#F8FAFC] pt-36 pb-20">
+<div x-data="jokiData()" class="min-h-screen bg-slate-50 pt-32 pb-20">
 
     <!-- Stepper Modern -->
     <div class="max-w-xl mx-auto px-6 mb-16">
@@ -127,7 +127,7 @@
 
             <div class="flex justify-center pt-10">
                 <button
-                    @click="if(canContinue()) step = 2"
+                    @click="if(canContinue()) { step = 2; window.scrollTo(0,0); }"
                     :disabled="!canContinue()"
                     :class="canContinue() ? 'bg-slate-900 hover:bg-black shadow-xl shadow-slate-900/10' : 'bg-slate-200 cursor-not-allowed'"
                     class="px-12 py-5 rounded-3xl text-white font-black text-sm uppercase tracking-widest transition-all">
@@ -248,9 +248,9 @@
                 </div>
 
                 <div class="flex items-center gap-4 pt-12">
-                    <button @click="step = 1" class="px-8 py-5 rounded-2xl bg-slate-50 text-slate-400 font-black text-xs uppercase tracking-widest hover:bg-slate-100 transition-all">Kembali</button>
+                    <button @click="step = 1; window.scrollTo(0,0);" class="px-8 py-5 rounded-2xl bg-slate-50 text-slate-400 font-black text-xs uppercase tracking-widest hover:bg-slate-100 transition-all">Kembali</button>
                     <button
-                        @click="if(isStep2Valid()) step = 3"
+                        @click="if(isStep2Valid()) { step = 3; window.scrollTo(0,0); }"
                         :disabled="!isStep2Valid()"
                         :class="isStep2Valid() ? 'bg-primary hover:bg-primary-dark shadow-xl shadow-primary/20' : 'bg-slate-200 cursor-not-allowed'"
                         class="flex-1 py-5 rounded-3xl text-white font-black text-sm uppercase tracking-widest transition-all">
@@ -268,13 +268,19 @@
                 </div>
 
                 <h2 class="text-3xl font-black text-slate-900 mb-4">Siap Dikirim!</h2>
-                <p class="text-slate-500 mb-10">Data akan diteruskan ke tim konsultan kami via WhatsApp untuk review teknis dan penawaran harga resmi.</p>
+                <p class="text-slate-500 mb-10 text-sm">Data akan diteruskan ke tim konsultan kami via WhatsApp untuk review teknis dan penawaran harga resmi.</p>
 
-                <div class="space-y-4 mb-10">
-                    <input type="text" x-model="formData.name" placeholder="Nama Lengkap Anda"
-                        class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900 text-center">
-                    <input type="text" x-model="formData.whatsapp" placeholder="Nomor WhatsApp (Aktif)"
-                        class="w-full px-6 py-5 rounded-2xl glass-input outline-none font-bold text-slate-900 text-center">
+                <div class="space-y-4 mb-10 text-left">
+                    <div class="space-y-2">
+                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Nama Lengkap</label>
+                        <input type="text" x-model="formData.name" placeholder="E.g. Andrew Princenton"
+                            class="w-full px-6 py-4 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">WhatsApp Aktif</label>
+                        <input type="text" x-model="formData.whatsapp" placeholder="E.g. 0812xxxx"
+                            class="w-full px-6 py-4 rounded-2xl glass-input outline-none font-bold text-slate-900">
+                    </div>
                 </div>
 
                 <div class="space-y-4">
@@ -282,7 +288,7 @@
                         <i class="fab fa-whatsapp text-xl"></i>
                         Kirim via WhatsApp
                     </button>
-                    <button @click="step = 2" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">Periksa Kembali Detail</button>
+                    <button @click="step = 2; window.scrollTo(0,0);" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">Periksa Kembali Detail</button>
                 </div>
             </div>
         </div>
