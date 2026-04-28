@@ -6,6 +6,7 @@ use App\Models\Portfolio;
 use App\Models\Price;
 use App\Models\ServiceCategory;
 use App\Models\Template;
+use App\Models\JokiService;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,7 +26,29 @@ class HomeController extends Controller
         $clients = \App\Models\Client::where('is_active', true)->orderBy('order')->orderBy('name')->get();
         $categories = ServiceCategory::whereNull('parent_id')->orderBy('order')->get();
 
-        return view('index', compact('portfolios', 'prices', 'clients', 'categories'));
+        // Static testimonials for Bilcode branding as seen in reference image
+        $testimonials = collect([
+            (object)[
+                'name' => 'Adi',
+                'position' => 'Mahasiswa',
+                'content' => 'Tugas koding jadi santai banget. Penjelasannya juga detail banget.',
+                'avatar_url' => null
+            ],
+            (object)[
+                'name' => 'Linda',
+                'position' => 'Mahasiswa',
+                'content' => 'Harganya oke banget buat kantong mahasiswa. Hasilnya memuaskan.',
+                'avatar_url' => null
+            ],
+            (object)[
+                'name' => 'Budi',
+                'position' => 'Developer',
+                'content' => 'Sangat terbantu buat project yang deadline-nya super mepet.',
+                'avatar_url' => null
+            ],
+        ]);
+
+        return view('index', compact('portfolios', 'prices', 'clients', 'categories', 'testimonials'));
     }
 
     public function portfolio()
@@ -209,5 +232,10 @@ class HomeController extends Controller
     {
         $categories = ServiceCategory::whereNull('parent_id')->orderBy('order')->get();
         return view('page.pesan', compact('categories'));
+    }
+    public function joki()
+    {
+        $services = JokiService::where('is_active', true)->with('packages')->orderBy('order')->get();
+        return view('page.joki', compact('services'));
     }
 }

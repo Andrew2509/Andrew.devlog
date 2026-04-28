@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ setting('site_name', 'Andrew.Devlog') }} - Personal Links</title>
+    <title>{{ setting('site_name', 'Andrew.Devlog') }} - Tautan Pribadi</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,7 +91,7 @@
                 </div>
                 <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
                     <div class="w-2 h-6 bg-indigo-500 rounded-full"></div>
-                    About Me
+                    Tentang Saya
                 </h3>
                 <p class="text-slate-600 leading-relaxed text-sm lg:text-base relative z-10 whitespace-pre-line">
                     {{ setting('sosmed_about', 'Halo! Saya adalah seorang Software Developer profesional yang berdedikasi dalam mengubah ide menjadi realitas digital. Dengan keahlian mendalam dalam pengembangan web dan aplikasi mobile, saya siap membantu bisnis Anda tumbuh lebih cepat melalui solusi teknologi yang modern, responsif, dan scalable.') }}
@@ -236,7 +236,7 @@
 
     <!-- Footer -->
     <footer class="text-center py-8 text-sm text-slate-500 font-medium">
-        <p>&copy; Copyright 2026 {{ setting('site_name', 'Andrew.Devlog') }} - Princenton Andrew Brightly Masrikat</p>
+        <p>&copy; Hak Cipta 2026 {{ setting('site_name', 'Andrew.Devlog') }} - Princenton Andrew Brightly Masrikat</p>
     </footer>
 
     <script>

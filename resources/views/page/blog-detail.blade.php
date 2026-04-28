@@ -225,7 +225,7 @@
                     </div>
                     <div>
                         <p class="text-sm font-bold text-gray-900">{{ $post->getAuthor()->getDisplayName() }}</p>
-                        <p class="text-xs text-gray-500">Author</p>
+                        <p class="text-xs text-gray-500">Penulis</p>
                     </div>
                 </div>
 

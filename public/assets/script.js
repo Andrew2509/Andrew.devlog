@@ -91,23 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Initialize Navbar Scroll
-    const initNavbarScroll = () => {
-        const nav = document.querySelector('nav');
-        if (!nav) return;
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('bg-white/95', 'shadow-md');
-                nav.classList.remove('bg-white/90');
-            } else {
-                nav.classList.add('bg-white/90');
-                nav.classList.remove('bg-white/95', 'shadow-md');
-            }
-        });
-    };
-
-    initNavbarScroll();
+    // 5. Navbar Scroll (Handled by component)
+    // Removed to avoid conflict with upgraded navbar component
 
     // 6. Sidebar Active State Switcher (for Outbar)
     const navItems = document.querySelectorAll('.nav-item');
@@ -122,56 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Toggle Mobile Menu
+ * Toggle Mobile Menu (Handled by component)
+ * Removed to avoid conflict with upgraded navbar component
  */
-function toggleMobileMenu() {
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileMenuIcon = document.getElementById('mobile-menu-icon');
-    
-    if (!mobileMenu || !mobileMenuIcon) return;
-    
-    const isHidden = mobileMenu.classList.contains('hidden');
-    
-    if (isHidden) {
-        // OPEN MENU
-        mobileMenu.classList.remove('hidden');
-        // Force reflow for height transition
-        mobileMenu.offsetHeight; 
-        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
-        mobileMenuIcon.classList.replace('fa-bars', 'fa-times');
-        
-        // Setup specialized click listener to close menu when clicking links
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            if (!link.dataset.hasListener) {
-                link.addEventListener('click', () => {
-                    closeMobileMenu();
-                });
-                link.dataset.hasListener = 'true';
-            }
-        });
-    } else {
-        // CLOSE MENU
-        closeMobileMenu();
-    }
-}
-
-/**
- * Helper to close mobile menu
- */
-function closeMobileMenu() {
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileMenuIcon = document.getElementById('mobile-menu-icon');
-    
-    if (!mobileMenu || !mobileMenuIcon) return;
-    
-    mobileMenu.style.maxHeight = '0';
-    mobileMenuIcon.classList.replace('fa-times', 'fa-bars');
-    
-    setTimeout(() => {
-        mobileMenu.classList.add('hidden');
-    }, 300);
-}
 
 /**
  * Toggle Submenu for Sidebar (Outbar)

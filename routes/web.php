@@ -19,6 +19,7 @@ Route::get('/blog/{id}', [App\Http\Controllers\BlogController::class, 'show'])->
 Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/me', function () { return view('page.sosmed'); })->name('sosmed');
+Route::get('/joki', [App\Http\Controllers\HomeController::class, 'joki'])->name('joki');
 Route::get('/privacy', function () { return view('page.privacy'); })->name('privacy');
 Route::get('/terms', function () { return view('page.terms'); })->name('terms');
 Route::post('/inquiry', [App\Http\Controllers\InquiryController::class, 'store'])->name('inquiry.store');
@@ -72,4 +73,20 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
 
     // Template Management
     Route::resource('templates', App\Http\Controllers\Admin\TemplateController::class)->names('admin.templates');
+
+    // Joki Management
+    Route::get('/joki', [App\Http\Controllers\Admin\JokiController::class, 'index'])->name('admin.joki.index');
+    Route::get('/joki/create', [App\Http\Controllers\Admin\JokiController::class, 'createService'])->name('admin.joki.create');
+    Route::post('/joki', [App\Http\Controllers\Admin\JokiController::class, 'storeService'])->name('admin.joki.store');
+    Route::get('/joki/{service}/edit', [App\Http\Controllers\Admin\JokiController::class, 'editService'])->name('admin.joki.edit');
+    Route::put('/joki/{service}', [App\Http\Controllers\Admin\JokiController::class, 'updateService'])->name('admin.joki.update');
+    Route::delete('/joki/{service}', [App\Http\Controllers\Admin\JokiController::class, 'destroyService'])->name('admin.joki.destroy');
+
+    // Joki Packages
+    Route::get('/joki/{service}/packages', [App\Http\Controllers\Admin\JokiController::class, 'indexPackages'])->name('admin.joki.packages.index');
+    Route::get('/joki/{service}/packages/create', [App\Http\Controllers\Admin\JokiController::class, 'createPackage'])->name('admin.joki.packages.create');
+    Route::post('/joki/{service}/packages', [App\Http\Controllers\Admin\JokiController::class, 'storePackage'])->name('admin.joki.packages.store');
+    Route::get('/joki/{service}/packages/{package}/edit', [App\Http\Controllers\Admin\JokiController::class, 'editPackage'])->name('admin.joki.packages.edit');
+    Route::put('/joki/{service}/packages/{package}', [App\Http\Controllers\Admin\JokiController::class, 'updatePackage'])->name('admin.joki.packages.update');
+    Route::delete('/joki/{service}/packages/{package}', [App\Http\Controllers\Admin\JokiController::class, 'destroyPackage'])->name('admin.joki.packages.destroy');
 });

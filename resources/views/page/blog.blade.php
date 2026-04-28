@@ -77,7 +77,7 @@
                             <img src="{{ $image }}" alt="{{ $post->getTitle() }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             <div class="absolute top-4 left-4">
                                 <span class="px-4 py-1.5 bg-primary/90 text-white text-xs font-bold rounded-full backdrop-blur-md uppercase tracking-widest">
-                                    {{ !empty($labels) ? $labels[0] : 'Article' }}
+                                    {{ !empty($labels) ? $labels[0] : 'Artikel' }}
                                 </span>
                             </div>
                         </div>

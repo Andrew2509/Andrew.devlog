@@ -32,7 +32,7 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold mb-6 tracking-wider uppercase backdrop-blur-sm border border-primary/20">
-                <i class="fas fa-sparkles"></i> Premium Website Templates
+                <i class="fas fa-sparkles"></i> Template Website Premium
             </div>
             <h1 class="text-4xl md:text-6xl font-display font-black text-gray-900 mb-6 leading-tight">
                 Pilih <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-600 italic">Desain Impian</span><br>Untuk Bisnis Anda
@@ -85,7 +85,7 @@
                                     rel="noopener noreferrer"
                                     class="w-full bg-white text-gray-900 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl hover:bg-primary hover:text-white transition-all transform active:scale-95 no-underline"
                                 >
-                                    <i class="fas fa-external-link-alt text-sm"></i> {{ $template->content_type === 'link' ? 'Live Preview' : 'Detail Template' }}
+                                    <i class="fas fa-external-link-alt text-sm"></i> {{ $template->content_type === 'link' ? 'Pratinjau Langsung' : 'Detail Template' }}
                                 </a>
                             </div>
 
@@ -115,7 +115,7 @@
                                         <div class="w-6 h-6 rounded-full border-2 border-white bg-sky-400 flex items-center justify-center text-[10px] text-white font-bold"><i class="fab fa-laravel"></i></div>
                                         <div class="w-6 h-6 rounded-full border-2 border-white bg-indigo-500 flex items-center justify-center text-[10px] text-white font-bold"><i class="fab fa-js"></i></div>
                                     </div>
-                                    <span class="text-[10px] text-gray-400 font-bold">Tech Stack</span>
+                                    <span class="text-[10px] text-gray-400 font-bold">Teknologi</span>
                                 </div>
                                 <span class="text-xs text-gray-400 font-bold uppercase tracking-wider">Premium Design</span>
                             </div>
@@ -156,28 +156,28 @@
                     <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-primary text-2xl">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h4 class="font-black text-gray-900 mb-2 tracking-tight">Fully Responsive</h4>
+                    <h4 class="font-black text-gray-900 mb-2 tracking-tight">Responsif Penuh</h4>
                     <p class="text-gray-500 text-xs font-bold leading-relaxed uppercase tracking-wider">Tampilan Sempurna di Semua Perangkat</p>
                 </div>
                 <div class="text-center p-8 bg-white rounded-3xl border border-gray-100 shadow-sm transition-all hover:shadow-md">
                     <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-primary text-2xl">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h4 class="font-black text-gray-900 mb-2 tracking-tight">High Performance</h4>
+                    <h4 class="font-black text-gray-900 mb-2 tracking-tight">Performa Tinggi</h4>
                     <p class="text-gray-500 text-xs font-bold leading-relaxed uppercase tracking-wider">Loading Cepat & SEO Friendly</p>
                 </div>
                 <div class="text-center p-8 bg-white rounded-3xl border border-gray-100 shadow-sm transition-all hover:shadow-md">
                     <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-primary text-2xl">
                         <i class="fas fa-code"></i>
                     </div>
-                    <h4 class="font-black text-gray-900 mb-2 tracking-tight">Clean Code</h4>
+                    <h4 class="font-black text-gray-900 mb-2 tracking-tight">Kode Bersih</h4>
                     <p class="text-gray-500 text-xs font-bold leading-relaxed uppercase tracking-wider">Struktur Rapi & Mudah Dimodifikasi</p>
                 </div>
                 <div class="text-center p-8 bg-white rounded-3xl border border-gray-100 shadow-sm transition-all hover:shadow-md">
                     <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-primary text-2xl">
                         <i class="fas fa-headset"></i>
                     </div>
-                    <h4 class="font-black text-gray-900 mb-2 tracking-tight">Full Support</h4>
+                    <h4 class="font-black text-gray-900 mb-2 tracking-tight">Dukungan Penuh</h4>
                     <p class="text-gray-500 text-xs font-bold leading-relaxed uppercase tracking-wider">Bantuan Instalasi & Kustomisasi</p>
                 </div>
             </div>

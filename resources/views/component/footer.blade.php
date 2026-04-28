@@ -48,7 +48,7 @@
             <div>
                 <h4 class="text-xs font-black mb-10 text-white uppercase tracking-[0.3em] flex items-center gap-3">
                     <span class="w-6 h-px bg-primary"></span>
-                    SERVICES
+                    LAYANAN
                 </h4>
                 <ul class="space-y-4">
                     @forelse($footerCategories as $category)
@@ -70,7 +70,7 @@
             <div>
                 <h4 class="text-xs font-black mb-10 text-white uppercase tracking-[0.3em] flex items-center gap-3">
                     <span class="w-6 h-px bg-primary"></span>
-                    EXPLORE
+                    JELAJAH
                 </h4>
                 <ul class="space-y-4">
                     <li><a href="{{ url('/') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">Beranda</a></li>
@@ -80,7 +80,7 @@
                     <li>
                         <a href="http://localhost:3000" target="_blank" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">
                             AI Sticker Studio
-                            <span class="px-1.5 py-0.5 rounded text-[8px] bg-primary/10 text-primary border border-primary/20 leading-none">NEW</span>
+                            <span class="px-1.5 py-0.5 rounded text-[8px] bg-primary/10 text-primary border border-primary/20 leading-none">BARU</span>
                         </a>
                     </li>
                 </ul>
@@ -90,7 +90,7 @@
             <div>
                 <h4 class="text-xs font-black mb-10 text-white uppercase tracking-[0.3em] flex items-center gap-3">
                     <span class="w-6 h-px bg-primary"></span>
-                    CONNECT
+                    KONEKSI
                 </h4>
                 <p class="text-gray-500 text-sm font-bold mb-8 leading-relaxed">
                     Follow perjalanan digital saya di berbagai platform sosial media.
@@ -119,7 +119,7 @@
 
         <!-- Tech Stack Row -->
         <div class="py-12 border-t border-white/5 flex flex-wrap justify-center items-center gap-10 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-            <span class="text-xs font-black tracking-[0.3em] uppercase">Built with:</span>
+            <span class="text-xs font-black tracking-[0.3em] uppercase">Dibangun dengan:</span>
             <i class="fab fa-laravel text-3xl"></i>
             <i class="fab fa-js text-3xl"></i>
             <i class="fab fa-php text-3xl"></i>
@@ -130,11 +130,11 @@
         <!-- Bottom Row -->
         <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="text-gray-500 text-xs font-black uppercase tracking-widest text-center md:text-left">
-                {{ setting('footer_copyright', '© 2026 ANDREW.DEVLOG. ALL RIGHTS RESERVED.') }}
+                {{ setting('footer_copyright', '© 2026 ANDREW.DEVLOG. HAK CIPTA DILINDUNGI.') }}
             </div>
             <div class="flex items-center gap-10">
-                <a href="{{ url('/privacy') }}" class="text-[10px] font-black text-gray-600 hover:text-primary uppercase tracking-widest transition-colors">Privacy</a>
-                <a href="{{ url('/terms') }}" class="text-[10px] font-black text-gray-600 hover:text-primary uppercase tracking-widest transition-colors">Terms</a>
+                <a href="{{ url('/privacy') }}" class="text-[10px] font-black text-gray-600 hover:text-primary uppercase tracking-widest transition-colors">Privasi</a>
+                <a href="{{ url('/terms') }}" class="text-[10px] font-black text-gray-600 hover:text-primary uppercase tracking-widest transition-colors">Ketentuan</a>
                 <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-12 h-12 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all group" aria-label="Kembali ke atas">
                     <i class="fas fa-chevron-up group-hover:-translate-y-1 transition-transform"></i>
                 </button>

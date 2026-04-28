@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', setting('site_name', 'Andrew.Devlog') . ' - Jasa Pembuatan Website Profesional & SEO')
+@section('title', setting('site_name', 'Andrew.Devlog') . ' - Jasa Pembuatan Website Profesional & Joki Coding')
 
 @section('head')
 <script>
@@ -13,33 +13,51 @@
                 },
                 colors: {
                     primary: {
-                        DEFAULT: '#0ea5e9',
-                        light: '#38bdf8',
-                        dark: '#0369a1',
+                        DEFAULT: '#1877F2',
+                        light: '#4294FF',
+                        dark: '#0056B3',
                         50: '#f0f9ff',
                         100: '#e0effe',
+                    },
+                    meta: {
+                        blue: '#0064E0',
+                        light: '#0088FF',
+                        purple: '#8A2BE2'
                     }
                 },
                 animation: {
-                    'blob': 'blob 7s infinite',
+                    'blob': 'blob 10s infinite',
                     'float': 'float 6s ease-in-out infinite',
                     'pulse-soft': 'pulse-soft 2s infinite',
+                    'spin-slow': 'spin 15s linear infinite',
+                    'bounce-slow': 'bounce 3s infinite',
+                    'marquee': 'marquee 40s linear infinite',
+                    'spin-reverse': 'spin-reverse 20s linear infinite',
                 },
                 keyframes: {
                     blob: {
                         '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                        '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                        '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                        '33%': { transform: 'translate(50px, -70px) scale(1.2)' },
+                        '66%': { transform: 'translate(-30px, 30px) scale(0.8)' },
                         '100%': { transform: 'translate(0px, 0px) scale(1)' },
                     },
                     float: {
-                        '0%, 100%': { transform: 'translateY(0)' },
-                        '50%': { transform: 'translateY(-20px)' },
+                        '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
+                        '33%': { transform: 'translate(5px, -15px) rotate(2deg)' },
+                        '66%': { transform: 'translate(-5px, -25px) rotate(-2deg)' },
                     },
                     'pulse-soft': {
-                        '0%': { boxShadow: '0 0 0 0 rgba(0, 86, 179, 0.4)', transform: 'scale(1)' },
-                        '70%': { boxShadow: '0 0 0 15px rgba(0, 86, 179, 0)', transform: 'scale(1.02)' },
-                        '100%': { boxShadow: '0 0 0 0 rgba(0, 86, 179, 0)', transform: 'scale(1)' },
+                        '0%': { boxShadow: '0 0 0 0 rgba(24, 119, 242, 0.4)', transform: 'scale(1)' },
+                        '70%': { boxShadow: '0 0 0 15px rgba(24, 119, 242, 0)', transform: 'scale(1.05)' },
+                        '100%': { boxShadow: '0 0 0 0 rgba(24, 119, 242, 0)', transform: 'scale(1)' },
+                    },
+                    'spin-reverse': {
+                        'from': { transform: 'rotate(360deg)' },
+                        'to': { transform: 'rotate(0deg)' },
+                    },
+                    marquee: {
+                        '0%': { transform: 'translateX(0)' },
+                        '100%': { transform: 'translateX(-50%)' },
                     }
                 }
             }
@@ -94,456 +112,458 @@
 @endsection
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="hero-{{ strtolower(setting('site_name', 'andrew.devlog')) }} relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-24 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('assets/image/Background.png') }}');">
-        <!-- Decorative Blobs -->
-        <div class="absolute top-0 left-0 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
-        <div class="absolute top-0 right-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-                <!-- Text Content -->
-                <div class="text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-primary text-sm font-semibold mb-6 shadow-sm border border-primary-100 animate-text-reveal" style="animation-delay: 0.1s;">
-                        <i class="fas fa-rocket"></i> {{ setting('hero_badge', 'Arsitek Digital Terbaik 2026') }}
-                    </div>
-
-                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-6 tracking-tight">
-                        <span class="block overflow-hidden pb-1"><span class="animate-text-reveal" style="animation-delay: 0.2s;">{{ setting('hero_title_1', 'Jasa Pembuatan') }}</span></span>
-                        <span class="block overflow-hidden pb-1"><span class="animate-text-reveal text-primary" style="animation-delay: 0.4s;">{{ setting('hero_title_2', 'Website Profesional') }}</span></span>
-                        <span class="block overflow-hidden pb-1"><span class="animate-text-reveal" style="animation-delay: 0.6s;">{{ setting('hero_title_3', '& SEO') }}</span></span>
-                    </h1>
-
-                    <p class="text-base sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed overflow-hidden">
-                        <span class="animate-text-reveal block" style="animation-delay: 0.8s;">
-                            {{ setting('hero_subtitle', 'Tingkatkan konversi dan visibilitas online bisnis Anda dengan website berkinerja tinggi dan strategi pemasaran digital yang terbukti. Saya hadir untuk mewujudkan visi digital Anda.') }}
-                        </span>
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start overflow-hidden pt-2 pb-4">
-                        <div class="animate-text-reveal" style="animation-delay: 1s;">
-                            <a href="#harga" class="bg-primary hover:bg-primary-dark text-white text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4 rounded-full font-semibold transition-all shadow-lg flex items-center justify-center gap-2 animate-pulse-soft relative z-10">
-                                Lihat Paket Harga <i class="fas fa-arrow-right text-sm"></i>
-                            </a>
-                        </div>
-                        <div class="animate-text-reveal" style="animation-delay: 1.1s;">
-                            <a href="#layanan" class="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4 rounded-full font-semibold transition-all flex items-center justify-center gap-2 hover:-translate-y-1">
-                                Pelajari Layanan
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 flex items-center justify-center lg:justify-start gap-4 text-xs sm:text-sm text-gray-500 font-medium overflow-hidden">
-                        <span class="animate-text-reveal flex items-center gap-1" style="animation-delay: 1.2s;">
-                            <i class="fas fa-check-circle text-green-500"></i> Gratis SSL
-                        </span>
-                        <span class="animate-text-reveal flex items-center gap-1" style="animation-delay: 1.3s;">
-                            <i class="fas fa-check-circle text-green-500"></i> Support 24/7
-                        </span>
-                        <span class="animate-text-reveal flex items-center gap-1" style="animation-delay: 1.4s;">
-                            <i class="fas fa-check-circle text-green-500"></i> Garansi SEO
-                        </span>
-                    </div>
-                </div>
-            </div>
+    <div class="relative min-h-screen bg-[#F8FAFC] overflow-x-hidden">
+        <!-- Background Grid & Decorative Blobs -->
+        <div class="absolute inset-0 z-[-10]">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 50% 50%, rgba(24, 119, 242, 0.05), transparent 70%);"></div>
+            <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(#1877F2 1px, transparent 1px), linear-gradient(90deg, #1877F2 1px, transparent 1px); background-size: 40px 40px;"></div>
         </div>
-    </section>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-radial-gradient from-blue-100/20 to-transparent blur-3xl pointer-events-none -z-10"></div>
 
-    <!-- Trusted By -->
-    <section class="py-10 border-b border-gray-100 bg-white overflow-hidden marquee-wrapper">
-        {{-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-            <p class="text-center text-sm font-semibold text-gray-400 uppercase tracking-wider">Dipercaya oleh Perusahaan Terkemuka</p>
-        </div> --}}
-        <div class="relative w-full overflow-hidden">
-            <div class="marquee-container flex flex-nowrap gap-8 md:gap-16 px-8 items-center">
-                @foreach($clients as $client)
-                <div class="flex items-center gap-4 text-2xl md:text-3xl font-bold text-gray-800 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 cursor-pointer transition-all duration-300">
-                    <img src="{{ $client->logo_url }}" alt="{{ $client->name }}" class="h-10 md:h-12 w-auto object-contain">
-                    <span>{{ $client->name }}</span>
-                </div>
-                @endforeach
-                {{-- Duplicate for seamless marquee --}}
-                @foreach($clients as $client)
-                <div class="flex items-center gap-4 text-2xl md:text-3xl font-bold text-gray-800 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 cursor-pointer transition-all duration-300">
-                    <img src="{{ $client->logo_url }}" alt="{{ $client->name }}" class="h-10 md:h-12 w-auto object-contain">
-                    <span>{{ $client->name }}</span>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    <!-- Kenapa Memilih Saya -->
-    <section id="keunggulan" class="py-24 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up-element" style="transition-delay: 0.1s;">
-                <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Keunggulan Saya</h2>
-                <h2 class="text-3xl md:text-4xl font-black mb-6 tracking-tight">Kelebihan Menggunakan Jasa {{ setting('site_name', 'Andrew.Devlog') }}?</h2>
-                <p class="text-gray-600 text-lg">Saya tidak hanya membuat website, saya membangun aset digital yang menghasilkan pertumbuhan nyata untuk bisnis Anda.</p>
+        <!-- Hero Section -->
+        <section class="relative pt-32 pb-32 px-6 max-w-7xl mx-auto flex flex-col items-center text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-100 mb-8 animate-float">
+                <span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                <span class="text-xs font-bold text-slate-500 tracking-wider uppercase">{{ setting('hero_badge', 'Arsitek Digital Terbaik 2026') }}</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="fade-in-up-element bg-gray-50 rounded-2xl p-6 md:p-8 hover:-translate-y-3 transition-transform duration-300 border border-gray-100 hover:shadow-2xl hover:shadow-primary/10 group cursor-default" style="transition-delay: 0.2s;">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-100 rounded-2xl flex items-center justify-center text-primary text-2xl md:text-3xl mb-6 group-hover:bg-primary group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">Kecepatan Maksimal</h4>
-                    <p class="text-gray-600 leading-relaxed text-sm md:text-base">Website dioptimalkan untuk loading secepat kilat, memberikan pengalaman pengguna terbaik.</p>
-                </div>
-                <div class="fade-in-up-element bg-gray-50 rounded-2xl p-6 md:p-8 hover:-translate-y-3 transition-transform duration-300 border border-gray-100 hover:shadow-2xl hover:shadow-primary/10 group cursor-default" style="transition-delay: 0.4s;">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-100 rounded-2xl flex items-center justify-center text-primary text-2xl md:text-3xl mb-6 group-hover:bg-primary group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">100% SEO Friendly</h4>
-                    <p class="text-gray-600 leading-relaxed text-sm md:text-base">Struktur, meta tag, dan kode dirancang khusus untuk memenuhi standar Google.</p>
-                </div>
-                <div class="fade-in-up-element bg-gray-50 rounded-2xl p-6 md:p-8 hover:-translate-y-3 transition-transform duration-300 border border-gray-100 hover:shadow-2xl hover:shadow-primary/10 group cursor-default" style="transition-delay: 0.6s;">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-primary-100 rounded-2xl flex items-center justify-center text-primary text-2xl md:text-3xl mb-6 group-hover:bg-primary group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                        <i class="fas fa-tags"></i>
-                    </div>
-                    <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">Harga Terjangkau</h4>
-                    <p class="text-gray-600 leading-relaxed text-sm md:text-base">Kualitas premium skala korporat dengan paket harga yang transparan dan kompetitif.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Detail Layanan Saya -->
-    <section id="layanan" class="py-24 bg-gray-50 border-y border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up-element">
-                <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Layanan Saya</h2>
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Solusi Digital Komprehensif</h2>
-                <p class="text-gray-600 text-lg">Semua yang Anda butuhkan untuk mendominasi era digital.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Service 1 -->
-                <div class="fade-in-up-element bg-white rounded-3xl p-6 md:p-10 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group cursor-pointer" style="transition-delay: 0.1s;">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary-50 rounded-bl-full -z-10 group-hover:scale-150 transition-transform duration-500"></div>
-                    <div class="flex items-start gap-5 md:gap-6 mb-6">
-                        <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary text-white flex items-center justify-center text-2xl md:text-3xl flex-shrink-0 group-hover:rotate-12 transition-transform">
-                            <i class="fas fa-laptop-code"></i>
+            <h1 class="text-4xl md:text-6xl lg:text-[72px] font-black tracking-tight leading-[1.1] mb-8 text-indigo-950 max-w-5xl">
+                {{ setting('hero_title_1', 'Jasa Pembuatan') }} <br />
+                <span class="inline-flex items-center font-normal mt-4">
+                    {{ setting('hero_title_2', 'Website') }}
+                    <div class="mx-3 px-5 py-2 bg-white shadow-xl shadow-primary/5 border border-slate-100 rounded-full flex items-center gap-3 transition-transform hover:scale-105 cursor-default">
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 border-2 border-white shadow-sm ring-1 ring-slate-100 flex items-center justify-center">
+                            <i class="fas fa-code text-[10px] text-white"></i>
                         </div>
-                        <div>
-                            <h4 class="text-xl md:text-2xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">Web Design & Dev</h4>
-                            <p class="text-gray-600 leading-relaxed text-sm md:text-base">Membangun representasi online bisnis Anda dengan desain estetis yang cepat dan responsif.</p>
-                        </div>
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400 font-black tracking-wide text-xl md:text-2xl">Joki</span>
                     </div>
-                    <hr class="border-gray-100 my-6">
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3 text-gray-700 font-medium">
-                            <div class="w-6 h-6 rounded-full bg-green-100 text-green-500 flex items-center justify-center text-xs flex-shrink-0"><i class="fas fa-check"></i></div>
-                            Desain Responsif (Mobile-Friendly)
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-700 font-medium">
-                            <div class="w-6 h-6 rounded-full bg-green-100 text-green-500 flex items-center justify-center text-xs flex-shrink-0"><i class="fas fa-check"></i></div>
-                            Sertifikat SSL Gratis (Keamanan)
-                        </li>
-                    </ul>
+                    {{ setting('hero_title_3', '& Coding') }}
+                </span>
+            </h1>
+
+            <p class="text-slate-500 max-w-2xl text-base md:text-lg leading-relaxed mb-12">
+                {{ setting('hero_subtitle', 'Tingkatkan konversi dan visibilitas online bisnis Anda dengan website berkinerja tinggi dan solusi joki coding profesional yang terpercaya.') }}
+            </p>
+
+            <div class="relative w-full max-w-5xl h-[350px] sm:h-[500px] flex items-center justify-center mt-8 sm:mt-12 scale-[0.8] sm:scale-100">
+                <!-- Background Grid -->
+                <div class="absolute inset-0 opacity-[0.03] pointer-events-none"
+                     style="background-image: linear-gradient(#1877F2 1px, transparent 1px), linear-gradient(90deg, #1877F2 1px, transparent 1px); background-size: 50px 50px;">
                 </div>
 
-                <!-- Service 2 -->
-                <div class="fade-in-up-element bg-white rounded-3xl p-6 md:p-10 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group cursor-pointer" style="transition-delay: 0.2s;">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary-50 rounded-bl-full -z-10 group-hover:scale-150 transition-transform duration-500"></div>
-                    <div class="flex items-start gap-5 md:gap-6 mb-6">
-                        <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary text-white flex items-center justify-center text-2xl md:text-3xl flex-shrink-0 group-hover:rotate-12 transition-transform">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-xl md:text-2xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">SEO Optimization</h4>
-                            <p class="text-gray-600 leading-relaxed text-sm md:text-base">Mendominasi halaman pertama mesin pencari Google.</p>
-                        </div>
-                    </div>
-                    <hr class="border-gray-100 my-6">
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3 text-gray-700 font-medium">
-                            <div class="w-6 h-6 rounded-full bg-green-100 text-green-500 flex items-center justify-center text-xs flex-shrink-0"><i class="fas fa-check"></i></div>
-                            Riset Keyword Akurat
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-700 font-medium">
-                            <div class="w-6 h-6 rounded-full bg-green-100 text-green-500 flex items-center justify-center text-xs flex-shrink-0"><i class="fas fa-check"></i></div>
-                            Optimasi On-Page & Off-Page
-                        </li>
-                    </ul>
+                <!-- Single Large Arc Path (Solid Line) -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <svg viewBox="0 0 1000 500" class="w-full h-full opacity-10">
+                        <path d="M 50 450 C 150 100, 850 100, 950 450" fill="none" stroke="#1877F2" stroke-width="1.5"/>
+                    </svg>
                 </div>
-            </div>
 
-        </div>
-    </section>
+                <!-- Main Hero Element (Central Coding Logo) -->
+                <div class="relative z-10 w-48 h-48 sm:w-64 sm:h-64 flex items-center justify-center animate-pulse-soft animate-float rounded-full">
+                    <!-- Rotating Ring -->
+                    <div class="absolute inset-0 border-2 border-dashed border-primary/30 rounded-full animate-spin-slow"></div>
+                    <div class="absolute inset-4 border border-dashed border-primary/20 rounded-full animate-spin-reverse"></div>
 
-    <!-- Proses Kerja -->
-    <section id="proses-kerja" class="py-24 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-20 fade-in-up-element">
-                <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Bagaimana Saya Bekerja</h2>
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Proses Kerja yang Transparan</h2>
-                <p class="text-gray-600 text-lg">Langkah demi langkah terstruktur dari awal hingga peluncuran.</p>
-            </div>
-
-            <!-- Steps Grid -->
-            <div class="relative">
-                <div class="hidden md:block absolute top-12 left-[12%] right-[12%] h-1 bg-gradient-to-r from-primary-100 via-primary to-primary-100 z-0"></div>
-
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
-                    <div class="fade-in-up-element flex flex-col items-center text-center group" style="transition-delay: 0.1s;">
-                        <div class="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full border-4 border-primary-50 shadow-xl flex items-center justify-center relative mb-6 group-hover:-translate-y-2 transition-transform duration-300">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">1</div>
-                            <i class="fas fa-comments text-3xl md:text-4xl text-primary"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Konsultasi</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Berdiskusi untuk memahami visi dan target audiens Anda.</p>
-                    </div>
-
-                    <div class="fade-in-up-element flex flex-col items-center text-center group" style="transition-delay: 0.2s;">
-                        <div class="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full border-4 border-primary-50 shadow-xl flex items-center justify-center relative mb-6 group-hover:-translate-y-2 transition-transform duration-300">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">2</div>
-                            <i class="fas fa-pen-nib text-3xl md:text-4xl text-primary"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Desain</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Pembuatan wireframe dan rancangan UI/UX visual yang estetis.</p>
-                    </div>
-
-                    <div class="fade-in-up-element flex flex-col items-center text-center group" style="transition-delay: 0.3s;">
-                        <div class="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full border-4 border-primary-50 shadow-xl flex items-center justify-center relative mb-6 group-hover:-translate-y-2 transition-transform duration-300">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">3</div>
-                            <i class="fas fa-code text-3xl md:text-4xl text-primary"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Development</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Saya mengubah desain menjadi website fungsional.</p>
-                    </div>
-
-                    <div class="fade-in-up-element flex flex-col items-center text-center group" style="transition-delay: 0.4s;">
-                        <div class="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full border-4 border-primary-50 shadow-xl flex items-center justify-center relative mb-6 group-hover:-translate-y-2 transition-transform duration-300">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">4</div>
-                            <i class="fas fa-rocket text-3xl md:text-4xl text-primary"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Launching</h4>
-                        <p class="text-gray-600 text-sm leading-relaxed">Optimasi server dan peluncuran website.</p>
+                    <div class="relative hover:scale-110 transition-transform duration-500 group">
+                        <img src="https://img.icons8.com/?size=100&id=ezj3zaVtImPg&format=png&color=000000" alt="VS Code" class="w-24 h-24 sm:w-40 sm:h-40 object-contain group-hover:rotate-12 transition-transform">
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Portofolio -->
-    <section id="portofolio" class="py-24 bg-gray-50 overflow-hidden border-y border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-row justify-between items-end gap-4 mb-12 fade-in-up-element">
-                <div class="text-left max-w-[70%]">
-                    <h2 class="text-primary font-bold tracking-wide uppercase text-xs mb-1">Karya Saya</h2>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Portofolio Proyek</h2>
-                    <p class="text-gray-600 text-sm md:text-lg hidden sm:block">Solusi digital pilihan saya.</p>
-                </div>
-                <div class="flex-shrink-0 mb-1">
-                    <a href="{{ url('/portofolio') }}" class="inline-flex items-center gap-2 bg-white text-primary border border-primary hover:bg-primary hover:text-white px-4 md:px-8 py-2 md:py-3 rounded-full font-bold text-xs md:text-base transition-all shadow-sm group">
-                        <span class="hidden md:inline">Lihat Semua</span>
-                        <span class="md:hidden">Semua</span>
-                        <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
-            </div>
+                <!-- Floating Elements - Following the curve exactly -->
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolio-grid">
-                @forelse($portfolios as $portfolio)
-                <div class="portfolio-item fade-in-up-element group relative overflow-hidden rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 bg-white" style="transition-delay: {{ 0.2 + ($loop->index * 0.1) }}s;">
-                    <div class="w-full h-72">
-                        <img src="{{ $portfolio->image_url }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <!-- GitHub Icon -->
+                <div class="absolute top-[30%] sm:top-[35%] left-[8%] sm:left-[12%] flex items-center justify-center transform -rotate-12 hover:rotate-0 transition-all duration-500 cursor-pointer z-20 animate-float" style="animation-delay: 1.2s; animation-duration: 7s;">
+                    <i class="fab fa-github text-3xl sm:text-5xl text-slate-900"></i>
+                </div>
+
+                <!-- VS Code / Code Icon -->
+                <div class="absolute bottom-[20%] sm:bottom-[25%] left-[20%] sm:left-[30%] flex items-center justify-center transform rotate-6 hover:scale-110 transition-all duration-500 cursor-pointer z-20 animate-float" style="animation-delay: 2.5s; animation-duration: 5.5s;">
+                    <i class="fas fa-code text-2xl sm:text-4xl text-blue-500"></i>
+                </div>
+
+                <!-- Laravel Icon -->
+                <div class="absolute bottom-[20%] sm:bottom-[25%] right-[20%] sm:right-[30%] flex items-center justify-center transform rotate-12 hover:rotate-0 transition-all duration-500 cursor-pointer z-20 animate-float" style="animation-delay: 1.8s; animation-duration: 6.5s;">
+                    <i class="fab fa-laravel text-2xl sm:text-4xl text-[#FF2D20]"></i>
+                </div>
+
+                <!-- Terminal Icon -->
+                <div class="absolute top-[30%] sm:top-[35%] right-[8%] sm:right-[12%] flex items-center justify-center transform hover:scale-110 transition-all duration-500 cursor-pointer z-20 animate-float" style="animation-delay: 0.5s; animation-duration: 8s;">
+                    <i class="fas fa-terminal text-2xl sm:text-4xl text-indigo-600"></i>
+                </div>
+
+                <!-- Contact Card (Top Right) -->
+                <div class="absolute top-[5%] sm:top-[10%] -right-4 sm:right-[10%] bg-white/90 backdrop-blur-md border border-white p-3 sm:p-5 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl flex items-center gap-2 sm:gap-4 z-30 animate-float scale-75 sm:scale-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-green-200">
+                        <i class="fab fa-whatsapp text-white text-xl sm:text-2xl"></i>
                     </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                        <span class="text-primary-100 font-semibold text-sm mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{{ $portfolio->category }}</span>
-                        <h4 class="text-white text-2xl font-bold mb-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{{ $portfolio->title }}</h4>
-                        <a href="{{ $portfolio->link ?? '#' }}" target="{{ $portfolio->link ? '_blank' : '_self' }}" class="inline-flex items-center justify-center bg-primary hover:bg-primary-light text-white px-6 py-2.5 rounded-full font-medium transition-colors w-max transform translate-y-4 group-hover:translate-y-0 duration-500 delay-100 shadow-lg">
-                            Lihat Website <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                    <div class="text-left">
+                        <p class="text-sm sm:text-lg font-black text-slate-800 leading-none mb-1">Punya Project?</p>
+                        <p class="text-[8px] sm:text-[10px] text-slate-500 font-medium leading-tight max-w-[100px] sm:max-w-[150px]">Hubungi via WA</p>
+                    </div>
+                </div>
+
+                <!-- CTA Button (Top Left) -->
+                <div class="absolute top-[10%] sm:top-[18%] -left-4 sm:left-[12%] z-30 animate-float scale-75 sm:scale-100" style="animation-delay: 0.5s;">
+                    <div class="flex items-center gap-2 sm:gap-4">
+                        <span class="text-xs sm:text-sm font-bold text-blue-600">Konsultasi</span>
+                        <a href="#kontak" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30 group hover:scale-110 transition-all">
+                            <i class="fas fa-arrow-up text-xs sm:text-sm rotate-45"></i>
                         </a>
                     </div>
                 </div>
-                @empty
-                <div class="col-span-1 md:col-span-2 lg:col-span-3 py-20 text-center">
-                    <p class="text-gray-500 font-bold uppercase tracking-widest italic">Belum ada portofolio unggulan.</p>
-                </div>
-                @endforelse
             </div>
+        </section>
 
-            <!-- Mobile View More Button -->
-            <div class="mt-12 text-center md:hidden fade-in-up-element">
-                <a href="{{ url('/portofolio') }}" class="inline-flex items-center gap-3 bg-white text-primary border-2 border-primary hover:bg-primary hover:text-white px-10 py-4 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-primary/20 group">
-                    Lihat Semua Portofolio
-                    <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Daftar Harga (Pricing Table) -->
-    <section id="harga" class="py-24 bg-gray-50 border-y border-gray-100 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12 fade-in-up-element" style="transition-delay: 0.2s;">
-                <div class="text-center md:text-left max-w-2xl">
-                    <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Daftar Harga</h2>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Pilih Paket Sesuai Kebutuhan</h2>
-                    <p class="text-gray-600 text-lg">Investasi terbaik untuk pertumbuhan digital bisnis Anda.</p>
+        <!-- Trusted Brands Marquee -->
+        <section class="border-y border-slate-200/40 bg-white/50 backdrop-blur-sm py-12 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+                <div class="shrink-0 text-center md:text-left">
+                    <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-1">Dipercaya Oleh</p>
+                    <p class="text-lg font-bold text-slate-900 leading-tight">Mitra<br/>Global</p>
                 </div>
-                <div class="flex-shrink-0">
-                    <a href="{{ url('/harga') }}" class="inline-flex items-center gap-2 bg-white hover:bg-primary hover:text-white text-primary border-2 border-primary px-6 py-3 rounded-full font-bold text-sm transition-all shadow-md hover:shadow-primary/20 hover:-translate-y-1 group">
-                        <i class="fas fa-tags group-hover:scale-110 transition-transform"></i> Lihat Semua Harga <i class="fas fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
-                @forelse($prices as $price)
-                <div class="fade-in-up-element bg-{{ $price->is_popular ? 'primary' : 'white' }} rounded-3xl p-6 md:p-8 lg:p-10 border border-{{ $price->is_popular ? 'primary-dark' : 'gray-200' }} shadow-{{ $price->is_popular ? '2xl' : 'sm' }} relative {{ $price->is_popular ? 'transform lg:-translate-y-6 z-10' : 'hover:shadow-xl' }} transition-all duration-300" style="transition-delay: {{ 0.1 + ($loop->index * 0.1) }}s;">
-                    @if($price->is_popular)
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-yellow-900 px-6 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg flex items-center gap-2">
-                        <i class="fas fa-star"></i> Paling Populer
-                    </div>
-                    @endif
-                    <div class="mb-4">
-                        <h4 class="text-lg font-bold {{ $price->is_popular ? 'text-white' : 'text-gray-900' }} uppercase tracking-tight">{{ $price->service_name }}</h4>
-                    </div>
-                    <div class="mb-6 {{ $price->is_popular ? 'text-white' : 'text-gray-900' }}">
-                        <span class="text-2xl {{ $price->is_popular ? 'lg:text-3xl' : '' }} font-extrabold">Rp {{ number_format($price->price, 0, ',', '.') }}</span>
-                    </div>
-                    <ul class="space-y-4 mb-10 {{ $price->is_popular ? 'text-white' : 'text-gray-700' }}">
-                        @foreach($price->features as $feature)
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-check-circle {{ $price->is_popular ? 'text-yellow-400' : 'text-green-500' }} mt-1"></i> <span>{{ $feature }}</span>
-                        </li>
+                <div class="flex-1 overflow-hidden">
+                    <div class="flex items-center gap-16 animate-marquee whitespace-nowrap">
+                        @php
+                            $techLogos = [
+                                ['name' => 'Cloudflare', 'icon' => 'fab fa-cloudflare'],
+                                ['name' => 'Figma', 'icon' => 'fab fa-figma'],
+                                ['name' => 'Firebase', 'icon' => 'fas fa-fire'],
+                                ['name' => 'Flutter', 'icon' => 'fas fa-mobile-alt'],
+                                ['name' => 'GraphQL', 'icon' => 'fas fa-project-diagram'],
+                                ['name' => 'Laravel', 'icon' => 'fab fa-laravel'],
+                                ['name' => 'Mysql', 'icon' => 'fas fa-database'],
+                            ];
+                        @endphp
+
+                        @foreach(array_merge($techLogos, $techLogos, $techLogos) as $tech)
+                        <div class="flex items-center gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-2">
+                            <i class="{{ $tech['icon'] }} text-2xl text-slate-600"></i>
+                            <span class="text-xl font-bold tracking-tighter text-slate-800">{{ $tech['name'] }}</span>
+                        </div>
                         @endforeach
-                    </ul>
-                    <a href="#kontak" data-package="{{ $price->service_name }}" data-category="{{ $price->service_category_id }}" class="pricing-btn block w-full text-center {{ $price->is_popular ? 'bg-white text-primary hover:bg-gray-50' : 'bg-white text-primary border-2 border-primary hover:bg-primary hover:text-white' }} text-base md:text-lg py-3 rounded-full font-bold transition-all {{ $price->is_popular ? 'hover:shadow-lg hover:-translate-y-1' : '' }}">
-                        {{ $price->button_text }}
-                    </a>
-                </div>
-                @empty
-                <div class="col-span-1 lg:col-span-3 py-20 text-center">
-                    <p class="text-gray-500 font-bold uppercase tracking-widest italic">Belum ada paket harga yang tersedia.</p>
-                </div>
-                @endforelse
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-20 bg-primary text-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 fade-in-up-element">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center divide-y md:divide-y-0 md:divide-x divide-white/20">
-                <div class="py-6 md:py-0">
-                    <div class="text-4xl md:text-6xl font-extrabold mb-2 flex justify-center items-center drop-shadow-lg">
-                        @php
-                            $projects = setting('stats_projects', '2500+');
-                            $projectsNum = preg_replace('/[^0-9]/', '', $projects);
-                        @endphp
-                        <span class="counter" data-target="{{ $projectsNum }}">{{ $projectsNum }}</span><span class="text-primary-100">{{ str_replace($projectsNum, '', $projects) ?: '+' }}</span>
                     </div>
-                    <p class="text-primary-100 text-lg font-medium tracking-wide">Project Selesai</p>
-                </div>
-                <div class="py-6 md:py-0">
-                    <div class="text-4xl md:text-6xl font-extrabold mb-2 flex justify-center items-center drop-shadow-lg">
-                        @php
-                            $clients = setting('stats_clients', '1500+');
-                            $clientsNum = preg_replace('/[^0-9]/', '', $clients);
-                        @endphp
-                        <span class="counter" data-target="{{ $clientsNum }}">{{ $clientsNum }}</span><span class="text-primary-100">{{ str_replace($clientsNum, '', $clients) ?: '+' }}</span>
-                    </div>
-                    <p class="text-primary-100 text-lg font-medium tracking-wide">Klien Puas</p>
-                </div>
-                <div class="py-6 md:py-0">
-                    <div class="text-5xl md:text-6xl font-extrabold mb-2 flex justify-center items-center drop-shadow-lg">
-                        @php
-                            $experience = setting('stats_experience', '10+');
-                            $experienceNum = preg_replace('/[^0-9]/', '', $experience);
-                        @endphp
-                        <span class="counter" data-target="{{ $experienceNum }}">{{ $experienceNum }}</span><span class="text-primary-100">{{ str_replace($experienceNum, '', $experience) ?: '+' }}</span>
-                    </div>
-                    <p class="text-primary-100 text-lg font-medium tracking-wide">Tahun Pengalaman</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Testimoni -->
-    <section id="testimoni" class="py-24 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up-element">
-                <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Testimoni</h2>
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Apa Kata Klien Saya?</h2>
-                <p class="text-gray-600 text-lg">Keberhasilan klien adalah prioritas utama saya.</p>
-            </div>
 
-            <!-- Elfsight Google Reviews Widget -->
-            <div class="fade-in-up-element relative" style="transition-delay: 0.2s;">
-                <div class="overflow-hidden" style="max-height: 580px;">
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.10/iframeResizer.min.js"></script>
-                    <iframe onload="iFrameResize(this)" src="{{ setting('google_reviews_iframe', 'https://5d994d31ef99443986d2ad9bf3283ff9.elf.site') }}" title="Widget Ulasan Google" style="border:none;width:100%; min-height: 500px;"></iframe>
-                </div>
-                <!-- Masking bottom banner if it still appears -->
-                <div class="absolute bottom-0 left-0 w-full h-12 bg-white pointer-events-none z-10"></div>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- Kontak Saya -->
-    <section id="kontak" class="py-24 bg-gray-50 border-y border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up-element">
-                <h2 class="text-primary font-bold tracking-wide uppercase text-sm mb-2">Hubungi Saya</h2>
-                <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Mari Mulai Proyek Anda</h3>
-                <p class="text-gray-600 text-lg">Saya siap membantu merealisasikan ide digital Anda.</p>
-            </div>
+        <!-- 3-Step Process Section -->
+        <section class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-5xl font-black text-indigo-950 mb-4 tracking-tight">Gampang Banget, Cuma 3 Step!</h2>
+                <p class="text-slate-500 mb-16 text-lg">Dari sekadar tanya, tugas beres sampai di depan mata.</p>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-                <div class="fade-in-up-element bg-white rounded-3xl p-6 md:p-8 lg:p-10 border border-gray-100 shadow-xl shadow-primary/5" style="transition-delay: 0.1s;">
-                    <h4 class="text-2xl font-bold text-gray-900 mb-6">Kirim Pesan Langsung</h4>
-                    @if(session('success'))
-                        <div class="mb-6 p-4 bg-green-500/10 border border-green-500/20 text-green-500 rounded-2xl text-sm font-medium flex items-center gap-3">
-                            <i class="fas fa-check-circle"></i>
-                            {{ session('success') }}
+                <div class="grid md:grid-cols-3 gap-12 relative">
+                    <!-- Step 1 -->
+                    <div class="relative group">
+                        <div class="w-20 h-20 bg-[#00D95F]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 transition-transform group-hover:scale-110 group-hover:rotate-3">
+                            <i class="fab fa-whatsapp text-4xl text-[#00D95F]"></i>
                         </div>
-                    @endif
-                    <form action="{{ route('inquiry.store') }}" method="POST" class="space-y-6">
-                        @csrf
-                        <input type="hidden" name="service_category_id" id="service_category_id">
-                        <input type="hidden" name="service_name" id="service_name">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-                                <input type="text" name="name" id="name" required placeholder="Budi Santoso" class="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none">
+                        <h3 class="text-xl font-black text-indigo-950 mb-3 tracking-tight">Chat & Cerita</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed max-w-[250px] mx-auto">
+                            Beri tahu apa yang kamu butuhkan. Joki kami sudah standby menunggu cerita kamu.
+                        </p>
+                        <!-- Arrow -->
+                        <div class="hidden md:block absolute top-10 -right-6 text-slate-200">
+                            <i class="fas fa-arrow-right text-xl"></i>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative group">
+                        <div class="w-20 h-20 bg-[#1877F2]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 transition-transform group-hover:scale-110 group-hover:-rotate-3">
+                            <i class="fas fa-file-invoice-dollar text-4xl text-[#1877F2]"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-indigo-950 mb-3 tracking-tight">Deal & Bayar</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed max-w-[250px] mx-auto">
+                            Deal untuk harga dan bayar. Tim kami siap langsung eksekusi tanpa tapi-tapi.
+                        </p>
+                        <!-- Arrow -->
+                        <div class="hidden md:block absolute top-10 -right-6 text-slate-200">
+                            <i class="fas fa-arrow-right text-xl"></i>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative group">
+                        <div class="w-20 h-20 bg-[#8A2BE2]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 transition-transform group-hover:scale-110 group-hover:rotate-3">
+                            <i class="fas fa-mug-hot text-4xl text-[#8A2BE2]"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-indigo-950 mb-3 tracking-tight">Santai & Terima</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed max-w-[250px] mx-auto">
+                            Duduk santai, minum kopi, tugasmu tahu-tahu beres sesuai target yang disepakati.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="py-32 bg-[#F8FAFC]">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20">
+                    <h2 class="text-3xl md:text-5xl font-black text-indigo-950 mb-4 tracking-tight">Kenapa Pilih Kita?</h2>
+                    <p class="text-slate-500 text-lg max-w-2xl mx-auto">Bukan cuma sekadar bayar doang. Ini alasan kamu bakal nikmatin joki dari tim kami.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-6 text-primary transition-transform group-hover:scale-110">
+                            <i class="fas fa-code text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-indigo-950 mb-3 tracking-tight">Kode yang Rapi & Clean</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            Struktur coding rapi, mudah dibaca, dan pakai standar terbaru sehingga aman untuk jangka panjang.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mb-6 text-purple-600 transition-transform group-hover:scale-110">
+                            <i class="fas fa-bolt text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-indigo-950 mb-3 tracking-tight">Dikerjakan dengan Cepat</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            Deadline mepet? Tenang, tim kami terbiasa dengan jadwal yang super ngegas namun tetap berkualitas.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center mb-6 text-green-600 transition-transform group-hover:scale-110">
+                            <i class="fas fa-shield-alt text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-indigo-950 mb-3 tracking-tight">Dijamin Rahasia</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            Privasi data kamu aman 100%. Nama kamu gak bakal bocor ke dosen, asisten laboratorium, atau atasan.
+                        </p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-6 text-orange-500 transition-transform group-hover:scale-110">
+                            <i class="fas fa-sync text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-indigo-950 mb-3 tracking-tight">Revisi? Gratis Dong!</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            Belum puas dengan hasilnya? Tenang, kami berikan revisi sampai deal tanpa biaya tambahan sepeserpun.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portofolio" class="py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20">
+                    <h2 class="text-3xl md:text-5xl font-black text-indigo-950 mb-4 tracking-tight">Penasaran Sama Hasilnya?</h2>
+                    <p class="text-slate-500 text-lg max-w-2xl mx-auto">Cek project yang sudah kami selesaikan. Semua dibuat dengan penuh kasih sayang dan standar industri.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($portfolios as $portfolio)
+                    <div class="group cursor-pointer">
+                        <div class="relative aspect-[16/10] rounded-[2.5rem] overflow-hidden bg-slate-100 mb-8 shadow-2xl shadow-slate-200/50">
+                            @if($portfolio->image_url)
+                                <img src="{{ $portfolio->image_url }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center bg-slate-50">
+                                    <i class="fas fa-image text-4xl text-slate-200"></i>
+                                </div>
+                            @endif
+                            
+                            <!-- Hover Overlay -->
+                            <div class="absolute inset-0 bg-indigo-950/40 opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-[2px] flex items-center justify-center">
+                                <div class="w-16 h-16 rounded-full bg-white text-indigo-950 flex items-center justify-center text-xl transform translate-y-10 group-hover:translate-y-0 transition-all duration-500 shadow-2xl">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
                             </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                                <input type="email" name="email" id="email" required placeholder="budi@example.com" class="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none">
+                        </div>
+                        <div class="px-2">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">{{ $portfolio->category->name ?? 'Project' }}</span>
+                                <span class="text-slate-300 text-xs">•</span>
+                                <span class="text-slate-400 text-xs font-bold">{{ $portfolio->client_name }}</span>
                             </div>
+                            <h3 class="text-2xl font-black text-indigo-950 mb-2 tracking-tight group-hover:text-primary transition-colors">{{ $portfolio->title }}</h3>
                         </div>
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Nomor HP</label>
-                            <input type="tel" name="phone" id="phone" required placeholder="0812-xxxx-xxxx" class="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Pesan Anda</label>
-                            <textarea name="message" id="message" required rows="5" placeholder="Tuliskan detail kebutuhan website Anda di sini..." class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none resize-none"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white text-lg font-bold py-4 rounded-xl transition-all shadow-lg">Kirim Pesan Sekarang</button>
-                    </form>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="harga" class="py-32 bg-[#F8FAFC]">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20">
+                    <h2 class="text-3xl md:text-5xl font-black text-indigo-950 mb-4 tracking-tight">Harga yang Masuk Akal</h2>
+                    <p class="text-slate-500 text-lg max-w-2xl mx-auto">Tenang, kantong mahasiswa bersahabat. Pilih paket yang paling cocok buat kebutuhan akademikmu.</p>
                 </div>
 
-                <div class="fade-in-up-element space-y-10" style="transition-delay: 0.2s;">
-                    <div class="w-full h-64 bg-gray-200 rounded-3xl overflow-hidden border border-gray-200 relative group">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15814.721471329582!2d110.37213215!3d-7.717409249999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a599f9c7be773%3A0xe13ca773e3cd9783!2sGading%20Sari%2C%20Donokerto%2C%20Kec.%20Turi%2C%20Kabupaten%20Sleman%2C%20Daerah%20Istimewa%20Yogyakarta!5e0!3m2!1sid!2sid!4v1741544321045!5m2!1sid!2sid" 
-                            title="Lokasi Kantor Andrew Devlog di Google Maps"
-                            class="absolute inset-0 w-full h-full" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                <div class="grid md:grid-cols-3 gap-8 items-stretch">
+                    @foreach($prices as $price)
+                    <div class="relative bg-white p-12 rounded-[3rem] border {{ $price->is_popular ? 'border-primary shadow-2xl shadow-primary/10' : 'border-slate-100 shadow-sm' }} flex flex-col h-full transform transition-all hover:scale-[1.02]">
+                        @if($price->is_popular)
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-primary text-white text-[10px] font-black uppercase tracking-widest shadow-xl">
+                            Paling Populer
+                        </div>
+                        @endif
+                        
+                        <h4 class="text-sm font-black text-slate-400 uppercase tracking-[0.2em] mb-4">{{ $price->service_name }}</h4>
+                        <div class="flex items-baseline gap-2 mb-8">
+                            <span class="text-sm font-bold text-slate-400">mulai dari</span>
+                            <span class="text-4xl font-black text-indigo-950">Rp {{ number_format($price->price, 0, ',', '.') }}</span>
+                        </div>
+
+                        <ul class="space-y-4 mb-10 flex-1">
+                            @if(is_array($price->features))
+                                @foreach($price->features as $feature)
+                                    @if(trim($feature))
+                                    <li class="flex items-center gap-3 text-slate-500 text-sm">
+                                        <i class="fas fa-check-circle text-primary text-base"></i>
+                                        {{ trim($feature) }}
+                                    </li>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </ul>
+
+                        <a href="#kontak" onclick="document.getElementById('service_name').value='{{ $price->service_name }}'; document.getElementById('service_category_id').value='{{ $price->service_category_id }}'" 
+                           class="w-full py-5 rounded-2xl {{ $price->is_popular ? 'bg-primary text-white shadow-xl shadow-primary/30' : 'bg-slate-50 text-slate-600 border border-slate-100' }} text-center font-black tracking-wide hover:scale-[1.05] transition-all">
+                            Pilih Paket Ini
+                        </a>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimoni" class="py-32 bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20">
+                    <h2 class="text-3xl md:text-5xl font-black text-indigo-950 mb-4 tracking-tight">Apa Kata Mereka?</h2>
+                    <p class="text-slate-500 text-lg">Kepercayaan kamu adalah segalanya bagi kami.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($testimonials as $testimonial)
+                    <div class="bg-slate-50 p-10 rounded-[2.5rem] border border-slate-100 relative group transition-all hover:bg-white hover:shadow-xl">
+                        <div class="flex gap-1 mb-6">
+                            @for($i=0; $i<5; $i++)
+                                <i class="fas fa-star text-orange-400 text-xs"></i>
+                            @endfor
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-8 font-medium">"{{ $testimonial->content }}"</p>
+                        <div class="flex items-center gap-4">
+                            @if($testimonial->avatar_url)
+                                <img src="{{ $testimonial->avatar_url }}" alt="{{ $testimonial->name }}" class="w-12 h-12 rounded-full object-cover">
+                            @else
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black">
+                                    {{ substr($testimonial->name, 0, 1) }}
+                                </div>
+                            @endif
+                            <div>
+                                <h5 class="text-sm font-black text-indigo-950 leading-none mb-1">{{ $testimonial->name }}</h5>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{{ $testimonial->position }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="kontak" class="py-32 bg-[#F8FAFC]">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-24 items-center">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/5 rounded-lg mb-6">
+                            <i class="fas fa-paper-plane text-primary text-xs"></i>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-primary">Hubungi Kami</span>
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-black text-indigo-950 mb-8 leading-tight">
+                            Siap Untuk <span class="text-primary italic">Berkembang?</span>
+                        </h2>
+                        <p class="text-slate-500 text-lg leading-relaxed mb-12 max-w-lg">
+                            Ambil langkah pertama untuk menyelesaikan tugasmu. Isi formulir dan pakar kami akan menghubungi Anda sesegera mungkin.
+                        </p>
+
+                        <div class="space-y-8">
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center text-primary">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Kami</p>
+                                    <p class="text-indigo-950 font-bold">{{ setting('contact_email', 'hello@bilcode.com') }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center text-primary">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">WhatsApp Kami</p>
+                                    <p class="text-indigo-950 font-bold">{{ setting('contact_phone', '+62...') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <div class="relative bg-white p-8 md:p-12 rounded-[3rem] border border-slate-100 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)]">
+                            @if(session('success'))
+                                <div class="mb-8 p-4 bg-green-50 text-green-600 rounded-2xl text-sm font-black flex items-center gap-3">
+                                    <i class="fas fa-check-circle"></i>
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            <form action="{{ route('inquiry.store') }}" method="POST" class="space-y-6">
+                                @csrf
+                                <input type="hidden" name="service_category_id" id="service_category_id">
+                                <input type="hidden" name="service_name" id="service_name">
+
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nama Lengkap</label>
+                                    <input type="text" name="name" required placeholder="Nama kamu..." class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-bold text-indigo-950 placeholder:text-slate-300">
+                                </div>
+
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email</label>
+                                        <input type="email" name="email" required placeholder="email@kamu.com" class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-bold text-indigo-950 placeholder:text-slate-300">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Telepon/WA</label>
+                                        <input type="tel" name="phone" required placeholder="+62..." class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-bold text-indigo-950 placeholder:text-slate-300">
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Pesan / Detail Tugas</label>
+                                    <textarea id="message" name="message" required rows="4" placeholder="Ceritakan tentang tugas atau project kamu..." class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-bold text-indigo-950 placeholder:text-slate-300 resize-none"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-5 bg-primary text-white rounded-2xl font-black text-lg shadow-xl shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
+                                    Kirim Sekarang
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 @endsection
 
 @section('scripts')

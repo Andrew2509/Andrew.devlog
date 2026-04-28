@@ -101,7 +101,7 @@
                         <!-- Popular Badge -->
                         @if($price->is_popular)
                         <div class="absolute top-4 right-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
-                            Best Sell
+                            Terlaris
                         </div>
                         @endif
                     </div>

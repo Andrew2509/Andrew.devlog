@@ -21,13 +21,13 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-white p-6 rounded-2xl shadow-xl shadow-cyan-900/5 border border-cyan-100/50">
                         <i class="fas fa-check-circle text-primary text-2xl mb-3"></i>
-                        <h3 class="font-bold text-gray-900">Precision</h3>
-                        <p class="text-sm text-gray-500">Pixel-perfect engineering in every project.</p>
+                        <h3 class="font-bold text-gray-900">Presisi</h3>
+                        <p class="text-sm text-gray-500">Rekayasa piksel sempurna di setiap proyek.</p>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-xl shadow-cyan-900/5 border border-cyan-100/50">
                         <i class="fas fa-bolt text-primary text-2xl mb-3"></i>
-                        <h3 class="font-bold text-gray-900">Agility</h3>
-                        <p class="text-sm text-gray-500">Rapid deployment without compromising quality.</p>
+                        <h3 class="font-bold text-gray-900">Ketangkasan</h3>
+                        <p class="text-sm text-gray-500">Penyebaran cepat tanpa mengorbankan kualitas.</p>
                     </div>
                 </div>
 
