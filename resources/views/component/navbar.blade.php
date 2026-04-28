@@ -31,6 +31,7 @@
                     @php
                         $links = [
                             ['label' => 'Beranda', 'url' => url('/'), 'active' => Request::is('/')],
+                            ['label' => 'Template', 'url' => route('templates'), 'active' => Request::is('templates*')],
                             ['label' => 'Portofolio', 'url' => url('/#portofolio'), 'active' => false],
                             ['label' => 'Harga', 'url' => route('harga'), 'active' => Request::is('harga*')],
                             ['label' => 'Joki', 'url' => route('joki'), 'active' => Request::is('joki*')],
