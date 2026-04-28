@@ -3,67 +3,7 @@
 @section('title', setting('site_name', 'Andrew.Devlog') . ' - Jasa Pembuatan Website Profesional & Joki Coding')
 
 @section('head')
-<script>
-    // Page-specific Tailwind extensions
-    tailwind.config = {
-        theme: {
-            extend: {
-                fontFamily: {
-                    sans: ['Inter', 'sans-serif'],
-                },
-                colors: {
-                    primary: {
-                        DEFAULT: '#1877F2',
-                        light: '#4294FF',
-                        dark: '#0056B3',
-                        50: '#f0f9ff',
-                        100: '#e0effe',
-                    },
-                    meta: {
-                        blue: '#0064E0',
-                        light: '#0088FF',
-                        purple: '#8A2BE2'
-                    }
-                },
-                animation: {
-                    'blob': 'blob 10s infinite',
-                    'float': 'float 6s ease-in-out infinite',
-                    'pulse-soft': 'pulse-soft 2s infinite',
-                    'spin-slow': 'spin 15s linear infinite',
-                    'bounce-slow': 'bounce 3s infinite',
-                    'marquee': 'marquee 40s linear infinite',
-                    'spin-reverse': 'spin-reverse 20s linear infinite',
-                },
-                keyframes: {
-                    blob: {
-                        '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                        '33%': { transform: 'translate(50px, -70px) scale(1.2)' },
-                        '66%': { transform: 'translate(-30px, 30px) scale(0.8)' },
-                        '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                    },
-                    float: {
-                        '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
-                        '33%': { transform: 'translate(5px, -15px) rotate(2deg)' },
-                        '66%': { transform: 'translate(-5px, -25px) rotate(-2deg)' },
-                    },
-                    'pulse-soft': {
-                        '0%': { boxShadow: '0 0 0 0 rgba(24, 119, 242, 0.4)', transform: 'scale(1)' },
-                        '70%': { boxShadow: '0 0 0 15px rgba(24, 119, 242, 0)', transform: 'scale(1.05)' },
-                        '100%': { boxShadow: '0 0 0 0 rgba(24, 119, 242, 0)', transform: 'scale(1)' },
-                    },
-                    'spin-reverse': {
-                        'from': { transform: 'rotate(360deg)' },
-                        'to': { transform: 'rotate(0deg)' },
-                    },
-                    marquee: {
-                        '0%': { transform: 'translateX(0)' },
-                        '100%': { transform: 'translateX(-50%)' },
-                    }
-                }
-            }
-        }
-    }
-</script>
+
 
 <script type="application/ld+json">
 {

@@ -3,23 +3,7 @@
 @section('title', 'Blog - ' . setting('site_name', 'Andrew.Devlog'))
 
 @section('head')
-<script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                colors: {
-                    primary: {
-                        DEFAULT: '#0ea5e9',
-                        light: '#38bdf8',
-                        dark: '#0369a1',
-                        50: '#f0f9ff',
-                        100: '#e0effe',
-                    }
-                }
-            }
-        }
-    }
-</script>
+
 <style>
     .glass-card {
         background: rgba(255, 255, 255, 0.7);

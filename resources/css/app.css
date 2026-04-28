@@ -64,3 +64,58 @@ body.mobile-menu-open {
     overflow: hidden;
 }
 
+@theme {
+    /* Custom Colors */
+    --color-primary: #1877F2;
+    --color-primary-light: #4294FF;
+    --color-primary-dark: #0056B3;
+    --color-primary-50: #f0f9ff;
+    --color-primary-100: #e0effe;
+    
+    --color-meta-blue: #0064E0;
+    --color-meta-light: #0088FF;
+    --color-meta-purple: #8A2BE2;
+
+    /* Custom Animations */
+    --animate-blob: blob 10s infinite;
+    --animate-float: float 6s ease-in-out infinite;
+    --animate-pulse-soft: pulse-soft 2s infinite;
+    --animate-spin-slow: spin 15s linear infinite;
+    --animate-bounce-slow: bounce 3s infinite;
+    --animate-marquee: marquee 40s linear infinite;
+    --animate-spin-reverse: spin-reverse 20s linear infinite;
+
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(50px, -70px) scale(1.2); }
+        66% { transform: translate(-30px, 30px) scale(0.8); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        33% { transform: translate(5px, -15px) rotate(2deg); }
+        66% { transform: translate(-5px, -25px) rotate(-2deg); }
+    }
+    @keyframes pulse-soft {
+        0% { box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.4); transform: scale(1); }
+        70% { box-shadow: 0 0 0 15px rgba(24, 119, 242, 0); transform: scale(1.05); }
+        100% { box-shadow: 0 0 0 0 rgba(24, 119, 242, 0); transform: scale(1); }
+    }
+    @keyframes spin-reverse {
+        from { transform: rotate(360deg); }
+        to { transform: rotate(0deg); }
+    }
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+}
+
+/* Animation Delay Utilities */
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+
