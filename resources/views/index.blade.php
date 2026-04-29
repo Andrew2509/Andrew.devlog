@@ -164,24 +164,36 @@
 
                 <div class="flex-1 overflow-hidden">
                     <div class="flex items-center gap-16 animate-marquee whitespace-nowrap">
-                        @php
-                            $techLogos = [
-                                ['name' => 'Cloudflare', 'icon' => 'fab fa-cloudflare'],
-                                ['name' => 'Figma', 'icon' => 'fab fa-figma'],
-                                ['name' => 'Firebase', 'icon' => 'fas fa-fire'],
-                                ['name' => 'Flutter', 'icon' => 'fas fa-mobile-alt'],
-                                ['name' => 'GraphQL', 'icon' => 'fas fa-project-diagram'],
-                                ['name' => 'Laravel', 'icon' => 'fab fa-laravel'],
-                                ['name' => 'Mysql', 'icon' => 'fas fa-database'],
-                            ];
-                        @endphp
-
-                        @foreach(array_merge($techLogos, $techLogos, $techLogos) as $tech)
-                        <div class="flex items-center gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-2">
-                            <i class="{{ $tech['icon'] }} text-2xl text-slate-600"></i>
-                            <span class="text-xl font-bold tracking-tighter text-slate-800">{{ $tech['name'] }}</span>
-                        </div>
-                        @endforeach
+                        @if($clients->isNotEmpty())
+                            {{-- Data dari Admin Panel (Client) - duplikasi 3x untuk seamless loop --}}
+                            @foreach(collect([$clients, $clients, $clients])->flatten() as $client)
+                            <div class="flex items-center gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-2">
+                                @if($client->logo)
+                                    <img src="{{ $client->logo_url }}" alt="{{ $client->name }}" class="h-8 w-auto object-contain">
+                                @endif
+                                <span class="text-xl font-bold tracking-tighter text-slate-800">{{ $client->name }}</span>
+                            </div>
+                            @endforeach
+                        @else
+                            {{-- Fallback hardcoded jika belum ada data client di admin --}}
+                            @php
+                                $techLogos = [
+                                    ['name' => 'Cloudflare', 'icon' => 'fab fa-cloudflare'],
+                                    ['name' => 'Figma', 'icon' => 'fab fa-figma'],
+                                    ['name' => 'Firebase', 'icon' => 'fas fa-fire'],
+                                    ['name' => 'Flutter', 'icon' => 'fas fa-mobile-alt'],
+                                    ['name' => 'GraphQL', 'icon' => 'fas fa-project-diagram'],
+                                    ['name' => 'Laravel', 'icon' => 'fab fa-laravel'],
+                                    ['name' => 'Mysql', 'icon' => 'fas fa-database'],
+                                ];
+                            @endphp
+                            @foreach(array_merge($techLogos, $techLogos, $techLogos) as $tech)
+                            <div class="flex items-center gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-2">
+                                <i class="{{ $tech['icon'] }} text-2xl text-slate-600"></i>
+                                <span class="text-xl font-bold tracking-tighter text-slate-800">{{ $tech['name'] }}</span>
+                            </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
