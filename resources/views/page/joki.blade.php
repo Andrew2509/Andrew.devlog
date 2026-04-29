@@ -76,6 +76,20 @@ function jokiData() {
         selectedService: null,
         selectedServiceSlug: null,
         selectedPackage: null,
+
+        init() {
+            // Check for service slug in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceSlug = urlParams.get('service');
+            
+            if (serviceSlug) {
+                const service = this.services_raw.find(s => s.slug === serviceSlug);
+                if (service) {
+                    this.selectService(service);
+                }
+            }
+        },
+
         formData: {
             title: '',
             description: '',
@@ -110,6 +124,23 @@ function jokiData() {
                 features: p.features,
                 price: p.price
             })) : [];
+
+            // Auto scroll to packages if available
+            if (this.packages.length > 0) {
+                this.$nextTick(() => {
+                    const el = document.getElementById('packages-section');
+                    if (el) {
+                        const headerOffset = 120;
+                        const elementPosition = el.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
         },
         
         getSelectedServiceTitle() {

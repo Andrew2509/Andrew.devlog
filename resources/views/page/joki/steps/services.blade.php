@@ -30,10 +30,10 @@
     </div>
 
     <!-- Pilih Paket (Conditional) -->
-    <div x-show="packages.length > 0" x-transition class="mt-20 space-y-10">
+    <div id="packages-section" x-show="packages.length > 0" x-transition class="mt-20 space-y-10">
         <div class="text-center">
-            <h2 class="text-2xl font-black text-slate-900 uppercase tracking-tight">Pilih Paket Layanan</h2>
-            <p class="text-slate-500 text-sm">Pilih spesifikasi yang paling pas dengan skala kebutuhan Anda.</p>
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight">Pilih Paket</h2>
+            <p class="text-slate-500 text-sm">Pilih paket yang sesuai dengan kebutuhan dan budget Anda.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

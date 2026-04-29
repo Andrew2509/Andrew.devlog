@@ -471,7 +471,7 @@
                             @endif
                         </ul>
 
-                        <a href="{{ route('joki') }}" 
+                        <a href="{{ route('joki', ['service' => \Illuminate\Support\Str::slug($price->service_name)]) }}" 
                            class="w-full py-5 rounded-2xl {{ $price->is_popular ? 'bg-primary text-white shadow-xl shadow-primary/30' : 'bg-slate-50 text-slate-600 border border-slate-100' }} text-center font-black tracking-wide hover:scale-[1.05] transition-all">
                             Pilih Paket Ini
                         </a>
