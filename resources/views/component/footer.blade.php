@@ -33,7 +33,7 @@
                         <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-primary border border-white/5 group-hover:bg-primary group-hover:text-black transition-all">
                             <i class="fas fa-envelope text-xs"></i>
                         </div>
-                        <span class="text-sm font-bold text-gray-300">{{ setting('site_email', 'hello@andrewdevlog.com') }}</span>
+                        <span class="text-sm font-bold text-gray-300">{{ setting('site_email', 'masbrightly@gmail.com') }}</span>
                     </div>
                     <div class="flex items-center gap-4 group">
                         <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-primary border border-white/5 group-hover:bg-primary group-hover:text-black transition-all">

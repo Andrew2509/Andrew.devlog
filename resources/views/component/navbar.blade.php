@@ -1,6 +1,6 @@
 <!-- Navbar -->
-<nav id="main-nav" 
-     x-data="{ mobileMenuOpen: false }" 
+<nav id="main-nav"
+     x-data="{ mobileMenuOpen: false }"
      x-init="$watch('mobileMenuOpen', value => {
          if (value) {
              document.body.classList.add('mobile-menu-open');
@@ -79,8 +79,8 @@
                 <button onclick="openSearch()" class="flex items-center justify-center w-10 h-10 rounded-xl bg-white/80 border border-slate-200 text-slate-500 active:scale-90 transition-all">
                     <i class="fas fa-search text-xs"></i>
                 </button>
-                
-                <button id="mobile-menu-btn" 
+
+                <button id="mobile-menu-btn"
                         @click="mobileMenuOpen = !mobileMenuOpen"
                         class="group w-10 h-10 sm:w-14 sm:h-14 flex flex-col items-center justify-center gap-1 sm:gap-1.5 rounded-xl sm:rounded-[1.25rem] bg-slate-950 text-white shadow-xl shadow-slate-900/10 transition-all duration-500 active:scale-90"
                         :class="{ 'open': mobileMenuOpen }">
@@ -93,11 +93,11 @@
     </div>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-overlay" 
+    <div id="mobile-overlay"
          class="fixed inset-0 bg-white z-[90] transition-all duration-700 cubic-bezier(0.85, 0, 0.15, 1) lg:hidden"
          :class="mobileMenuOpen ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0 pointer-events-none'"
          x-cloak>
-        
+
         <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-[0.03] pointer-events-none">
             <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -134,11 +134,11 @@
                     </div>
                     <div class="flex flex-col gap-3">
                         <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Hubungi</span>
-                        <a href="mailto:{{ setting('site_email', 'hello@neonflux.id') }}" class="text-sm font-bold text-slate-900 hover:text-primary transition-colors">hello@neonflux.id</a>
+                        <a href="mailto:{{ setting('site_email', 'masbrightly@gmail.com') }}" class="text-sm font-bold text-slate-900 hover:text-primary transition-colors">masbrightly@gmail.com</a>
                     </div>
                 </div>
 
-                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" 
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}"
                    @click="mobileMenuOpen = false"
                    class="block w-full text-center bg-slate-950 text-white py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-slate-900/20 transition-all duration-700 delay-700 mobile-footer-item hover:bg-primary transition-colors"
                    :class="mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">

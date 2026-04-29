@@ -15,12 +15,12 @@
 
     <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        
+
         <div class="space-y-10">
             <!-- Umum Section -->
             <div class="bg-gray-900 border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
-                
+
                 <h3 class="text-white font-black text-xl tracking-tight mb-8 flex items-center gap-3 uppercase relative z-10">
                     <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary border border-primary/20">
                         <i class="fas fa-globe text-sm"></i>
@@ -92,7 +92,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Nama Website
                         </label>
-                        <input type="text" name="site_name" value="{{ setting('site_name', 'Andrew.Devlog') }}" 
+                        <input type="text" name="site_name" value="{{ setting('site_name', 'Andrew.Devlog') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                             placeholder="Contoh: Andrew.Devlog Digital Agency">
                     </div>
@@ -101,7 +101,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Tagline Website
                         </label>
-                        <input type="text" name="site_tagline" value="{{ setting('site_tagline', 'Elegance in Every Pixel') }}" 
+                        <input type="text" name="site_tagline" value="{{ setting('site_tagline', 'Elegance in Every Pixel') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                             placeholder="Slogan website Anda">
                     </div>
@@ -110,7 +110,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Deskripsi Meta (SEO)
                         </label>
-                        <textarea name="site_description" rows="3" 
+                        <textarea name="site_description" rows="3"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-medium resize-none outline-none"
                             placeholder="Deskripsi singkat untuk mesin pencari...">{{ setting('site_description') }}</textarea>
                     </div>
@@ -120,7 +120,7 @@
             <!-- Hero Section -->
             <div class="bg-gray-900 border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl transition-all hover:border-primary/20">
                 <div class="absolute -left-20 -top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
-                
+
                 <h3 class="text-white font-black text-xl tracking-tight mb-8 flex items-center gap-3 uppercase relative z-10">
                     <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary border border-primary/20">
                         <i class="fas fa-rocket text-sm"></i>
@@ -133,7 +133,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Badge/Label Atas
                         </label>
-                        <input type="text" name="hero_badge" value="{{ setting('hero_badge', 'Arsitek Digital Terbaik 2026') }}" 
+                        <input type="text" name="hero_badge" value="{{ setting('hero_badge', 'Arsitek Digital Terbaik 2026') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none">
                     </div>
 
@@ -141,7 +141,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Judul Baris 1
                         </label>
-                        <input type="text" name="hero_title_1" value="{{ setting('hero_title_1', 'Jasa Pembuatan') }}" 
+                        <input type="text" name="hero_title_1" value="{{ setting('hero_title_1', 'Jasa Pembuatan') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none">
                     </div>
 
@@ -149,7 +149,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Judul Baris 2 (Text Biru)
                         </label>
-                        <input type="text" name="hero_title_2" value="{{ setting('hero_title_2', 'Website Profesional') }}" 
+                        <input type="text" name="hero_title_2" value="{{ setting('hero_title_2', 'Website Profesional') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none text-primary">
                     </div>
 
@@ -157,7 +157,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Judul Baris 3
                         </label>
-                        <input type="text" name="hero_title_3" value="{{ setting('hero_title_3', '& SEO') }}" 
+                        <input type="text" name="hero_title_3" value="{{ setting('hero_title_3', '& SEO') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none">
                     </div>
 
@@ -165,7 +165,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Subtitle / Deskripsi Hero
                         </label>
-                        <textarea name="hero_subtitle" rows="3" 
+                        <textarea name="hero_subtitle" rows="3"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-medium resize-none outline-none">{{ setting('hero_subtitle', 'Tingkatkan konversi dan visibilitas online bisnis Anda dengan website berkinerja tinggi dan strategi pemasaran digital yang terbukti.') }}</textarea>
                     </div>
                 </div>
@@ -187,7 +187,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Email Bisnis
                         </label>
-                        <input type="email" name="contact_email" value="{{ setting('contact_email', 'hello@andrew.devlog') }}" 
+                        <input type="email" name="contact_email" value="{{ setting('contact_email', 'masbrightly@gmail.com') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none">
                     </div>
 
@@ -195,7 +195,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             WhatsApp (Tanpa '+', Awali 62)
                         </label>
-                        <input type="text" name="contact_whatsapp" value="{{ setting('contact_whatsapp', '628123456789') }}" 
+                        <input type="text" name="contact_whatsapp" value="{{ setting('contact_whatsapp', '628123456789') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                             placeholder="628xxxxxxxxxx">
                     </div>
@@ -204,7 +204,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Alamat Kantor
                         </label>
-                        <textarea name="contact_address" rows="2" 
+                        <textarea name="contact_address" rows="2"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-medium resize-none outline-none">{{ setting('contact_address') }}</textarea>
                     </div>
                 </div>
@@ -228,7 +228,7 @@
                             <div class="bg-white/5 px-4 flex items-center rounded-l-2xl border-r border-white/5 text-gray-500">
                                 <i class="fab fa-instagram"></i>
                             </div>
-                            <input type="text" name="social_instagram" value="{{ setting('social_instagram') }}" 
+                            <input type="text" name="social_instagram" value="{{ setting('social_instagram') }}"
                                 class="w-full bg-white text-gray-900 px-6 py-4 rounded-r-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                                 placeholder="https://instagram.com/username">
                         </div>
@@ -242,7 +242,7 @@
                             <div class="bg-white/5 px-4 flex items-center rounded-l-2xl border-r border-white/5 text-gray-500">
                                 <i class="fab fa-tiktok"></i>
                             </div>
-                            <input type="text" name="social_tiktok" value="{{ setting('social_tiktok') }}" 
+                            <input type="text" name="social_tiktok" value="{{ setting('social_tiktok') }}"
                                 class="w-full bg-white text-gray-900 px-6 py-4 rounded-r-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                                 placeholder="https://tiktok.com/@username">
                         </div>
@@ -256,7 +256,7 @@
                             <div class="bg-white/5 px-4 flex items-center rounded-l-2xl border-r border-white/5 text-gray-500">
                                 <i class="fab fa-github"></i>
                             </div>
-                            <input type="text" name="social_github" value="{{ setting('social_github') }}" 
+                            <input type="text" name="social_github" value="{{ setting('social_github') }}"
                                 class="w-full bg-white text-gray-900 px-6 py-4 rounded-r-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                                 placeholder="https://github.com/username">
                         </div>
@@ -270,7 +270,7 @@
                             <div class="bg-white/5 px-4 flex items-center rounded-l-2xl border-r border-white/5 text-gray-500">
                                 <i class="fab fa-facebook"></i>
                             </div>
-                            <input type="text" name="social_facebook" value="{{ setting('social_facebook') }}" 
+                            <input type="text" name="social_facebook" value="{{ setting('social_facebook') }}"
                                 class="w-full bg-white text-gray-900 px-6 py-4 rounded-r-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                                 placeholder="https://facebook.com/username">
                         </div>
@@ -281,7 +281,7 @@
             <!-- Statistik Beranda Section -->
             <div class="bg-gray-900 border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl transition-all hover:border-primary/20">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
-                
+
                 <h3 class="text-white font-black text-xl tracking-tight mb-8 flex items-center gap-3 uppercase relative z-10">
                     <div class="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
                         <i class="fas fa-chart-line text-sm"></i>
@@ -296,7 +296,7 @@
                             Project Selesai
                         </label>
                         <div class="relative group">
-                            <input type="text" name="stats_projects" value="{{ setting('stats_projects', '2500+') }}" 
+                            <input type="text" name="stats_projects" value="{{ setting('stats_projects', '2500+') }}"
                                 class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-black text-lg outline-none"
                                 placeholder="Contoh: 2500+">
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none group-focus-within:text-primary transition-colors">
@@ -312,7 +312,7 @@
                             Klien Puas
                         </label>
                         <div class="relative group">
-                            <input type="text" name="stats_clients" value="{{ setting('stats_clients', '1500+') }}" 
+                            <input type="text" name="stats_clients" value="{{ setting('stats_clients', '1500+') }}"
                                 class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-black text-lg outline-none"
                                 placeholder="Contoh: 1500+">
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none group-focus-within:text-primary transition-colors">
@@ -328,7 +328,7 @@
                             Pengalaman (Tahun)
                         </label>
                         <div class="relative group">
-                            <input type="text" name="stats_experience" value="{{ setting('stats_experience', '10+') }}" 
+                            <input type="text" name="stats_experience" value="{{ setting('stats_experience', '10+') }}"
                                 class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-black text-lg outline-none"
                                 placeholder="Contoh: 10+">
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none group-focus-within:text-primary transition-colors">
@@ -343,14 +343,14 @@
             <!-- WhatsApp Configuration Section -->
             <div class="bg-gray-900 border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl transition-all hover:border-primary/20">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-green-500/5 rounded-full blur-3xl"></div>
-                
+
                 <h3 class="text-white font-black text-xl tracking-tight mb-8 flex items-center gap-3 uppercase relative z-10">
                     <div class="w-10 h-10 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 border border-green-500/20">
                         <i class="fab fa-whatsapp text-sm"></i>
                     </div>
                     Pengaturan WhatsApp (Orbit API)
                 </h3>
-                
+
                 <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-8 leading-relaxed relative z-10">
                     Konfigurasi ini digunakan untuk mengirimkan notifikasi pesan baru ke WhatsApp Anda melalui Orbit API.<br>
                     Dokumentasi: <a href="https://orbitwaapi.site/docs" target="_blank" class="text-primary hover:underline">orbitwaapi.site/docs</a>
@@ -361,7 +361,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Orbit API Key
                         </label>
-                        <input type="password" name="orbit_api_key" value="{{ setting('orbit_api_key') }}" 
+                        <input type="password" name="orbit_api_key" value="{{ setting('orbit_api_key') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                             placeholder="Masukkan API Key Orbit...">
                     </div>
@@ -370,7 +370,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Nomor WA Penerima (Gunakan 62)
                         </label>
-                        <input type="text" name="orbit_recipient" value="{{ setting('orbit_recipient') }}" 
+                        <input type="text" name="orbit_recipient" value="{{ setting('orbit_recipient') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                             placeholder="Contoh: 628123456789">
                     </div>
@@ -380,14 +380,14 @@
             <!-- Google Reviews Configuration Section -->
             <div class="bg-gray-900 border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl transition-all hover:border-primary/20">
                 <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl"></div>
-                
+
                 <h3 class="text-white font-black text-xl tracking-tight mb-8 flex items-center gap-3 uppercase relative z-10">
                     <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 border border-blue-500/20">
                         <i class="fab fa-google text-sm"></i>
                     </div>
                     Google Reviews Widget (Iframe)
                 </h3>
-                
+
                 <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-8 leading-relaxed relative z-10">
                     Masukkan URL Iframe dari Elfsight atau penyedia widget Google Reviews lainnya.<br>
                     Contoh: https://5d994d31ef99443986d2ad9bf3283ff9.elf.site
@@ -401,7 +401,7 @@
                     <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                         URL Iframe Google Reviews
                     </label>
-                    <input type="text" name="google_reviews_iframe" value="{{ setting('google_reviews_iframe', 'https://5d994d31ef99443986d2ad9bf3283ff9.elf.site') }}" 
+                    <input type="text" name="google_reviews_iframe" value="{{ setting('google_reviews_iframe', 'https://5d994d31ef99443986d2ad9bf3283ff9.elf.site') }}"
                         class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                         placeholder="https://xxx.elf.site">
                 </div>
@@ -410,14 +410,14 @@
             <!-- Blogger Configuration Section -->
             <div class="bg-gray-900 border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl transition-all hover:border-primary/20">
                 <div class="absolute -left-20 -top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
-                
+
                 <h3 class="text-white font-black text-xl tracking-tight mb-8 flex items-center gap-3 uppercase relative z-10">
                     <div class="w-10 h-10 bg-orange-500/10 rounded-xl flex items-center justify-center text-orange-500 border border-orange-500/20">
                         <i class="fab fa-blogger-b text-sm"></i>
                     </div>
                     Pengaturan Blogger API
                 </h3>
-                
+
                 <p class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mb-8 leading-relaxed relative z-10">
                     Konfigurasi ini digunakan untuk mengambil postingan terbaru dari Blog Anda.<br>
                     Data yang diisi di sini akan mengabaikan nilai di file .env.
@@ -428,7 +428,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Blogger API Key
                         </label>
-                        <input type="password" name="blogger_api_key" value="{{ setting('blogger_api_key', config('services.blogger.key')) }}" 
+                        <input type="password" name="blogger_api_key" value="{{ setting('blogger_api_key', config('services.blogger.key')) }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                             placeholder="AIzaSy...">
                     </div>
@@ -437,7 +437,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Blogger Blog ID
                         </label>
-                        <input type="text" name="blogger_blog_id" value="{{ setting('blogger_blog_id', config('services.blogger.blog_id')) }}" 
+                        <input type="text" name="blogger_blog_id" value="{{ setting('blogger_blog_id', config('services.blogger.blog_id')) }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none"
                             placeholder="67956...">
                     </div>
@@ -491,7 +491,7 @@
                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest flex items-center gap-2 ml-1">
                             Copyright Text
                         </label>
-                        <input type="text" name="footer_copyright" value="{{ setting('footer_copyright', '© 2026 Andrew.Devlog Digital. All Rights Reserved.') }}" 
+                        <input type="text" name="footer_copyright" value="{{ setting('footer_copyright', '© 2026 Andrew.Devlog Digital. All Rights Reserved.') }}"
                             class="w-full bg-white text-gray-900 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-primary transition-all font-semibold outline-none">
                     </div>
                 </div>
@@ -513,19 +513,19 @@
     function previewLogo(input, previewId, placeholderId) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            
+
             reader.onload = function(e) {
                 const preview = document.getElementById(previewId);
                 const placeholder = document.getElementById(placeholderId);
-                
+
                 preview.src = e.target.result;
                 preview.classList.remove('hidden');
-                
+
                 if (placeholder) {
                     placeholder.classList.add('hidden');
                 }
             }
-            
+
             reader.readAsDataURL(input.files[0]);
         }
     }

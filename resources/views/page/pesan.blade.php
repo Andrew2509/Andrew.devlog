@@ -42,7 +42,7 @@
                 <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl shadow-cyan-900/10 relative overflow-hidden border border-cyan-50">
                     <!-- Subtle background accent -->
                     <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-                    
+
                     @if(session('success'))
                         <div class="mb-8 p-6 bg-green-500/10 border border-green-500/20 text-green-600 rounded-2xl flex items-center gap-4 animate-bounce-soft">
                             <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white shadow-lg shadow-green-500/20">
@@ -65,7 +65,7 @@
                             <!-- Email -->
                             <div class="space-y-2">
                                 <label class="text-xs font-bold uppercase tracking-wider text-gray-400" for="email">Email Bisnis</label>
-                                <input name="email" class="w-full bg-slate-50 border-0 focus:ring-2 focus:ring-primary rounded-xl py-4 px-4 text-gray-900 placeholder:text-gray-400 transition-all" id="email" placeholder="hello@company.com" type="email" required/>
+                                <input name="email" class="w-full bg-slate-50 border-0 focus:ring-2 focus:ring-primary rounded-xl py-4 px-4 text-gray-900 placeholder:text-gray-400 transition-all" id="email" placeholder="masbrightly@gmail.com" type="email" required/>
                             </div>
                             <!-- Nomor Telepon -->
                             <div class="space-y-2">
@@ -128,18 +128,18 @@
             const urlParams = new URLSearchParams(window.location.search);
             const package = urlParams.get('package');
             const categoryId = urlParams.get('category_id');
-            
+
             if (categoryId) {
                 const categorySelect = document.getElementById('service_category_id');
                 if (categorySelect) categorySelect.value = categoryId;
             }
-            
+
             if (package) {
                 const serviceNameInput = document.getElementById('service_name');
                 const messageArea = document.getElementById('message');
-                
+
                 if (serviceNameInput) serviceNameInput.value = package;
-                
+
                 if (messageArea && !messageArea.value) {
                     messageArea.value = `Halo Andrew.Devlog,\n\nSaya tertarik untuk memesan paket: *${package}*.\n\nBerikut rincian kebutuhan saya:\n- \n\n(Silakan lengkapi detail di atas)`;
                 }
