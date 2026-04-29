@@ -155,24 +155,24 @@
         </section>
 
         <!-- Trusted Brands & Tech Stack Marquee -->
-        <section class="border-y border-slate-200/40 bg-white/50 backdrop-blur-sm py-16 overflow-hidden space-y-12">
+        <section class="border-y border-slate-200/40 bg-white/50 backdrop-blur-sm py-8 md:py-16 overflow-hidden space-y-8 md:space-y-12">
             <!-- First Row: Mitra Global (Scroll Left) -->
-            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
-                <div class="shrink-0 text-center md:text-left">
-                    <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-1">Dipercaya Oleh</p>
-                    <p class="text-lg font-bold text-slate-900 leading-tight">Mitra<br/>Global</p>
+            <div class="max-w-7xl mx-auto px-4 md:px-6 flex items-center gap-4 md:gap-12">
+                <div class="shrink-0 text-left">
+                    <p class="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-0.5">Dipercaya Oleh</p>
+                    <p class="text-sm md:text-lg font-bold text-slate-900 leading-tight">Mitra<br/>Global</p>
                 </div>
 
                 <div class="flex-1 overflow-hidden">
-                    <div class="flex items-center gap-16 animate-marquee whitespace-nowrap">
+                    <div class="flex items-center gap-8 md:gap-16 animate-marquee whitespace-nowrap">
                         @if($partners->isNotEmpty())
                             {{-- Data dari Admin Panel (Client - Partner) --}}
                             @foreach(collect([$partners, $partners])->flatten() as $client)
-                            <div class="flex items-center gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-2">
+                            <div class="flex items-center gap-2 md:gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-1 md:py-2">
                                 @if($client->logo)
-                                    <img src="{{ $client->logo_url }}" alt="{{ $client->name }}" class="h-8 w-auto object-contain">
+                                    <img src="{{ $client->logo_url }}" alt="{{ $client->name }}" class="h-5 md:h-8 w-auto object-contain">
                                 @endif
-                                <span class="text-xl font-bold tracking-tighter text-slate-800">{{ $client->name }}</span>
+                                <span class="text-base md:text-xl font-bold tracking-tighter text-slate-800">{{ $client->name }}</span>
                             </div>
                             @endforeach
                         @else
@@ -187,9 +187,9 @@
                                 ];
                             @endphp
                             @foreach(array_merge($techLogos, $techLogos) as $tech)
-                            <div class="flex items-center gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-2">
-                                <i class="{{ $tech['icon'] }} text-2xl text-slate-600"></i>
-                                <span class="text-xl font-bold tracking-tighter text-slate-800">{{ $tech['name'] }}</span>
+                            <div class="flex items-center gap-2 md:gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-1 md:py-2">
+                                <i class="{{ $tech['icon'] }} text-lg md:text-2xl text-slate-600"></i>
+                                <span class="text-base md:text-xl font-bold tracking-tighter text-slate-800">{{ $tech['name'] }}</span>
                             </div>
                             @endforeach
                         @endif
@@ -198,17 +198,17 @@
             </div>
 
             <!-- Second Row: Tech Stack (Scroll Right) -->
-            <div class="max-w-7xl mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-12">
+            <div class="max-w-7xl mx-auto px-4 md:px-6 flex items-center gap-4 md:gap-12">
                 <div class="flex-1 overflow-hidden">
-                    <div class="flex items-center gap-16 animate-marquee-reverse whitespace-nowrap">
+                    <div class="flex items-center gap-8 md:gap-16 animate-marquee-reverse whitespace-nowrap">
                         @if($techs->isNotEmpty())
                             {{-- Data dari Admin Panel (Client - Tech) --}}
                             @foreach(collect([$techs, $techs])->flatten() as $tech)
-                            <div class="flex items-center gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-2">
+                            <div class="flex items-center gap-2 md:gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-1 md:py-2">
                                 @if($tech->logo)
-                                    <img src="{{ $tech->logo_url }}" alt="{{ $tech->name }}" class="h-8 w-auto object-contain">
+                                    <img src="{{ $tech->logo_url }}" alt="{{ $tech->name }}" class="h-5 md:h-8 w-auto object-contain">
                                 @endif
-                                <span class="text-xl font-bold tracking-tighter text-slate-800">{{ $tech->name }}</span>
+                                <span class="text-base md:text-xl font-bold tracking-tighter text-slate-800">{{ $tech->name }}</span>
                             </div>
                             @endforeach
                         @else
@@ -224,18 +224,18 @@
                                 ];
                             @endphp
                             @foreach(array_merge($fallbackTechs, $fallbackTechs) as $tech)
-                            <div class="flex items-center gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-2">
-                                <i class="{{ $tech['icon'] }} text-2xl text-slate-600"></i>
-                                <span class="text-xl font-bold tracking-tighter text-slate-800">{{ $tech['name'] }}</span>
+                            <div class="flex items-center gap-2 md:gap-3 opacity-30 hover:opacity-100 transition-opacity cursor-default grayscale hover:grayscale-0 py-1 md:py-2">
+                                <i class="{{ $tech['icon'] }} text-lg md:text-2xl text-slate-600"></i>
+                                <span class="text-base md:text-xl font-bold tracking-tighter text-slate-800">{{ $tech['name'] }}</span>
                             </div>
                             @endforeach
                         @endif
                     </div>
                 </div>
 
-                <div class="shrink-0 text-center md:text-right">
-                    <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-1">Tech Stack</p>
-                    <p class="text-lg font-bold text-slate-900 leading-tight">Bahasa<br/>Pemrograman</p>
+                <div class="shrink-0 text-right">
+                    <p class="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-0.5">Tech Stack</p>
+                    <p class="text-sm md:text-lg font-bold text-slate-900 leading-tight">Bahasa<br/>Pemrograman</p>
                 </div>
             </div>
         </section>
