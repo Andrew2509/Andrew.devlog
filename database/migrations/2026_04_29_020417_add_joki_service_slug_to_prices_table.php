@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('prices', function (Blueprint $table) {
-            //
+            $table->boolean('is_joki')->default(false)->after('is_popular');
+            $table->string('joki_service_slug')->nullable()->after('is_joki');
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('prices', function (Blueprint $table) {
-            //
+            $table->dropColumn(['is_joki', 'joki_service_slug']);
         });
     }
 };

@@ -15,6 +15,8 @@ class Price extends Model
         'badge',
         'features',
         'is_popular',
+        'is_joki',
+        'joki_service_slug',
         'is_visible_home',
         'is_visible_pricing',
         'button_text',
@@ -30,6 +32,7 @@ class Price extends Model
     protected $casts = [
         'features' => 'array',
         'is_popular' => 'boolean',
+        'is_joki' => 'boolean',
         'is_visible_home' => 'boolean',
         'is_visible_pricing' => 'boolean',
     ];

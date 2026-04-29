@@ -116,7 +116,7 @@
                         </ul>
 
                         <div class="mt-auto">
-                            <a href="{{ route('pesan', ['package' => $price->service_name, 'category_id' => $price->service_category_id]) }}" class="w-full flex items-center justify-center py-5 bg-primary text-white rounded-[2rem] font-black text-lg hover:bg-primary-dark transition-all shadow-xl shadow-primary/20 transform active:scale-95 uppercase tracking-widest">
+                            <a href="{{ $price->is_joki ? route('joki', ['service' => $price->joki_service_slug ?: \Illuminate\Support\Str::slug($price->service_name)]) : ($price->button_link ?: route('pesan', ['package' => $price->service_name, 'category_id' => $price->service_category_id])) }}" class="w-full flex items-center justify-center py-5 bg-primary text-white rounded-[2rem] font-black text-lg hover:bg-primary-dark transition-all shadow-xl shadow-primary/20 transform active:scale-95 uppercase tracking-widest">
                                 Pesan Sekarang
                             </a>
                         </div>

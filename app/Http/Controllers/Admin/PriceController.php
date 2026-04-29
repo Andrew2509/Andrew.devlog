@@ -45,6 +45,8 @@ class PriceController extends Controller
             'button_text' => $request->button_text,
             'button_link' => $request->button_link,
             'is_popular' => $request->has('is_popular'),
+            'is_joki' => $request->has('is_joki'),
+            'joki_service_slug' => $request->joki_service_slug,
             'is_visible_home' => $request->has('is_visible_home'),
             'is_visible_pricing' => $request->has('is_visible_pricing'),
         ];
@@ -81,6 +83,8 @@ class PriceController extends Controller
             'button_text' => $request->button_text,
             'button_link' => $request->button_link,
             'is_popular' => $request->has('is_popular'),
+            'is_joki' => $request->has('is_joki'),
+            'joki_service_slug' => $request->joki_service_slug,
             'is_visible_home' => $request->has('is_visible_home'),
             'is_visible_pricing' => $request->has('is_visible_pricing'),
         ];
@@ -92,7 +96,7 @@ class PriceController extends Controller
 
     public function toggleStatus(Price $pricing, $field)
     {
-        if (!in_array($field, ['is_visible_home', 'is_visible_pricing', 'is_popular'])) {
+        if (!in_array($field, ['is_visible_home', 'is_visible_pricing', 'is_popular', 'is_joki'])) {
             return back()->with('error', 'Field tidak valid.');
         }
 

@@ -113,6 +113,19 @@
                     <p class="text-[8px] text-gray-500 font-medium">Muncul di menu harga.</p>
                 </div>
             </div>
+
+            <div class="flex items-center gap-4 bg-white/2 border border-white/5 p-6 rounded-3xl">
+                <label class="relative inline-flex items-center cursor-pointer group">
+                    <input type="checkbox" name="is_joki" value="1" class="sr-only peer" {{ $pricing->is_joki ? 'checked' : '' }}>
+                    <div class="w-14 h-7 bg-gray-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-gray-500 after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500 peer-checked:after:bg-white"></div>
+                </label>
+                <div class="leading-tight flex-1">
+                    <p class="text-[10px] font-black text-white uppercase tracking-tighter">Gunakan Alur Joki</p>
+                    <input type="text" name="joki_service_slug" value="{{ old('joki_service_slug', $pricing->joki_service_slug) }}" 
+                        class="w-full mt-2 bg-transparent border-b border-white/10 text-[10px] font-medium text-primary outline-none focus:border-primary transition-all"
+                        placeholder="service-slug">
+                </div>
+            </div>
         </div>
 
         <!-- Submit Button -->

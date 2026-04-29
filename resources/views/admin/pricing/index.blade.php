@@ -29,6 +29,7 @@
                     <th class="px-4 py-4 text-[9px] font-black text-gray-500 uppercase tracking-widest text-center">Status</th>
                     <th class="px-4 py-4 text-[9px] font-black text-gray-500 uppercase tracking-widest text-center">Home</th>
                     <th class="px-4 py-4 text-[9px] font-black text-gray-500 uppercase tracking-widest text-center">Page</th>
+                    <th class="px-4 py-4 text-[9px] font-black text-gray-500 uppercase tracking-widest text-center">Joki</th>
                     <th class="px-4 py-4 text-[9px] font-black text-gray-500 uppercase tracking-widest">Fitur</th>
                     <th class="px-4 py-4 text-[9px] font-black text-gray-500 uppercase tracking-widest text-right">Aksi</th>
                 </tr>
@@ -79,6 +80,14 @@
                             @csrf
                             <button type="submit" class="w-10 h-10 rounded-xl {{ $price->is_visible_pricing ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500' }} flex items-center justify-center hover:scale-110 transition-all mx-auto" title="Tampilkan di Halaman Harga">
                                 <i class="fas {{ $price->is_visible_pricing ? 'fa-eye' : 'fa-eye-slash' }} text-xs"></i>
+                            </button>
+                        </form>
+                    </td>
+                    <td class="px-4 py-4 text-center">
+                        <form action="{{ route('admin.pricing.toggle', [$price, 'is_joki']) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-10 h-10 rounded-xl {{ $price->is_joki ? 'bg-indigo-500/10 text-indigo-500' : 'bg-white/5 text-gray-600' }} flex items-center justify-center hover:scale-110 transition-all mx-auto" title="Hubungkan ke Alur Joki">
+                                <i class="fas {{ $price->is_joki ? 'fa-rocket' : 'fa-times' }} text-xs"></i>
                             </button>
                         </form>
                     </td>
