@@ -2,9 +2,14 @@
 <nav id="main-nav" 
      x-data="{ mobileMenuOpen: false }" 
      x-init="$watch('mobileMenuOpen', value => {
-         if (value) document.body.classList.add('mobile-menu-open');
-         else document.body.classList.remove('mobile-menu-open');
-     })"
+         if (value) {
+             document.body.classList.add('mobile-menu-open');
+         } else {
+             document.body.classList.remove('mobile-menu-open');
+         }
+     });
+     // Initial cleanup
+     document.body.classList.remove('mobile-menu-open');"
      class="fixed top-0 left-0 right-0 z-[100] py-6 transition-all duration-700 ease-in-out"
      :class="{ 'mobile-menu-open': mobileMenuOpen }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -142,6 +147,5 @@
             </div>
         </div>
     </div>
-
-
+</nav>
 

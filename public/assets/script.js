@@ -3,6 +3,9 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Fail-safe: Ensure scroll is unlocked when page loads
+    document.body.classList.remove('mobile-menu-open');
+    document.body.style.overflowY = 'auto';
 
     // 1. Fade-in-up Observer (scroll trigger)
     const fadeElements = document.querySelectorAll('.fade-in-up-element');

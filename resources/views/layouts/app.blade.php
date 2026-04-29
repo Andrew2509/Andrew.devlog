@@ -46,17 +46,22 @@
 
     @yield('head')
     <style>
-        /* FORCE SCROLL FIX */
-        html, body {
-            overflow-y: auto !important;
-            height: auto !important;
-            min-height: 100vh !important;
-            position: relative !important;
+        /* Base Reset - Allow natural scrolling */
+        html {
+            scroll-behavior: smooth;
+            height: auto;
+            overflow-x: clip;
+        }
+
+        body {
+            min-height: 100vh;
+            position: relative;
+            overflow-x: clip;
+            overflow-y: auto;
         }
         
         body.mobile-menu-open {
-            overflow: hidden !important;
-            height: 100vh !important;
+            overflow: hidden;
         }
 
         /* Reduced Motion Support */
@@ -108,6 +113,14 @@
 
     <!-- Scripts -->
     <script src="{{ asset('assets/script.js') }}"></script>
+    <script>
+        // Force unlock scroll on load
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.remove('mobile-menu-open');
+            document.body.style.overflowY = 'auto';
+            document.documentElement.style.overflowY = 'auto';
+        });
+    </script>
     @yield('scripts')
 </body>
 </html>

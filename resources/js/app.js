@@ -13,6 +13,10 @@ console.log('Vite Build Active:', window.VITE_SYNC_VERSION);
 
 document.addEventListener('DOMContentLoaded', () => {
     // Mobile Menu Toggle handled by Alpine.js in navbar component
+    // Fail-safe: Ensure scroll is unlocked when page loads or navigation happens
+    document.body.classList.remove('mobile-menu-open');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
 
 
     // Pill Logic for Desktop

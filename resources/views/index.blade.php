@@ -52,7 +52,7 @@
 @endsection
 
 @section('content')
-    <div class="relative min-h-screen bg-[#F8FAFC] overflow-x-clip">
+    <div class="relative bg-[#F8FAFC]">
         <!-- Background Grid & Decorative Blobs -->
         <div class="absolute inset-0 z-[-10]">
             <div class="absolute inset-0" style="background-image: radial-gradient(circle at 50% 50%, rgba(24, 119, 242, 0.05), transparent 70%);"></div>
@@ -187,9 +187,6 @@
             </div>
         </section>
 
-
-    </div>
-
         <!-- 3-Step Process Section -->
         <section class="py-24 bg-white">
             <div class="max-w-7xl mx-auto px-6 text-center">
@@ -298,19 +295,28 @@
         </section>
 
         <!-- Portfolio Section -->
-        <section id="portofolio" class="py-32 bg-white">
+        <section id="portofolio" class="py-32 bg-white overflow-hidden">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-20">
                     <h2 class="text-3xl md:text-5xl font-black text-indigo-950 mb-4 tracking-tight">Penasaran Sama Hasilnya?</h2>
                     <p class="text-slate-500 text-lg max-w-2xl mx-auto">Cek project yang sudah kami selesaikan. Semua dibuat dengan penuh kasih sayang dan standar industri.</p>
                 </div>
+            </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Auto-scrolling Portfolio Marquee -->
+            <div class="portfolio-marquee-wrapper relative">
+                <!-- Gradient Fade Left -->
+                <div class="absolute left-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+                <!-- Gradient Fade Right -->
+                <div class="absolute right-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+
+                <div class="portfolio-marquee-track flex gap-8 hover:[animation-play-state:paused]">
+                    {{-- Original items --}}
                     @foreach($portfolios as $portfolio)
-                    <div class="group cursor-pointer">
-                        <div class="relative aspect-[16/10] rounded-[2.5rem] overflow-hidden bg-slate-100 mb-8 shadow-2xl shadow-slate-200/50">
+                    <a href="{{ $portfolio->url ?? '#' }}" class="group cursor-pointer flex-shrink-0 w-[340px] md:w-[420px]" target="_blank" rel="noopener">
+                        <div class="relative aspect-[16/10] rounded-[2rem] overflow-hidden bg-slate-100 mb-6 shadow-2xl shadow-slate-200/50">
                             @if($portfolio->image_url)
-                                <img src="{{ $portfolio->image_url }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                                <img src="{{ $portfolio->image_url }}" alt="{{ $portfolio->title }}" loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-slate-50">
                                     <i class="fas fa-image text-4xl text-slate-200"></i>
@@ -319,7 +325,7 @@
                             
                             <!-- Hover Overlay -->
                             <div class="absolute inset-0 bg-indigo-950/40 opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-[2px] flex items-center justify-center">
-                                <div class="w-16 h-16 rounded-full bg-white text-indigo-950 flex items-center justify-center text-xl transform translate-y-10 group-hover:translate-y-0 transition-all duration-500 shadow-2xl">
+                                <div class="w-14 h-14 rounded-full bg-white text-indigo-950 flex items-center justify-center text-lg transform translate-y-10 group-hover:translate-y-0 transition-all duration-500 shadow-2xl">
                                     <i class="fas fa-external-link-alt"></i>
                                 </div>
                             </div>
@@ -330,11 +336,49 @@
                                 <span class="text-slate-300 text-xs">•</span>
                                 <span class="text-slate-400 text-xs font-bold">{{ $portfolio->client_name }}</span>
                             </div>
-                            <h3 class="text-2xl font-black text-indigo-950 mb-2 tracking-tight group-hover:text-primary transition-colors">{{ $portfolio->title }}</h3>
+                            <h3 class="text-xl font-black text-indigo-950 mb-1 tracking-tight group-hover:text-primary transition-colors whitespace-nowrap overflow-hidden text-ellipsis">{{ $portfolio->title }}</h3>
                         </div>
-                    </div>
+                    </a>
+                    @endforeach
+
+                    {{-- Duplicated items for seamless loop --}}
+                    @foreach($portfolios as $portfolio)
+                    <a href="{{ $portfolio->url ?? '#' }}" class="group cursor-pointer flex-shrink-0 w-[340px] md:w-[420px]" target="_blank" rel="noopener" aria-hidden="true">
+                        <div class="relative aspect-[16/10] rounded-[2rem] overflow-hidden bg-slate-100 mb-6 shadow-2xl shadow-slate-200/50">
+                            @if($portfolio->image_url)
+                                <img src="{{ $portfolio->image_url }}" alt="{{ $portfolio->title }}" loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center bg-slate-50">
+                                    <i class="fas fa-image text-4xl text-slate-200"></i>
+                                </div>
+                            @endif
+                            
+                            <!-- Hover Overlay -->
+                            <div class="absolute inset-0 bg-indigo-950/40 opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-[2px] flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white text-indigo-950 flex items-center justify-center text-lg transform translate-y-10 group-hover:translate-y-0 transition-all duration-500 shadow-2xl">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-2">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">{{ $portfolio->category->name ?? 'Project' }}</span>
+                                <span class="text-slate-300 text-xs">•</span>
+                                <span class="text-slate-400 text-xs font-bold">{{ $portfolio->client_name }}</span>
+                            </div>
+                            <h3 class="text-xl font-black text-indigo-950 mb-1 tracking-tight group-hover:text-primary transition-colors whitespace-nowrap overflow-hidden text-ellipsis">{{ $portfolio->title }}</h3>
+                        </div>
+                    </a>
                     @endforeach
                 </div>
+            </div>
+
+            <!-- View All Button -->
+            <div class="text-center mt-16">
+                <a href="{{ url('/portofolio') }}" class="inline-flex items-center gap-3 px-8 py-4 bg-indigo-950 text-white rounded-2xl font-black tracking-wide hover:bg-primary transition-all duration-300 shadow-xl hover:shadow-primary/30 hover:scale-105">
+                    Lihat Semua Karya
+                    <i class="fas fa-arrow-right text-sm"></i>
+                </a>
             </div>
         </section>
 
@@ -504,6 +548,7 @@
                 </div>
             </div>
         </section>
+    </div>
 @endsection
 
 @section('scripts')

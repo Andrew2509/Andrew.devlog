@@ -50,16 +50,19 @@
 
 
 /* Global Scroll Fix */
-html, body {
-    height: auto !important;
-    min-height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto !important;
+html {
+    height: auto;
+    overflow-x: clip;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: clip;
+    overflow-y: auto;
 }
 
 body.mobile-menu-open {
-    overflow: hidden !important;
-    height: 100vh !important;
+    overflow: hidden;
 }
 
 [x-cloak] { display: none !important; }
@@ -117,5 +120,43 @@ body.mobile-menu-open {
 }
 .animation-delay-4000 {
     animation-delay: 4s;
+}
+
+/* Portfolio Auto-Scroll Marquee */
+.portfolio-marquee-wrapper {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+}
+
+.portfolio-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: portfolio-scroll 30s linear infinite;
+}
+
+.portfolio-marquee-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes portfolio-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
