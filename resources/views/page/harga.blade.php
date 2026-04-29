@@ -109,7 +109,7 @@
                             Punya kebutuhan spesifik yang tidak ada di daftar? Kami siap membantu membangun solusi digital kustom yang dipersonalisasi khusus untuk bisnis Anda.
                         </p>
 
-                        <a href="{{ url('/#kontak') }}" class="w-full py-5 bg-primary text-white font-black text-center rounded-[1.5rem] hover:bg-white hover:text-primary transition-all uppercase tracking-widest text-sm shadow-lg shadow-primary/20">
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="w-full py-5 bg-primary text-white font-black text-center rounded-[1.5rem] hover:bg-white hover:text-primary transition-all uppercase tracking-widest text-sm shadow-lg shadow-primary/20">
                             Mulai Konsultasi
                         </a>
                     </div>
@@ -170,7 +170,7 @@
                     Konsultasikan ide brilian Anda sekarang dan dapatkan estimasi harga terbaik secara gratis bersama tim ahli kami.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-6 justify-center pt-6">
-                    <a href="{{ url('/#kontak') }}" class="px-12 py-5 bg-primary text-white rounded-3xl font-black text-lg hover:bg-primary-dark transition-all shadow-2xl shadow-primary/40 transform hover:scale-105 active:scale-95">
+                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="px-12 py-5 bg-primary text-white rounded-3xl font-black text-lg hover:bg-primary-dark transition-all shadow-2xl shadow-primary/40 transform hover:scale-105 active:scale-95">
                         Mulai Proyek
                     </a>
                     <a href="{{ setting('whatsapp_link', 'https://wa.me/xxx') }}" target="_blank" class="px-12 py-5 bg-white/5 text-white backdrop-blur-xl border border-white/10 rounded-3xl font-black text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3">

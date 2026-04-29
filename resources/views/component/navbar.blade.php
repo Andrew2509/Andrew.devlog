@@ -67,7 +67,7 @@
                     <i class="fas fa-search text-slate-500 group-hover:text-primary transition-colors text-sm"></i>
                 </button>
 
-                <a href="{{ url('/#kontak') }}" class="relative group px-8 py-3.5 rounded-full font-black text-[11px] tracking-[0.15em] uppercase transition-all duration-500 active:scale-95 overflow-hidden">
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="relative group px-8 py-3.5 rounded-full font-black text-[11px] tracking-[0.15em] uppercase transition-all duration-500 active:scale-95 overflow-hidden">
                     <div class="absolute inset-0 bg-slate-950 transition-all duration-500 group-hover:bg-primary"></div>
                     <div class="absolute inset-0 bg-gradient-to-r from-primary to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <span class="relative z-10 text-white">Konsultasi Gratis</span>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                <a href="{{ url('/#kontak') }}" 
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" 
                    @click="mobileMenuOpen = false"
                    class="block w-full text-center bg-slate-950 text-white py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-slate-900/20 transition-all duration-700 delay-700 mobile-footer-item hover:bg-primary transition-colors"
                    :class="mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">

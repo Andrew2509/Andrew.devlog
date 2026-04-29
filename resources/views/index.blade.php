@@ -146,8 +146,8 @@
                 <div class="absolute top-[10%] sm:top-[18%] -left-4 sm:left-[12%] z-30 animate-float scale-75 sm:scale-100" style="animation-delay: 0.5s;">
                     <div class="flex items-center gap-2 sm:gap-4">
                         <span class="text-xs sm:text-sm font-bold text-blue-600">Konsultasi</span>
-                        <a href="#kontak" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30 group hover:scale-110 transition-all">
-                            <i class="fas fa-arrow-up text-xs sm:text-sm rotate-45"></i>
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30 group hover:scale-110 transition-all">
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
@@ -471,7 +471,7 @@
                             @endif
                         </ul>
 
-                        <a href="#kontak" onclick="document.getElementById('service_name').value='{{ $price->service_name }}'; document.getElementById('service_category_id').value='{{ $price->service_category_id }}'" 
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" 
                            class="w-full py-5 rounded-2xl {{ $price->is_popular ? 'bg-primary text-white shadow-xl shadow-primary/30' : 'bg-slate-50 text-slate-600 border border-slate-100' }} text-center font-black tracking-wide hover:scale-[1.05] transition-all">
                             Pilih Paket Ini
                         </a>
@@ -516,122 +516,11 @@
                 </div>
             </div>
         </section>
-
-        <!-- Contact Section -->
-        <section id="kontak" class="py-32 bg-[#F8FAFC]">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="grid lg:grid-cols-2 gap-24 items-center">
-                    <div>
-                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/5 rounded-lg mb-6">
-                            <i class="fas fa-paper-plane text-primary text-xs"></i>
-                            <span class="text-[10px] font-black uppercase tracking-widest text-primary">Hubungi Kami</span>
-                        </div>
-                        <h2 class="text-4xl md:text-6xl font-black text-indigo-950 mb-8 leading-tight">
-                            Siap Untuk <span class="text-primary italic">Berkembang?</span>
-                        </h2>
-                        <p class="text-slate-500 text-lg leading-relaxed mb-12 max-w-lg">
-                            Ambil langkah pertama untuk menyelesaikan tugasmu. Isi formulir dan pakar kami akan menghubungi Anda sesegera mungkin.
-                        </p>
-
-                        <div class="space-y-8">
-                            <div class="flex items-center gap-6">
-                                <div class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center text-primary">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Kami</p>
-                                    <p class="text-indigo-950 font-bold">{{ setting('contact_email', 'hello@bilcode.com') }}</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-6">
-                                <div class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center text-primary">
-                                    <i class="fas fa-phone"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">WhatsApp Kami</p>
-                                    <p class="text-indigo-950 font-bold">{{ setting('contact_phone', '+62...') }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="relative">
-                        <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-
-                        <div class="relative bg-white p-8 md:p-12 rounded-[3rem] border border-slate-100 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)]">
-                            @if(session('success'))
-                                <div class="mb-8 p-4 bg-green-50 text-green-600 rounded-2xl text-sm font-black flex items-center gap-3">
-                                    <i class="fas fa-check-circle"></i>
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
-                            <form action="{{ route('inquiry.store') }}" method="POST" class="space-y-6">
-                                @csrf
-                                <input type="hidden" name="service_category_id" id="service_category_id">
-                                <input type="hidden" name="service_name" id="service_name">
-
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nama Lengkap</label>
-                                    <input type="text" name="name" required placeholder="Nama kamu..." class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-bold text-indigo-950 placeholder:text-slate-300">
-                                </div>
-
-                                <div class="grid md:grid-cols-2 gap-6">
-                                    <div class="space-y-2">
-                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email</label>
-                                        <input type="email" name="email" required placeholder="email@kamu.com" class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-bold text-indigo-950 placeholder:text-slate-300">
-                                    </div>
-                                    <div class="space-y-2">
-                                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Telepon/WA</label>
-                                        <input type="tel" name="phone" required placeholder="+62..." class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-bold text-indigo-950 placeholder:text-slate-300">
-                                    </div>
-                                </div>
-
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Pesan / Detail Tugas</label>
-                                    <textarea id="message" name="message" required rows="4" placeholder="Ceritakan tentang tugas atau project kamu..." class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-bold text-indigo-950 placeholder:text-slate-300 resize-none"></textarea>
-                                </div>
-
-                                <button type="submit" class="w-full py-5 bg-primary text-white rounded-2xl font-black text-lg shadow-xl shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
-                                    Kirim Sekarang
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
 @endsection
 
 @section('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const pricingButtons = document.querySelectorAll('.pricing-btn');
-        const messageArea = document.getElementById('message');
-        const serviceCategorySelect = document.getElementById('service_category_id');
-        const serviceNameInput = document.getElementById('service_name');
-
-        pricingButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                const package = this.getAttribute('data-package');
-                const categoryId = this.getAttribute('data-category');
-
-                if (categoryId && serviceCategorySelect) {
-                    serviceCategorySelect.value = categoryId;
-                }
-
-                if (package && serviceNameInput) {
-                    serviceNameInput.value = package;
-                }
-
-                if (package && messageArea) {
-                    messageArea.value = `Halo Andrew.Devlog,\n\nSaya tertarik untuk memesan paket: *${package}*.\n\nBerikut rincian kebutuhan saya:\n- \n\n(Silakan lengkapi detail di atas)`;
-                }
-            });
-        });
-    });
-
     function previewLogo(input, previewId, placeholderId) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();

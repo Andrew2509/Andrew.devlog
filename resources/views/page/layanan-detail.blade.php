@@ -145,7 +145,7 @@
                             Punya kebutuhan spesifik untuk {{ $currentCategory->name }} yang tidak tertera di paket? Konsultasikan ide Anda secara gratis.
                         </p>
                     </div>
-                    <a href="{{ url('/#kontak') }}" class="w-full py-5 bg-primary text-white rounded-[1.25rem] font-black text-center hover:bg-white hover:text-primary transition-all shadow-xl transform active:scale-95">
+                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="w-full py-5 bg-primary text-white rounded-[1.25rem] font-black text-center hover:bg-white hover:text-primary transition-all shadow-xl transform active:scale-95">
                         Konsultasi Gratis
                     </a>
                 </div>

@@ -141,7 +141,7 @@
                 </div>
                 <h3 class="text-3xl font-black text-gray-900 mb-4 tracking-tight">Butuh Template <span class="text-primary">Kustom?</span></h3>
                 <p class="text-gray-500 max-w-xl mx-auto mb-10 leading-relaxed text-lg">Kami terus menambahkan koleksi baru setiap minggu. Hubungi kami jika Anda memiliki permintaan khusus untuk desain bisnis Anda.</p>
-                <a href="{{ url('/#kontak') }}" class="inline-flex items-center gap-3 bg-gray-900 hover:bg-black text-white px-10 py-5 rounded-2xl font-black transition-all shadow-2xl hover:shadow-black/20 hover:-translate-y-1">
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="inline-flex items-center gap-3 bg-gray-900 hover:bg-black text-white px-10 py-5 rounded-2xl font-black transition-all shadow-2xl hover:shadow-black/20 hover:-translate-y-1">
                     Hubungi Kami Sekarang <i class="fas fa-arrow-right text-xs"></i>
                 </a>
             </div>
@@ -192,7 +192,7 @@
             <h2 class="text-4xl md:text-6xl font-black text-white mb-8 tracking-tighter">Sudah Menemukan <span class="text-gray-900 italic">Desain</span> yang Cocok?</h2>
             <p class="text-xl text-white/80 max-w-2xl mx-auto mb-12 font-bold leading-relaxed">Jangan tunda lagi untuk membuat bisnis Anda online dengan kualitas terbaik.</p>
             <div class="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="{{ url('/#kontak') }}" class="bg-white text-primary px-12 py-5 rounded-[2rem] font-black text-lg transition-all shadow-2xl hover:scale-105 active:scale-95">Konsultasi via WhatsApp</a>
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="bg-white text-primary px-12 py-5 rounded-[2rem] font-black text-lg transition-all shadow-2xl hover:scale-105 active:scale-95">Konsultasi via WhatsApp</a>
                 <a href="{{ url('/#layanan') }}" class="bg-primary-dark text-white px-12 py-5 rounded-[2rem] font-black text-lg transition-all border border-white/20 hover:bg-white hover:text-primary">Lihat Layanan Lainnya</a>
             </div>
         </div>

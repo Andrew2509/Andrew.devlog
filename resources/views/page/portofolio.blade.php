@@ -65,7 +65,7 @@
                 Mari diskusikan visi Anda dan biarkan saya mengubahnya menjadi kenyataan digital yang luar biasa.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="{{ url('/#kontak') }}" class="bg-primary hover:bg-primary-dark text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all shadow-xl shadow-primary/20">Mulai Proyek Sekarang</a>
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="bg-primary hover:bg-primary-dark text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all shadow-xl shadow-primary/20">Mulai Proyek Sekarang</a>
                 <a href="https://wa.me/628123456789" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md px-10 py-5 rounded-2xl font-bold text-lg transition-all">Konsultasi Gratis</a>
             </div>
         </div>
