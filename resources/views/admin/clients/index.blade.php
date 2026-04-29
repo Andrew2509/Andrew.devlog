@@ -6,14 +6,20 @@
 
 @section('admin_content')
 <div class="bg-white/5 backdrop-blur-xl rounded-[2.5rem] border border-white/5 overflow-hidden shadow-2xl">
-    <div class="p-8 flex justify-between items-center border-b border-white/5">
-        <div>
-            <h3 class="text-xl font-bold text-white">Daftar Partner & Client</h3>
-            <p class="text-gray-500 text-sm mt-1">Total: {{ $clients->count() }} Perusahaan</p>
+    <div class="p-8 flex flex-col md:flex-row justify-between items-center gap-6 border-b border-white/5">
+        <div class="flex p-1 bg-white/5 rounded-2xl border border-white/10">
+            <a href="{{ route('admin.clients.index', ['type' => 'partner']) }}" 
+                class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all {{ request('type', 'partner') == 'partner' ? 'bg-primary text-black shadow-lg shadow-primary/20' : 'text-gray-400 hover:text-white' }}">
+                <i class="fas fa-handshake mr-2"></i> Mitra Global
+            </a>
+            <a href="{{ route('admin.clients.index', ['type' => 'tech']) }}" 
+                class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all {{ request('type') == 'tech' ? 'bg-primary text-black shadow-lg shadow-primary/20' : 'text-gray-400 hover:text-white' }}">
+                <i class="fas fa-code mr-2"></i> Bahasa Pemrograman
+            </a>
         </div>
-        <a href="{{ route('admin.clients.create') }}" class="px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-2xl font-bold transition-all flex items-center gap-2 shadow-lg shadow-primary/20 hover:-translate-y-1">
+        <a href="{{ route('admin.clients.create', ['type' => request('type', 'partner')]) }}" class="w-full md:w-auto px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-2xl font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:-translate-y-1">
             <i class="fas fa-plus text-xs"></i>
-            <span>Tambah Client</span>
+            <span>Tambah {{ request('type') == 'tech' ? 'Bahasa' : 'Client' }}</span>
         </a>
     </div>
 

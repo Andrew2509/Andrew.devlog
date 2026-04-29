@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::orderBy('order')->get();
+        $type = $request->get('type', 'partner');
+        $query = Client::where('type', $type);
+        
+        $clients = $query->orderBy('order')->get();
         return view('admin.clients.index', compact('clients'));
     }
 
@@ -24,6 +27,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'type' => 'required|in:partner,tech',
             'logo_type' => 'required|in:file,url',
             'logo' => 'required_if:logo_type,file|nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
             'logo_url' => 'required_if:logo_type,url|nullable|url',
@@ -42,7 +46,7 @@ class ClientController extends Controller
 
         Client::create($data);
 
-        return redirect()->route('admin.clients.index')->with('success', 'Client berhasil ditambahkan.');
+        return redirect()->route('admin.clients.index', ['type' => $request->type])->with('success', 'Client berhasil ditambahkan.');
     }
 
     public function edit(Client $client)
@@ -54,6 +58,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'type' => 'required|in:partner,tech',
             'logo_type' => 'required|in:file,url',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
             'logo_url' => 'required_if:logo_type,url|nullable|url',
@@ -80,7 +85,7 @@ class ClientController extends Controller
 
         $client->update($data);
 
-        return redirect()->route('admin.clients.index')->with('success', 'Client berhasil diperbarui.');
+        return redirect()->route('admin.clients.index', ['type' => $client->type])->with('success', 'Client berhasil diperbarui.');
     }
 
     public function destroy(Client $client)

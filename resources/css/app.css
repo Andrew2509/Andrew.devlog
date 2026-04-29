@@ -86,6 +86,7 @@ body.mobile-menu-open {
     --animate-spin-slow: spin 15s linear infinite;
     --animate-bounce-slow: bounce 3s infinite;
     --animate-marquee: marquee 40s linear infinite;
+    --animate-marquee-reverse: marquee-reverse 40s linear infinite;
     --animate-spin-reverse: spin-reverse 20s linear infinite;
 
     @keyframes blob {
@@ -111,6 +112,10 @@ body.mobile-menu-open {
     @keyframes marquee {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
+    }
+    @keyframes marquee-reverse {
+        0% { transform: translateX(-50%); }
+        100% { transform: translateX(0); }
     }
 }
 

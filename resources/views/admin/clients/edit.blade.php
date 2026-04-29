@@ -14,10 +14,20 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Name -->
                 <div class="space-y-3">
-                    <label class="text-sm font-bold text-gray-400 uppercase tracking-widest px-1">Nama Perusahaan <span class="text-red-500">*</span></label>
-                    <input type="text" name="name" value="{{ old('name', $client->name) }}" placeholder="Contoh: Google, Microsoft, dll." required
+                    <label class="text-sm font-bold text-gray-400 uppercase tracking-widest px-1">Nama <span class="text-red-500">*</span></label>
+                    <input type="text" name="name" value="{{ old('name', $client->name) }}" placeholder="Contoh: Google, PHP, Laravel, dll." required
                         class="w-full bg-white/5 border border-white/10 text-white px-6 py-4 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-600">
                     @error('name')<p class="text-red-500 text-xs mt-1 px-1">{{ $message }}</p>@enderror
+                </div>
+
+                <!-- Type -->
+                <div class="space-y-3">
+                    <label class="text-sm font-bold text-gray-400 uppercase tracking-widest px-1">Tipe <span class="text-red-500">*</span></label>
+                    <select name="type" required class="w-full bg-white/5 border border-white/10 text-white px-6 py-4 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none cursor-pointer">
+                        <option value="partner" {{ old('type', $client->type) == 'partner' ? 'selected' : '' }} class="bg-slate-900 text-white">Mitra Global</option>
+                        <option value="tech" {{ old('type', $client->type) == 'tech' ? 'selected' : '' }} class="bg-slate-900 text-white">Bahasa Pemrograman (Tech Stack)</option>
+                    </select>
+                    @error('type')<p class="text-red-500 text-xs mt-1 px-1">{{ $message }}</p>@enderror
                 </div>
 
                 <!-- Order -->

@@ -23,7 +23,8 @@ class HomeController extends Controller
             $prices = Price::where('is_visible_home', true)->orderBy('price')->take(3)->get();
         }
 
-        $clients = \App\Models\Client::where('is_active', true)->orderBy('order')->orderBy('name')->get();
+        $partners = \App\Models\Client::where('is_active', true)->where('type', 'partner')->orderBy('order')->orderBy('name')->get();
+        $techs = \App\Models\Client::where('is_active', true)->where('type', 'tech')->orderBy('order')->orderBy('name')->get();
         $categories = ServiceCategory::whereNull('parent_id')->orderBy('order')->get();
 
         // Static testimonials for Bilcode branding as seen in reference image
@@ -48,7 +49,7 @@ class HomeController extends Controller
             ],
         ]);
 
-        return view('index', compact('portfolios', 'prices', 'clients', 'categories', 'testimonials'));
+        return view('index', compact('portfolios', 'prices', 'partners', 'techs', 'categories', 'testimonials'));
     }
 
     public function portfolio()
