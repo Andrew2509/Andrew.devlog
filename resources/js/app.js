@@ -1,8 +1,32 @@
 // Andrew.Devlog - Production Build Sync
 import './bootstrap';
 import Alpine from 'alpinejs';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
+import Lenis from 'lenis';
+import { createIcons, icons } from 'lucide';
 
+// Expose libraries globally for blade inline scripts
 window.Alpine = Alpine;
+window.gsap = gsap;
+window.ScrollTrigger = ScrollTrigger;
+window.ScrollSmoother = ScrollSmoother;
+window.Lenis = Lenis;
+
+// Expose Lucide and all icons for standard lucide.createIcons() usage
+window.lucide = {
+    createIcons: (config) => {
+        return createIcons({
+            icons,
+            ...config
+        });
+    }
+};
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
 Alpine.start();
 
 // Fail-safe: Ensure body is scrollable on load

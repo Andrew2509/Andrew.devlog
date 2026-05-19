@@ -102,11 +102,16 @@
 
     @include('component.navbar')
 
-    <main id="main-content">
-        @yield('content')
-    </main>
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+            <main id="main-content">
+                @yield('content')
+            </main>
 
-    @include('component.footer')
+            @include('component.footer')
+        </div>
+    </div>
+
     @include('component.search-modal')
     @include('component.whatsapp_button')
 

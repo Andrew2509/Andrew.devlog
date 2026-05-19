@@ -1,151 +1,98 @@
-@php
-    $footerCategories = \App\Models\ServiceCategory::whereNull('parent_id')->orderBy('order')->take(4)->get();
-@endphp
-
 <!-- Footer -->
-<footer class="bg-[#0b0f1a] text-white pt-0 pb-10 relative overflow-hidden">
-    <!-- Neon Top Border -->
-    <div class="h-0.5 w-full bg-linear-to-r from-transparent via-primary to-transparent opacity-50 shadow-[0_0_20px_#0ea5e9]"></div>
-
-
-
-    <!-- Main Footer Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
-
-            <!-- Column 1: Brand & Contact -->
-            <div class="space-y-8">
-                <div>
-                    <a href="{{ url('/') }}" class="flex items-center gap-2 group">
-                        @if(setting('footer_logo') || setting('site_logo'))
-                            <img src="{{ setting('footer_logo') ?: setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto transition-transform group-hover:scale-105">
-                        @else
-                            <img src="{{ asset('assets/image/logo.png') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-28 w-auto transition-transform group-hover:scale-105">
-                        @endif
-                    </a>
-                </div>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    {{ setting('site_tagline', 'Digital Solutions & Identity Creator') }}
-                </p>
-
-                <div class="space-y-4 pt-4 border-t border-white/5">
-                    <div class="flex items-center gap-4 group">
-                        <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-primary border border-white/5 group-hover:bg-primary group-hover:text-black transition-all">
-                            <i class="fas fa-envelope text-xs"></i>
-                        </div>
-                        <span class="text-sm font-bold text-gray-300">{{ setting('site_email', 'masbrightly@gmail.com') }}</span>
+<footer class="gsap-footer relative bg-slate-900 text-slate-300 pt-20 pb-10 px-6 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        
+        <!-- Brand Info -->
+        <div class="md:col-span-1">
+            <div class="flex items-center gap-2 font-bold text-xl tracking-tighter mb-6 text-white cursor-pointer group">
+                @if(setting('site_logo'))
+                    <img src="{{ setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-8 w-auto object-contain brightness-0 invert">
+                @else
+                    <div class="w-8 h-8 bg-blue-600 text-white rounded-xl flex items-center justify-center transform -rotate-6 group-hover:rotate-0 transition-transform">
+                        <span class="transform rotate-6 group-hover:rotate-0 transition-transform font-bold">{{ substr(setting('site_name', 'Andrew'), 0, 1) }}</span>
                     </div>
-                    <div class="flex items-center gap-4 group">
-                        <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-primary border border-white/5 group-hover:bg-primary group-hover:text-black transition-all">
-                            <i class="fab fa-whatsapp text-xs"></i>
-                        </div>
-                        <span class="text-sm font-bold text-gray-300">{{ setting('whatsapp_number', '+62 812 3456 789') }}</span>
-                    </div>
-                </div>
+                    <span class="text-white">{{ setting('site_name', 'Andrew.Devlog') }}</span>
+                @endif
             </div>
-
-            <!-- Column 2: Services (Dynamic) -->
-            <div>
-                <h4 class="text-xs font-black mb-10 text-white uppercase tracking-[0.3em] flex items-center gap-3">
-                    <span class="w-6 h-px bg-primary"></span>
-                    LAYANAN
-                </h4>
-                <ul class="space-y-4">
-                    @forelse($footerCategories as $category)
-                        <li>
-                            <a href="{{ route('harga.layanan', $category->slug) }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">
-                                <span class="w-0 group-hover/link:w-3 h-px bg-primary transition-all"></span>
-                                {{ $category->name }}
-                            </a>
-                        </li>
-                    @empty
-                        <li><a href="{{ route('harga') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all">Web Development</a></li>
-                        <li><a href="{{ route('harga') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all">UI/UX Design</a></li>
-                        <li><a href="{{ route('harga') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all">SEO Optimization</a></li>
-                    @endforelse
-                </ul>
-            </div>
-
-            <!-- Column 3: Quick Links -->
-            <div>
-                <h4 class="text-xs font-black mb-10 text-white uppercase tracking-[0.3em] flex items-center gap-3">
-                    <span class="w-6 h-px bg-primary"></span>
-                    JELAJAH
-                </h4>
-                <ul class="space-y-4">
-                    <li><a href="{{ url('/') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">Beranda</a></li>
-                    <li><a href="{{ url('/portofolio') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">Portofolio</a></li>
-                    <li><a href="{{ url('/harga') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">Daftar Harga</a></li>
-                    <li><a href="{{ url('/pesan') }}" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">Pesan Sekarang</a></li>
-                    <li>
-                        <a href="http://localhost:3000" target="_blank" class="text-gray-500 text-sm font-bold hover:text-primary transition-all flex items-center gap-2 group/link">
-                            AI Sticker Studio
-                            <span class="px-1.5 py-0.5 rounded text-[8px] bg-primary/10 text-primary border border-primary/20 leading-none">BARU</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Column 4: Social & Follow -->
-            <div>
-                <h4 class="text-xs font-black mb-10 text-white uppercase tracking-[0.3em] flex items-center gap-3">
-                    <span class="w-6 h-px bg-primary"></span>
-                    KONEKSI
-                </h4>
-                <p class="text-gray-500 text-sm font-bold mb-8 leading-relaxed">
-                    Follow perjalanan digital saya di berbagai platform sosial media.
-                </p>
-                <div class="flex gap-4">
-                    @php
-                        $socials = [
-                            ['icon' => 'fab fa-instagram', 'setting' => 'social_instagram', 'color' => '#E1306C'],
-                            ['icon' => 'fab fa-facebook-f', 'setting' => 'social_facebook', 'color' => '#1877F2'],
-                            ['icon' => 'fab fa-tiktok', 'setting' => 'social_tiktok', 'color' => '#000000'],
-                            ['icon' => 'fab fa-github', 'setting' => 'social_github', 'color' => '#ffffff'],
-                        ];
-                    @endphp
-                    @foreach($socials as $social)
-                        @if(setting($social['setting']))
-                        <a href="{{ setting($social['setting']) }}" target="_blank" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-all transform hover:-translate-y-1 relative group"
-                           style="--hover-color: {{ $social['color'] }}" aria-label="Follow me on {{ str_replace('social_', '', $social['setting']) }}">
-                            <i class="{{ $social['icon'] }}"></i>
-                            <div class="absolute inset-0 rounded-2xl bg-(--hover-color) opacity-0 group-hover:opacity-20 blur-lg transition-opacity"></div>
-                        </a>
-                        @endif
-                    @endforeach
-                </div>
+            <p class="text-sm leading-relaxed text-slate-400 mb-6">
+                {{ setting('site_tagline', 'Arsitek digital terpercaya Anda. Membantu mewujudkan ide menjadi solusi teknologi yang berdampak tinggi.') }}
+            </p>
+            <div class="flex gap-4">
+                @if(setting('social_facebook'))
+                    <a href="{{ setting('social_facebook') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i data-lucide="facebook" class="w-[18px] h-[18px]"></i></a>
+                @endif
+                @if(setting('social_twitter'))
+                    <a href="{{ setting('social_twitter') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i data-lucide="twitter" class="w-[18px] h-[18px]"></i></a>
+                @endif
+                @if(setting('social_instagram'))
+                    <a href="{{ setting('social_instagram') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i data-lucide="instagram" class="w-[18px] h-[18px]"></i></a>
+                @endif
+                @if(setting('social_linkedin'))
+                    <a href="{{ setting('social_linkedin') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i data-lucide="linkedin" class="w-[18px] h-[18px]"></i></a>
+                @endif
             </div>
         </div>
 
-        <!-- Tech Stack Row -->
-        <div class="py-12 border-t border-white/5 flex flex-wrap justify-center items-center gap-10 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-            <span class="text-xs font-black tracking-[0.3em] uppercase">Dibangun dengan:</span>
-            <i class="fab fa-laravel text-3xl"></i>
-            <i class="fab fa-js text-3xl"></i>
-            <i class="fab fa-php text-3xl"></i>
-            <i class="fab fa-html5 text-3xl"></i>
-            <i class="fab fa-css3-alt text-3xl"></i>
+        <!-- Services -->
+        <div>
+            <h4 class="text-white font-bold mb-6">Layanan</h4>
+            @php
+                $footerCategories = \App\Models\ServiceCategory::whereNull('parent_id')->orderBy('order')->take(5)->get();
+            @endphp
+            <ul class="space-y-3 text-sm">
+                @forelse($footerCategories as $category)
+                    <li><a href="{{ route('harga.layanan', $category->slug) }}" class="hover:text-blue-400 transition-colors">{{ $category->name }}</a></li>
+                @empty
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Pembuatan Website</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Aplikasi Mobile</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Joki Tugas IT</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Optimasi SEO</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">Desain UI/UX</a></li>
+                @endforelse
+            </ul>
         </div>
 
-        <!-- Bottom Row -->
-        <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="text-gray-500 text-xs font-black uppercase tracking-widest text-center md:text-left">
-                {{ setting('footer_copyright', '© 2026 ANDREW.DEVLOG. HAK CIPTA DILINDUNGI.') }}
-            </div>
-            <div class="flex items-center gap-10">
-                <a href="{{ url('/privacy') }}" class="text-[10px] font-black text-gray-600 hover:text-primary uppercase tracking-widest transition-colors">Privasi</a>
-                <a href="{{ url('/terms') }}" class="text-[10px] font-black text-gray-600 hover:text-primary uppercase tracking-widest transition-colors">Ketentuan</a>
-                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-12 h-12 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all group" aria-label="Kembali ke atas">
-                    <i class="fas fa-chevron-up group-hover:-translate-y-1 transition-transform"></i>
-                </button>
-            </div>
+        <!-- Company Links -->
+        <div>
+            <h4 class="text-white font-bold mb-6">Perusahaan</h4>
+            <ul class="space-y-3 text-sm">
+                <li><a href="{{ url('/') }}" class="hover:text-blue-400 transition-colors">Tentang Kami</a></li>
+                <li><a href="{{ url('/#portofolio') }}" class="hover:text-blue-400 transition-colors">Portofolio</a></li>
+                <li><a href="{{ route('harga') }}" class="hover:text-blue-400 transition-colors">Harga & Paket</a></li>
+                <li><a href="#" class="hover:text-blue-400 transition-colors">Syarat & Ketentuan</a></li>
+                <li><a href="#" class="hover:text-blue-400 transition-colors">Kebijakan Privasi</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div>
+            <h4 class="text-white font-bold mb-6">Hubungi Kami</h4>
+            <ul class="space-y-4 text-sm">
+                <li class="flex items-start gap-3">
+                    <i data-lucide="map-pin" class="w-[18px] h-[18px] text-blue-500 shrink-0 mt-0.5"></i>
+                    <span>{{ setting('contact_address', 'Surabaya, Jawa Timur, Indonesia') }}</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <i data-lucide="phone" class="w-[18px] h-[18px] text-blue-500 shrink-0"></i>
+                    <span>{{ setting('contact_phone', '+62 812-3456-7890') }}</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <i data-lucide="mail" class="w-[18px] h-[18px] text-blue-500 shrink-0"></i>
+                    <span>{{ setting('site_email', 'hello@sparkdigital.id') }}</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="max-w-7xl mx-auto pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div>
+            {!! setting('footer_copyright', '&copy; ' . date('Y') . ' Spark. All rights reserved.') !!}
+        </div>
+        <div class="flex gap-6">
+            <a href="#" class="hover:text-slate-300">Privacy Policy</a>
+            <a href="#" class="hover:text-slate-300">Terms of Service</a>
         </div>
     </div>
 </footer>
-
-<style>
-    /* Custom Neon Glow for Social Buttons */
-    .group:hover i {
-        text-shadow: 0 0 10px var(--hover-color);
-    }
-</style>
