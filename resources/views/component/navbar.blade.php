@@ -12,14 +12,14 @@
      class="gsap-nav relative z-50 flex items-center justify-between px-6 py-5 max-w-7xl mx-auto w-full">
     
     <!-- Logo Section -->
-    <a href="{{ url('/') }}" class="flex items-center gap-2 font-bold text-xl tracking-tighter cursor-pointer group">
+    <a href="{{ url('/') }}" class="flex items-center gap-3 font-bold text-xl tracking-tighter cursor-pointer group">
         @if(setting('site_logo'))
-            <img src="{{ setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-8 w-auto object-contain">
+            <img src="{{ setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-10 md:h-12 w-auto object-contain">
         @else
-            <div class="w-8 h-8 bg-blue-600 text-white rounded-xl flex items-center justify-center transform -rotate-6 group-hover:rotate-0 transition-transform">
-                <span class="transform rotate-6 group-hover:rotate-0 transition-transform font-bold">{{ substr(setting('site_name', 'Andrew'), 0, 1) }}</span>
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center transform -rotate-6 group-hover:rotate-0 transition-transform">
+                <span class="transform rotate-6 group-hover:rotate-0 transition-transform font-bold text-lg">{{ substr(setting('site_name', 'Andrew'), 0, 1) }}</span>
             </div>
-            <span class="text-slate-800">{{ setting('site_name', 'Andrew.Devlog') }}</span>
+            <span class="text-slate-800 text-xl md:text-2xl">{{ setting('site_name', 'Andrew.Devlog') }}</span>
         @endif
     </a>
 

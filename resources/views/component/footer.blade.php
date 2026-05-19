@@ -4,14 +4,14 @@
         
         <!-- Brand Info -->
         <div class="md:col-span-1">
-            <div class="flex items-center gap-2 font-bold text-xl tracking-tighter mb-6 text-white cursor-pointer group">
+            <div class="flex items-center gap-3 font-bold text-xl tracking-tighter mb-6 text-white cursor-pointer group">
                 @if(setting('site_logo'))
-                    <img src="{{ setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-8 w-auto object-contain brightness-0 invert">
+                    <img src="{{ setting('site_logo') }}" alt="{{ setting('site_name', 'Andrew.Devlog') }}" class="h-10 md:h-12 w-auto object-contain brightness-0 invert">
                 @else
-                    <div class="w-8 h-8 bg-blue-600 text-white rounded-xl flex items-center justify-center transform -rotate-6 group-hover:rotate-0 transition-transform">
-                        <span class="transform rotate-6 group-hover:rotate-0 transition-transform font-bold">{{ substr(setting('site_name', 'Andrew'), 0, 1) }}</span>
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center transform -rotate-6 group-hover:rotate-0 transition-transform">
+                        <span class="transform rotate-6 group-hover:rotate-0 transition-transform font-bold text-lg">{{ substr(setting('site_name', 'Andrew'), 0, 1) }}</span>
                     </div>
-                    <span class="text-white">{{ setting('site_name', 'Andrew.Devlog') }}</span>
+                    <span class="text-white text-xl md:text-2xl">{{ setting('site_name', 'Andrew.Devlog') }}</span>
                 @endif
             </div>
             <p class="text-sm leading-relaxed text-slate-400 mb-6">
