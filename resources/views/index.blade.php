@@ -983,30 +983,36 @@
 
             // --- 9. Pricing Section - 3D Hover Tilt & Card Float Entrance ---
             if (document.querySelector(".gsap-pricing-card")) {
-                gsap.from(".gsap-pricing-card", {
-                    scrollTrigger: {
-                        trigger: ".gsap-pricing-header",
-                        start: "top 90%"
+                gsap.fromTo(".gsap-pricing-card", 
+                    {
+                        y: 60,
+                        opacity: 0
                     },
-                    y: 50,
-                    opacity: 0,
-                    duration: 0.8,
-                    stagger: 0.15,
-                    ease: "power3.out",
-                    onComplete: () => {
-                        // Start continuous hover/float on popular card once entrance is done
-                        const popularCard = document.querySelector(".gsap-pricing-card.border-blue-500");
-                        if (popularCard) {
-                            gsap.to(popularCard, {
-                                y: "-=8",
-                                duration: 2,
-                                ease: "sine.inOut",
-                                repeat: -1,
-                                yoyo: true
-                            });
+                    {
+                        scrollTrigger: {
+                            trigger: ".gsap-pricing-section",
+                            start: "top 85%",
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        ease: "power3.out",
+                        onComplete: () => {
+                            // Start continuous hover/float on popular card once entrance is done
+                            const popularCard = document.querySelector(".gsap-pricing-card.border-blue-500");
+                            if (popularCard) {
+                                gsap.to(popularCard, {
+                                    y: "-=8",
+                                    duration: 2,
+                                    ease: "sine.inOut",
+                                    repeat: -1,
+                                    yoyo: true
+                                });
+                            }
                         }
                     }
-                });
+                );
 
                 // 3D Hover Tilt Effect
                 document.querySelectorAll(".gsap-pricing-card").forEach(card => {
@@ -1041,17 +1047,23 @@
 
             // --- 10. Testimonials Section - Card Parallax Entrance ---
             if (document.querySelector(".gsap-testi-card")) {
-                gsap.from(".gsap-testi-card", {
-                    scrollTrigger: {
-                        trigger: ".gsap-testi-header",
-                        start: "top 90%"
+                gsap.fromTo(".gsap-testi-card", 
+                    {
+                        scale: 0.9,
+                        opacity: 0
                     },
-                    scale: 0.95,
-                    opacity: 0,
-                    duration: 0.8,
-                    stagger: 0.15,
-                    ease: "power3.out"
-                });
+                    {
+                        scrollTrigger: {
+                            trigger: ".gsap-testi-section",
+                            start: "top 85%",
+                        },
+                        scale: 1,
+                        opacity: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        ease: "power3.out"
+                    }
+                );
             }
 
             // Always call ScrollTrigger.refresh() after all triggers and pins are set up
