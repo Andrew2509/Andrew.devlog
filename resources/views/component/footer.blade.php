@@ -19,16 +19,16 @@
             </p>
             <div class="flex gap-4">
                 @if(setting('social_facebook'))
-                    <a href="{{ setting('social_facebook') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i data-lucide="facebook" class="w-[18px] h-[18px]"></i></a>
+                    <a href="{{ setting('social_facebook') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f text-[18px]"></i></a>
                 @endif
                 @if(setting('social_twitter'))
-                    <a href="{{ setting('social_twitter') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i data-lucide="twitter" class="w-[18px] h-[18px]"></i></a>
+                    <a href="{{ setting('social_twitter') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter text-[18px]"></i></a>
                 @endif
                 @if(setting('social_instagram'))
-                    <a href="{{ setting('social_instagram') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i data-lucide="instagram" class="w-[18px] h-[18px]"></i></a>
+                    <a href="{{ setting('social_instagram') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i class="fa-brands fa-instagram text-[18px]"></i></a>
                 @endif
                 @if(setting('social_linkedin'))
-                    <a href="{{ setting('social_linkedin') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i data-lucide="linkedin" class="w-[18px] h-[18px]"></i></a>
+                    <a href="{{ setting('social_linkedin') }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in text-[18px]"></i></a>
                 @endif
             </div>
         </div>

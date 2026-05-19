@@ -24,6 +24,11 @@ window.lucide = {
     }
 };
 
+// Auto-initialize icons for elements already in the DOM
+document.addEventListener('DOMContentLoaded', () => {
+    window.lucide.createIcons();
+});
+
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
