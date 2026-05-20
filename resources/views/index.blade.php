@@ -158,35 +158,35 @@
             </div>
 
             <!-- Floating Element: Github Logo -->
-            <div class="layer-1 absolute top-[30%] left-[8%] sm:left-[12%] flex items-center justify-center transform -rotate-12 hover:rotate-0 transition-all duration-500 cursor-pointer z-20">
+            <div class="layer-1 absolute top-[30%] left-[8%] sm:left-[12%] flex items-center justify-center transform -rotate-12 hover:rotate-0 transition-all duration-500 cursor-pointer z-20" data-lag="0.3">
                 <div class="w-14 h-14 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center">
                     <i data-lucide="github" class="w-8 h-8 text-slate-800"></i>
                 </div>
             </div>
 
             <!-- Floating Element: Code Tag -->
-            <div class="layer-2 absolute bottom-[20%] left-[20%] sm:left-[30%] flex items-center justify-center transform rotate-6 hover:scale-110 transition-all duration-500 cursor-pointer z-20">
+            <div class="layer-2 absolute bottom-[20%] left-[20%] sm:left-[30%] flex items-center justify-center transform rotate-6 hover:scale-110 transition-all duration-500 cursor-pointer z-20" data-lag="0.5">
                 <div class="w-12 h-12 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center">
                     <i data-lucide="code" class="w-6 h-6 text-blue-600"></i>
                 </div>
             </div>
 
             <!-- Floating Element: Hexagon -->
-            <div class="layer-3 absolute bottom-[20%] right-[20%] sm:right-[30%] flex items-center justify-center transform rotate-12 hover:rotate-0 transition-all duration-500 cursor-pointer z-20">
+            <div class="layer-3 absolute bottom-[20%] right-[20%] sm:right-[30%] flex items-center justify-center transform rotate-12 hover:rotate-0 transition-all duration-500 cursor-pointer z-20" data-lag="0.7">
                 <div class="w-12 h-12 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center">
                     <i data-lucide="hexagon" class="w-6 h-6 text-indigo-500"></i>
                 </div>
             </div>
 
             <!-- Floating Element: Terminal Icon -->
-            <div class="layer-2 absolute top-[30%] right-[8%] sm:right-[12%] flex items-center justify-center transform hover:scale-110 transition-all duration-500 cursor-pointer z-20">
+            <div class="layer-2 absolute top-[30%] right-[8%] sm:right-[12%] flex items-center justify-center transform hover:scale-110 transition-all duration-500 cursor-pointer z-20" data-lag="0.4">
                 <div class="w-14 h-14 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center">
                     <i data-lucide="terminal" class="w-7 h-7 text-indigo-600"></i>
                 </div>
             </div>
 
             <!-- Floating Element: WhatsApp Contact Card (Top Right) -->
-            <div class="layer-4 absolute top-[5%] right-[1%] sm:right-[10%] bg-white/90 backdrop-blur-md border border-slate-200/50 p-4 sm:p-5 rounded-[2rem] shadow-2xl flex items-center gap-4 z-30 transform hover:-translate-y-2 transition-transform duration-300">
+            <div class="layer-4 absolute top-[5%] right-[1%] sm:right-[10%] bg-white/90 backdrop-blur-md border border-slate-200/50 p-4 sm:p-5 rounded-[2rem] shadow-2xl flex items-center gap-4 z-30 transform hover:-translate-y-2 transition-transform duration-300" data-lag="0.2">
                 <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="flex items-center gap-4">
                     <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-400/30 text-white">
                         <i data-lucide="message-circle" class="w-6 h-6"></i>
@@ -199,7 +199,7 @@
             </div>
 
             <!-- Floating Element: CTA Button (Top Left) -->
-            <div class="layer-1 absolute top-[10%] left-[1%] sm:left-[12%] z-30">
+            <div class="layer-1 absolute top-[10%] left-[1%] sm:left-[12%] z-30" data-lag="0.25">
                 <div class="flex items-center gap-3">
                     <span class="text-xs sm:text-sm font-extrabold text-blue-600 uppercase tracking-widest">Konsultasi</span>
                     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/30 group hover:scale-110 transition-transform duration-300">
@@ -453,7 +453,7 @@
 
             <div class="flex flex-col md:flex-row gap-8 items-start relative mt-16">
                 <!-- Floating background typography element with parallax effect -->
-                <div class="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 text-slate-200/40 font-black text-[12rem] select-none pointer-events-none opacity-40 hidden lg:block gsap-why-bg-text tracking-widest" data-speed="0.5">
+                <div class="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 text-slate-200/40 font-black text-[12rem] select-none pointer-events-none opacity-40 hidden lg:block gsap-why-bg-text tracking-widest" data-speed="0.55" data-lag="0.8">
                     BENEFITS
                 </div>
 
@@ -711,110 +711,188 @@
 @section('scripts')
 <script>
     window.addEventListener("load", () => {
-        // Initialize Lucide SVG Icons using the custom exposed function
-        if (window.lucide) {
-            window.lucide.createIcons();
+        // ── Initialize Icons ────────────────────────────────────────────────
+        if (window.lucide) window.lucide.createIcons();
+
+        // ── Plugin Registration (safety guard in case app.js hasn't run) ────
+        gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, Flip);
+
+        // ════════════════════════════════════════════════════════════════════
+        //  1. SCROLL SMOOTHER  – buttery 60fps smooth scrolling
+        // ════════════════════════════════════════════════════════════════════
+        let smoother = null;
+        const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+        if (isDesktop && document.querySelector("#smooth-wrapper")) {
+            smoother = ScrollSmoother.create({
+                wrapper: "#smooth-wrapper",
+                content: "#smooth-content",
+                smooth: 1.5,            // lerp factor – higher = dreamier lag
+                smoothTouch: 0.1,       // minimal lag on touch devices
+                effects: true,          // enable data-speed / data-lag attributes
+                normalizeScroll: true,  // prevent browser quirks
+            });
+            window.smoother = smoother;
         }
 
-        // Register plugins locally in page context
-        gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
-        // --- 1. GSAP ScrollSmoother Smooth Scrolling ---
-        window.smoother = ScrollSmoother.create({
-            wrapper: "#smooth-wrapper",
-            content: "#smooth-content",
-            smooth: 1.2,
-            effects: true
-        });
-
-        // --- 2. GSAP Animations wrapped in Context (for automatic cleanup & efficiency) ---
+        // ════════════════════════════════════════════════════════════════════
+        //  GSAP Context – all animations contained for clean teardown
+        // ════════════════════════════════════════════════════════════════════
         const ctx = gsap.context(() => {
 
-            // Custom Premium Cursor
-            const cursor = document.getElementById('custom-cursor');
+            // ── Custom Premium Cursor ─────────────────────────────────────
+            const cursor    = document.getElementById('custom-cursor');
             const cursorDot = document.getElementById('custom-cursor-dot');
 
             if (cursor && cursorDot) {
-                const xToCursor = gsap.quickTo(cursor, "x", { duration: 0.1, ease: "power3" });
-                const yToCursor = gsap.quickTo(cursor, "y", { duration: 0.1, ease: "power3" });
-                const xToDot = gsap.quickTo(cursorDot, "x", { duration: 0.05, ease: "power3" });
-                const yToDot = gsap.quickTo(cursorDot, "y", { duration: 0.05, ease: "power3" });
+                const xCursor = gsap.quickTo(cursor,    "x", { duration: 0.12, ease: "power3" });
+                const yCursor = gsap.quickTo(cursor,    "y", { duration: 0.12, ease: "power3" });
+                const xDot    = gsap.quickTo(cursorDot, "x", { duration: 0.04, ease: "power3" });
+                const yDot    = gsap.quickTo(cursorDot, "y", { duration: 0.04, ease: "power3" });
 
-                document.addEventListener('mousemove', (e) => {
-                    xToCursor(e.clientX);
-                    yToCursor(e.clientY);
-                    xToDot(e.clientX);
-                    yToDot(e.clientY);
+                document.addEventListener('mousemove', e => {
+                    xCursor(e.clientX); yCursor(e.clientY);
+                    xDot(e.clientX);    yDot(e.clientY);
                 });
 
                 document.querySelectorAll('a, button, [role="button"], .cursor-pointer').forEach(el => {
-                    el.addEventListener('mouseenter', () => {
-                        gsap.to(cursor, { 
-                            scale: 1.5, 
-                            backgroundColor: 'rgba(37, 99, 235, 0.08)',
-                            borderColor: '#2563eb',
-                            duration: 0.2 
-                        });
-                    });
-                    el.addEventListener('mouseleave', () => {
-                        gsap.to(cursor, { 
-                            scale: 1, 
-                            backgroundColor: 'transparent',
-                            borderColor: '#2563eb',
-                            duration: 0.2 
-                        });
-                    });
+                    el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 1.6, backgroundColor: 'rgba(37,99,235,0.08)', duration: 0.2 }));
+                    el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, backgroundColor: 'transparent', duration: 0.2 }));
                 });
             }
 
-            // --- 3. Interactive Mouse Parallax (Hero Visual) ---
-            const layers = [".layer-1", ".layer-2", ".layer-3", ".layer-4"];
-            const hasLayers = layers.every(selector => document.querySelector(selector) !== null);
-            
-            if (hasLayers) {
-                const xTo1 = gsap.quickTo(".layer-1", "x", { duration: 0.8, ease: "power3" });
-                const yTo1 = gsap.quickTo(".layer-1", "y", { duration: 0.8, ease: "power3" });
-                
-                const xTo2 = gsap.quickTo(".layer-2", "x", { duration: 0.8, ease: "power3" });
-                const yTo2 = gsap.quickTo(".layer-2", "y", { duration: 0.8, ease: "power3" });
-                
-                const xTo3 = gsap.quickTo(".layer-3", "x", { duration: 0.8, ease: "power3" });
-                const yTo3 = gsap.quickTo(".layer-3", "y", { duration: 0.8, ease: "power3" });
-                
-                const xTo4 = gsap.quickTo(".layer-4", "x", { duration: 0.8, ease: "power3" });
-                const yTo4 = gsap.quickTo(".layer-4", "y", { duration: 0.8, ease: "power3" });
+            // ════════════════════════════════════════════════════════════════
+            //  2. SPLIT TEXT – cinematic text reveal for all headings
+            // ════════════════════════════════════════════════════════════════
 
-                document.addEventListener('mousemove', (e) => {
-                    const x = (e.clientX / window.innerWidth - 0.5) * 2;
-                    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            // Helper: split + animate on scroll
+            function splitReveal(selector, { type = "chars,words", stagger = 0.02, y = 40, duration = 0.9, delay = 0, triggerSelector = null, start = "top 85%" } = {}) {
+                const els = gsap.utils.toArray(selector);
+                els.forEach(el => {
+                    if (!el) return;
+                    const split = new SplitText(el, { type, linesClass: "split-line", charsClass: "split-char", wordsClass: "split-word" });
+                    const targets = type.includes("chars") ? split.chars : type.includes("words") ? split.words : split.lines;
                     
-                    xTo1(x * 15); yTo1(y * 15);
-                    xTo2(x * 30); yTo2(y * 30);
-                    xTo3(x * 45); yTo3(y * 45);
-                    xTo4(x * -20); yTo4(y * -20);
+                    // Clip overflow so chars don't bleed out during animation
+                    if (type.includes("lines")) {
+                        split.lines.forEach(l => l.style.overflow = "hidden");
+                    }
+
+                    gsap.from(targets, {
+                        scrollTrigger: {
+                            trigger: triggerSelector || el,
+                            start,
+                            toggleActions: "play none none none",
+                        },
+                        y,
+                        opacity: 0,
+                        rotateX: y > 0 ? 15 : 0,
+                        duration,
+                        delay,
+                        stagger: { each: stagger, ease: "power2.inOut" },
+                        ease: "power4.out",
+                        onComplete: () => split.revert(),   // revert after animation to keep HTML clean
+                    });
                 });
             }
 
-            // --- 4. Entrance & Scroll GSAP Animations ---
-            if (document.querySelector(".gsap-badge")) {
-                const tl = gsap.timeline();
-                tl.from(".gsap-badge", { y: 20, opacity: 0, duration: 0.6, ease: "power3.out" });
-                if (document.querySelector(".gsap-title")) {
-                    tl.from(".gsap-title", { y: 30, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.4");
-                }
-                if (document.querySelector(".gsap-subtitle")) {
-                    tl.from(".gsap-subtitle", { y: 20, opacity: 0, duration: 0.6, ease: "power3.out" }, "-=0.4");
-                }
-                if (document.querySelector(".gsap-visual")) {
-                    tl.from(".gsap-visual", { scale: 0.9, opacity: 0, duration: 1, ease: "elastic.out(1, 0.75)" }, "-=0.4");
-                }
+            // ── Hero Section – entrance before scroll ─────────────────────
+            const heroTitle = document.querySelector(".gsap-title");
+            if (heroTitle) {
+                const splitTitle = new SplitText(heroTitle, { type: "lines,words", linesClass: "overflow-hidden" });
+                const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+                tl.from(".gsap-badge",     { y: 24, opacity: 0, duration: 0.7 })
+                  .from(splitTitle.words,   { y: "110%", opacity: 0, duration: 1.0, stagger: 0.06 }, "-=0.3")
+                  .from(".gsap-subtitle",   { y: 20, opacity: 0, duration: 0.7 }, "-=0.6")
+                  .from(".gsap-visual",     { scale: 0.88, opacity: 0, duration: 1.1, ease: "elastic.out(1,0.75)" }, "-=0.6");
+
+                // Revert split after entrance animation
+                tl.call(() => splitTitle.revert(), null, "+=0.05");
             }
 
-            // --- 5. Step Section Pinned Horizontal Scroll & Mobile reveals ---
-            if (window.innerWidth >= 768) {
-                const track = document.querySelector(".gsap-step-horizontal-track");
+            // ── Section heading char reveals ──────────────────────────────
+            splitReveal(".gsap-feature-section h2",   { type: "chars", stagger: 0.025, y: 50, start: "top 80%" });
+            splitReveal(".gsap-step-section h2",       { type: "words", stagger: 0.08,  y: 40, start: "top 80%" });
+            splitReveal(".gsap-portfolio-section h2",  { type: "chars", stagger: 0.022, y: 50, start: "top 85%" });
+            splitReveal(".gsap-pricing-section h2",    { type: "chars", stagger: 0.025, y: 50, start: "top 85%" });
+            splitReveal(".gsap-testi-section h2",      { type: "chars", stagger: 0.022, y: 50, start: "top 85%" });
+
+            // Sub-text word reveals for all section descriptors
+            splitReveal(".gsap-feature-header p, .gsap-portfolio-header p, .gsap-pricing-header p, .gsap-testi-header p",
+                { type: "words", stagger: 0.05, y: 20, duration: 0.7, start: "top 88%" });
+
+            // ════════════════════════════════════════════════════════════════
+            //  3. SCROLL TRIGGER – parallax, reveals, pins, scrub
+            // ════════════════════════════════════════════════════════════════
+
+            // ── Hero Mouse Parallax layers ────────────────────────────────
+            const layerDefs = [
+                { sel: ".layer-1", xFactor: 15, yFactor: 15 },
+                { sel: ".layer-2", xFactor: 30, yFactor: 30 },
+                { sel: ".layer-3", xFactor: 45, yFactor: 45 },
+                { sel: ".layer-4", xFactor: -20, yFactor: -20 },
+            ];
+            const quickTos = layerDefs.map(({ sel, xFactor, yFactor }) => {
+                const el = document.querySelector(sel);
+                if (!el) return null;
+                return {
+                    x: gsap.quickTo(el, "x", { duration: 0.8, ease: "power3" }),
+                    y: gsap.quickTo(el, "y", { duration: 0.8, ease: "power3" }),
+                    xFactor,
+                    yFactor,
+                };
+            }).filter(Boolean);
+
+            document.addEventListener('mousemove', e => {
+                const nx = (e.clientX / window.innerWidth  - 0.5) * 2;
+                const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+                quickTos.forEach(({ x, y, xFactor, yFactor }) => {
+                    x(nx * xFactor);
+                    y(ny * yFactor);
+                });
+            });
+
+            // ── "BENEFITS" background parallax text (ScrollSmoother data-speed) ──
+            // ScrollSmoother handles this via the attribute; add a subtle fade too
+            const bgText = document.querySelector(".gsap-why-bg-text");
+            if (bgText) {
+                bgText.setAttribute("data-speed", "0.55");   // slower = nice parallax
+                gsap.fromTo(bgText,
+                    { opacity: 0, scale: 1.1 },
+                    {
+                        scrollTrigger: { trigger: ".gsap-feature-section", start: "top center", end: "bottom center", scrub: 1.5 },
+                        opacity: 0.35, scale: 1,
+                    }
+                );
+            }
+
+            // ── Why col parallax offset (right column scrolls slightly faster) ─
+            const whyColRight = document.querySelector(".gsap-why-col-right");
+            if (whyColRight && isDesktop) {
+                gsap.fromTo(whyColRight,
+                    { y: 60 },
+                    {
+                        scrollTrigger: { trigger: ".gsap-feature-section", start: "top bottom", end: "bottom top", scrub: 1.2 },
+                        y: -60,
+                        ease: "none",
+                    }
+                );
+            }
+
+            // ── Feature cards staggered reveal ───────────────────────────
+            if (document.querySelector(".gsap-feature-card")) {
+                gsap.from(".gsap-feature-card", {
+                    scrollTrigger: { trigger: ".gsap-feature-section", start: "top 75%" },
+                    y: 50, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out"
+                });
+            }
+
+            // ── Step Section – Pinned Horizontal Scroll (Desktop) ─────────
+            if (isDesktop) {
+                const track   = document.querySelector(".gsap-step-horizontal-track");
                 const wrapper = document.querySelector(".gsap-step-horizontal-wrapper");
-                
+
                 if (track && wrapper) {
                     const tlSteps = gsap.timeline({
                         scrollTrigger: {
@@ -822,255 +900,181 @@
                             pin: true,
                             start: "center center",
                             end: () => `+=${track.scrollWidth - wrapper.offsetWidth + 200}`,
-                            scrub: 1,
+                            scrub: 1.2,
+                            anticipatePin: 1,
                             invalidateOnRefresh: true,
-                            onUpdate: (self) => {
-                                const progress = self.progress;
-                                
-                                // Update progress text only when it changes
-                                let currentStep = 1;
-                                if (progress > 0.66) {
-                                    currentStep = 3;
-                                } else if (progress > 0.33) {
-                                    currentStep = 2;
-                                }
-                                const progressText = document.querySelector(".gsap-step-progress-text");
-                                if (progressText && progressText.innerText !== `Step ${currentStep} of 3`) {
-                                    progressText.innerText = `Step ${currentStep} of 3`;
-                                }
+                            onUpdate(self) {
+                                const step = self.progress > 0.66 ? 3 : self.progress > 0.33 ? 2 : 1;
+                                const txt  = document.querySelector(".gsap-step-progress-text");
+                                if (txt && txt.innerText !== `Step ${step} of 3`) txt.innerText = `Step ${step} of 3`;
                             }
                         }
                     });
 
-                    // Horizontal scrolling track tween
-                    tlSteps.to(track, {
-                        x: () => -(track.scrollWidth - wrapper.offsetWidth + 120),
-                        ease: "none"
-                    }, 0);
+                    tlSteps.to(track, { x: () => -(track.scrollWidth - wrapper.offsetWidth + 120), ease: "none" }, 0);
+                    tlSteps.to(".gsap-step-progress-bar", { width: "100%", ease: "none" }, 0);
 
-                    // Dynamic progress bar synchronized directly (zero overhead)
-                    if (document.querySelector(".gsap-step-progress-bar")) {
-                        tlSteps.to(".gsap-step-progress-bar", {
-                            width: "100%",
-                            ease: "none"
-                        }, 0);
-                    }
-
-                    // Subtle entrance for individual horizontal cards
-                    if (document.querySelector(".gsap-step-card-horizontal")) {
-                        gsap.from(".gsap-step-card-horizontal", {
-                            opacity: 0,
-                            y: 40,
-                            scale: 0.95,
-                            duration: 0.8,
-                            stagger: 0.1,
-                            ease: "power3.out",
-                            scrollTrigger: {
-                                trigger: ".gsap-step-section",
-                                start: "top 60%",
-                            }
-                        });
-                    }
-                }
-            } else {
-                // Mobile entrance animation
-                if (document.querySelector(".gsap-step-card-mobile")) {
-                    gsap.from(".gsap-step-card-mobile", {
-                        scrollTrigger: {
-                            trigger: ".gsap-step-mobile-container",
-                            start: "top 80%"
-                        },
-                        y: 50,
-                        opacity: 0,
-                        duration: 0.8,
-                        stagger: 0.15,
-                        ease: "power3.out"
-                    });
-                }
-            }
-
-            // --- 6. Features Section Staggered Parallax & Reveals ---
-            if (window.innerWidth >= 768) {
-                // Clean entrance for features
-                if (document.querySelector(".gsap-feature-card")) {
-                    gsap.from(".gsap-feature-card", {
-                        scrollTrigger: {
-                            trigger: ".gsap-feature-section",
-                            start: "top 75%"
-                        },
-                        y: 40,
-                        opacity: 0,
-                        duration: 0.8,
-                        stagger: 0.1,
-                        ease: "power3.out"
+                    // Staggered card entrance
+                    gsap.from(".gsap-step-card-horizontal", {
+                        scrollTrigger: { trigger: ".gsap-step-section", start: "top 65%" },
+                        opacity: 0, y: 60, scale: 0.93, duration: 0.9, stagger: 0.12, ease: "power3.out"
                     });
                 }
             } else {
-                // Mobile standard reveals
-                if (document.querySelector(".gsap-feature-card")) {
-                    gsap.from(".gsap-feature-card", {
-                        scrollTrigger: {
-                            trigger: ".gsap-feature-section",
-                            start: "top 80%"
-                        },
-                        y: 40,
-                        opacity: 0,
-                        duration: 0.8,
-                        stagger: 0.15,
-                        ease: "power3.out"
-                    });
-                }
+                // Mobile stacked reveal
+                gsap.from(".gsap-step-card-mobile", {
+                    scrollTrigger: { trigger: ".gsap-step-mobile-container", start: "top 80%" },
+                    y: 60, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"
+                });
             }
 
-            // --- 7. Portfolio Section - Infinite Scroll & Velocity-Driven Marquee ---
+            // ── Portfolio Marquee – velocity-linked acceleration ───────────
             const marqueeTrack = document.querySelector(".portfolio-marquee-track");
             if (marqueeTrack) {
-                // Clone track children to make infinite scrolling seamless
-                const items = Array.from(marqueeTrack.children);
-                items.forEach(item => {
-                    const clone = item.cloneNode(true);
-                    marqueeTrack.appendChild(clone);
-                });
-
-                // Disable the CSS fallback animation so GSAP can take over cleanly
+                // Duplicate items for seamless loop
+                Array.from(marqueeTrack.children).forEach(child => marqueeTrack.appendChild(child.cloneNode(true)));
                 gsap.set(marqueeTrack, { animation: "none" });
 
-                // Create infinite linear marquee timeline
-                const marqueeLoop = gsap.to(marqueeTrack, {
-                    xPercent: -50,
-                    ease: "none",
-                    duration: 35, // speed of continuous scroll
-                    repeat: -1
-                });
+                const marqueeLoop = gsap.to(marqueeTrack, { xPercent: -50, ease: "none", duration: 35, repeat: -1 });
 
-                // Accelerate the marquee dynamically based on user scroll velocity!
                 ScrollTrigger.create({
                     trigger: ".gsap-portfolio-section",
                     start: "top bottom",
                     end: "bottom top",
-                    onUpdate: (self) => {
-                        let velocity = self.getVelocity() * 0.005;
-                        velocity = gsap.utils.clamp(-5, 5, velocity);
-                        
-                        // Dynamically scale timeScale of the marquee loop
-                        gsap.to(marqueeLoop, {
-                            timeScale: 1 + Math.abs(velocity),
-                            duration: 0.4,
-                            ease: "power2.out",
-                            overwrite: "auto"
-                        });
+                    onUpdate(self) {
+                        const vel = gsap.utils.clamp(-5, 5, self.getVelocity() * 0.005);
+                        gsap.to(marqueeLoop, { timeScale: 1 + Math.abs(vel), duration: 0.4, ease: "power2.out", overwrite: "auto" });
                     }
                 });
             }
 
-            // --- 8. Premium Header entrance animations with Stagger ---
-            [".gsap-portfolio-header", ".gsap-pricing-header", ".gsap-testi-header"].forEach(selector => {
-                const el = document.querySelector(selector);
-                if (el) {
-                    gsap.from(el.children, {
-                        scrollTrigger: {
-                            trigger: el,
-                            start: "top 85%"
-                        },
-                        y: 30,
-                        opacity: 0,
-                        duration: 0.8,
-                        stagger: 0.15,
-                        ease: "power3.out"
-                    });
-                }
-            });
+            // ── Portfolio header reveal ───────────────────────────────────
+            if (document.querySelector(".gsap-portfolio-header")) {
+                gsap.from(".gsap-portfolio-header > *", {
+                    scrollTrigger: { trigger: ".gsap-portfolio-header", start: "top 85%" },
+                    y: 30, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"
+                });
+            }
 
-            // --- 9. Pricing Section - 3D Hover Tilt & Card Float Entrance ---
-            if (document.querySelector(".gsap-pricing-card")) {
-                gsap.fromTo(".gsap-pricing-card", 
+            // ── Testimonial cards scale reveal ────────────────────────────
+            if (document.querySelector(".gsap-testi-card")) {
+                gsap.fromTo(".gsap-testi-card",
+                    { scale: 0.88, opacity: 0, y: 30 },
                     {
-                        y: 60,
-                        opacity: 0
-                    },
+                        scrollTrigger: { trigger: ".gsap-testi-section", start: "top 85%" },
+                        scale: 1, opacity: 1, y: 0, duration: 0.85, stagger: 0.12, ease: "power3.out"
+                    }
+                );
+            }
+
+            // ════════════════════════════════════════════════════════════════
+            //  4. FLIP – animated layout transitions
+            // ════════════════════════════════════════════════════════════════
+
+            // ── Pricing cards: Flip-animated highlight switch ─────────────
+            // Capture state before/after toggling 'active' on a pricing card,
+            // then FLIP-animate the layout change so borders/shadows morph smoothly.
+            const pricingCards = document.querySelectorAll(".gsap-pricing-card");
+            if (pricingCards.length > 0) {
+
+                // Entrance animation
+                gsap.fromTo(".gsap-pricing-card",
+                    { y: 70, opacity: 0 },
                     {
-                        scrollTrigger: {
-                            trigger: ".gsap-pricing-section",
-                            start: "top 85%",
-                        },
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.8,
-                        stagger: 0.15,
-                        ease: "power3.out",
-                        onComplete: () => {
-                            // Start continuous hover/float on popular card once entrance is done
-                            const popularCard = document.querySelector(".gsap-pricing-card.border-blue-500");
-                            if (popularCard) {
-                                gsap.to(popularCard, {
-                                    y: "-=8",
-                                    duration: 2,
-                                    ease: "sine.inOut",
-                                    repeat: -1,
-                                    yoyo: true
-                                });
+                        scrollTrigger: { trigger: ".gsap-pricing-section", start: "top 85%" },
+                        y: 0, opacity: 1, duration: 0.85, stagger: 0.15, ease: "power3.out",
+                        onComplete() {
+                            // Floating pulse on the popular card
+                            const popular = document.querySelector(".gsap-pricing-card.border-blue-500");
+                            if (popular) {
+                                gsap.to(popular, { y: -10, duration: 2.2, ease: "sine.inOut", repeat: -1, yoyo: true });
                             }
                         }
                     }
                 );
 
-                // 3D Hover Tilt Effect
-                document.querySelectorAll(".gsap-pricing-card").forEach(card => {
-                    card.addEventListener("mousemove", (e) => {
-                        const rect = card.getBoundingClientRect();
-                        const x = e.clientX - rect.left - rect.width / 2;
-                        const y = e.clientY - rect.top - rect.height / 2;
-                        
-                        gsap.to(card, {
-                            rotateY: x * 0.04,
-                            rotateX: -y * 0.04,
-                            scale: 1.02,
-                            transformPerspective: 1000,
-                            ease: "power2.out",
-                            duration: 0.4,
-                            overwrite: "auto"
-                        });
+                // 3D tilt hover
+                pricingCards.forEach(card => {
+                    card.addEventListener("mousemove", e => {
+                        const r   = card.getBoundingClientRect();
+                        const x   = e.clientX - r.left - r.width  / 2;
+                        const y   = e.clientY - r.top  - r.height / 2;
+                        gsap.to(card, { rotateY: x * 0.04, rotateX: -y * 0.04, scale: 1.02, transformPerspective: 1200, duration: 0.4, ease: "power2.out", overwrite: "auto" });
                     });
-                    
                     card.addEventListener("mouseleave", () => {
-                        gsap.to(card, {
-                            rotateY: 0,
-                            rotateX: 0,
-                            scale: 1,
-                            ease: "power2.out",
-                            duration: 0.4,
-                            overwrite: "auto"
+                        gsap.to(card, { rotateY: 0, rotateX: 0, scale: 1, duration: 0.4, ease: "power2.out", overwrite: "auto" });
+                    });
+
+                    // FLIP: Animate state change when user clicks a pricing card to "select" it
+                    card.addEventListener("click", () => {
+                        if (card.classList.contains("flip-selected")) return; // already selected
+                        
+                        // Capture state BEFORE DOM change
+                        const state = Flip.getState(pricingCards, { props: "boxShadow,transform,borderColor" });
+
+                        // DOM change: toggle selected class
+                        pricingCards.forEach(c => c.classList.remove("flip-selected"));
+                        card.classList.add("flip-selected");
+
+                        // FLIP animate from old → new layout
+                        Flip.from(state, {
+                            duration: 0.55,
+                            ease: "power2.inOut",
+                            absolute: true,
+                            onEnter: els => gsap.from(els, { opacity: 0, scale: 0.95, duration: 0.4 }),
                         });
                     });
                 });
             }
 
-            // --- 10. Testimonials Section - Card Parallax Entrance ---
-            if (document.querySelector(".gsap-testi-card")) {
-                gsap.fromTo(".gsap-testi-card", 
-                    {
-                        scale: 0.9,
-                        opacity: 0
-                    },
-                    {
-                        scrollTrigger: {
-                            trigger: ".gsap-testi-section",
-                            start: "top 85%",
-                        },
-                        scale: 1,
-                        opacity: 1,
-                        duration: 0.8,
-                        stagger: 0.15,
-                        ease: "power3.out"
+            // ── Feature section header subtexts ──────────────────────────
+            [".gsap-pricing-header", ".gsap-testi-header", ".gsap-portfolio-header"].forEach(sel => {
+                const el = document.querySelector(sel);
+                if (el) {
+                    gsap.from(el.children, {
+                        scrollTrigger: { trigger: el, start: "top 85%" },
+                        y: 30, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"
+                    });
+                }
+            });
+
+            // ── Navbar entrance (Flip state-based) ───────────────────────
+            // Uses Flip to animate navbar items as they get highlighted on scroll-spy
+            const navLinks = document.querySelectorAll(".nav-link");
+            if (navLinks.length) {
+                const sections = ["portofolio", "harga", "testimoni"].map(id => document.getElementById(id)).filter(Boolean);
+
+                ScrollTrigger.create({
+                    trigger: document.body,
+                    start: "top top",
+                    end: "bottom top",
+                    onUpdate(self) {
+                        sections.forEach(section => {
+                            const rect = section.getBoundingClientRect();
+                            if (rect.top <= 120 && rect.bottom >= 120) {
+                                const targetLink = document.querySelector(`.nav-link[href="#${section.id}"]`);
+                                if (targetLink && !targetLink.dataset.gsapActive) {
+                                    // Capture → change → Flip
+                                    const pill = document.getElementById("nav-pill");
+                                    if (pill) {
+                                        const state = Flip.getState(pill);
+                                        navLinks.forEach(l => delete l.dataset.gsapActive);
+                                        targetLink.dataset.gsapActive = "1";
+                                        Flip.from(state, { duration: 0.4, ease: "power2.inOut" });
+                                    }
+                                }
+                            }
+                        });
                     }
-                );
+                });
             }
 
-            // Always call ScrollTrigger.refresh() after all triggers and pins are set up
+            // Always refresh after all triggers are set
             ScrollTrigger.refresh();
-        });
 
-        // Cleanup function for GSAP context
+        }); // end gsap.context
+
+        // Cleanup
         window.addEventListener("unload", () => ctx.revert());
     });
 </script>

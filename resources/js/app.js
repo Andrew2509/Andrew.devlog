@@ -4,6 +4,8 @@ import Alpine from 'alpinejs';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
+import { SplitText } from 'gsap/SplitText';
+import { Flip } from 'gsap/Flip';
 import Lenis from 'lenis';
 import { createIcons, icons } from 'lucide';
 
@@ -12,6 +14,8 @@ window.Alpine = Alpine;
 window.gsap = gsap;
 window.ScrollTrigger = ScrollTrigger;
 window.ScrollSmoother = ScrollSmoother;
+window.SplitText = SplitText;
+window.Flip = Flip;
 window.Lenis = Lenis;
 
 // Expose Lucide and all icons for standard lucide.createIcons() usage
@@ -30,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, Flip);
 
 Alpine.start();
 
