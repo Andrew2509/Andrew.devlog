@@ -105,106 +105,175 @@
     <div id="custom-cursor" class="hidden md:block fixed top-0 left-0 w-8 h-8 rounded-full border border-blue-600 pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2"></div>
     <div id="custom-cursor-dot" class="hidden md:block fixed top-0 left-0 w-2 h-2 bg-blue-600 rounded-full pointer-events-none z-[999] -translate-x-1/2 -translate-y-1/2"></div>
 
-    <!-- Background Grid Pattern -->
-    <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(#2563eb 1px, transparent 1px), linear-gradient(90deg, #2563eb 1px, transparent 1px); background-size: 40px 40px;"></div>
-        <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/10 blur-[120px] pointer-events-none"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-400/10 blur-[120px] pointer-events-none"></div>
+    <!-- Background Grid Pattern & Glowing Orbs -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <!-- Blueprint Grid -->
+        <div class="absolute inset-0 opacity-[0.05]" style="background-image: linear-gradient(to right, rgba(37, 99, 235, 0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(37, 99, 235, 0.15) 1px, transparent 1px); background-size: 30px 30px;"></div>
+        <!-- Glowing Orbs (Neon Blur Spots) -->
+        <div class="absolute top-[-10%] left-[5%] w-[45vw] h-[45vw] rounded-full bg-cyan-500/15 blur-[120px] pointer-events-none animate-pulse-soft"></div>
+        <div class="absolute top-[20%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-indigo-500/15 blur-[130px] pointer-events-none animate-pulse-soft" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-[-10%] left-[25%] w-[35vw] h-[35vw] rounded-full bg-purple-500/10 blur-[120px] pointer-events-none animate-pulse-soft" style="animation-delay: 4s;"></div>
     </div>
 
     <!-- --- HERO SECTION --- -->
-    <section class="relative z-10 pt-20 pb-32 px-6 max-w-7xl mx-auto flex flex-col items-center text-center">
+    <section class="relative z-10 pt-32 sm:pt-40 pb-32 px-6 max-w-7xl mx-auto flex flex-col items-center text-center">
         <!-- Floating Badge -->
-        <div class="gsap-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-200/60 mb-8 transform">
+        <div class="gsap-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur border border-slate-200/50 mb-8 transform shadow-sm">
             <span class="flex h-2 w-2 rounded-full bg-blue-600 animate-pulse"></span>
-            <span class="text-xs font-bold text-slate-500 tracking-wider uppercase">{{ setting('hero_badge', 'Arsitek Digital Terbaik 2026') }}</span>
+            <span class="text-xs font-black text-slate-500 tracking-wider uppercase">{{ setting('hero_badge', 'Arsitek Digital Terbaik 2026') }}</span>
         </div>
 
         <!-- Animated Hero Title -->
-        <h1 class="gsap-title text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] text-slate-900 max-w-5xl mb-8">
+        <h1 class="gsap-title font-heading text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.05] text-slate-900 max-w-5xl mb-8">
             {{ setting('hero_title_1', 'Jasa Pembuatan') }} <br />
-            <span class="inline-flex items-center font-normal mt-4 text-slate-800 flex-wrap justify-center gap-4">
-                {{ setting('hero_title_2', 'Website & Aplikasi') }}
-                <div class="px-5 py-2.5 bg-slate-900 text-white rounded-full flex items-center gap-3 transition-transform hover:scale-105 cursor-default shadow-lg shadow-slate-900/30">
-                    <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center">
-                        <i data-lucide="terminal" class="w-3.5 h-3.5 text-white"></i>
+            <span class="inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-3 font-normal mt-4 text-slate-700">
+                <span class="font-extralight tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    {{ setting('hero_title_2', 'Website & Aplikasi') }}
+                </span>
+                
+                <!-- Terminal Badge Joki & SEO -->
+                <div class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-slate-950 text-white rounded-full transition-all duration-300 hover:scale-105 cursor-default shadow-lg shadow-slate-950/20 border border-slate-800 relative group overflow-hidden">
+                    <span class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    
+                    <div class="w-6 h-6 rounded-full bg-blue-600/90 flex items-center justify-center relative z-10">
+                        <i data-lucide="terminal" class="w-3.5 h-3.5 text-white animate-pulse"></i>
                     </div>
-                    <span class="font-extrabold tracking-wide text-xl">Joki & SEO</span>
+                    <span class="font-extrabold tracking-wide text-sm sm:text-base relative z-10 flex items-center gap-1.5">
+                        Joki & SEO
+                        <span class="w-1.5 h-4.5 bg-blue-500 inline-block animate-blink"></span>
+                    </span>
                 </div>
             </span>
         </h1>
 
         <!-- Subtitle -->
-        <p class="gsap-subtitle text-slate-500 max-w-2xl text-lg leading-relaxed mb-12">
+        <p class="gsap-subtitle text-slate-500 max-w-2xl text-lg leading-relaxed mb-10">
             {{ setting('hero_subtitle', 'Tingkatkan konversi dan visibilitas online bisnis Anda dengan website berkinerja tinggi dan solusi joki coding profesional yang terpercaya.') }}
         </p>
 
-        <!-- Dynamic Circular Interactive Parallax Container -->
-        <div class="gsap-visual relative w-full max-w-5xl h-[400px] sm:h-[500px] flex items-center justify-center mt-12">
-            <div class="absolute inset-0 opacity-[0.02]" style="background-image: linear-gradient(#2563eb 1px, transparent 1px), linear-gradient(90deg, #2563eb 1px, transparent 1px); background-size: 50px 50px;"></div>
+        <!-- Double High-Conversion CTA Buttons -->
+        <div class="gsap-cta flex flex-col sm:flex-row items-center gap-4 mb-16 relative z-20">
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" 
+               class="relative overflow-hidden w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-extrabold text-sm tracking-wider uppercase rounded-full shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 group text-center">
+                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-sweep"></span>
+                <span class="relative z-10 flex items-center justify-center gap-2">
+                    Mulai Project Sekarang
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </span>
+            </a>
             
-            <svg viewBox="0 0 1000 500" class="absolute w-full h-full opacity-[0.07] pointer-events-none">
-                <path d="M 50 450 C 150 100, 850 100, 950 450" fill="none" stroke="#2563eb" stroke-width="1.5"/>
-            </svg>
+            <a href="#portofolio" 
+               class="w-full sm:w-auto px-8 py-4 bg-white/60 hover:bg-white text-slate-700 hover:text-slate-900 font-extrabold text-sm tracking-wider uppercase rounded-full border border-slate-200 backdrop-blur-md shadow-sm hover:shadow transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 text-center">
+                Eksplorasi Portofolio
+            </a>
+        </div>
 
-            <!-- Rotating Central Ring Mockup -->
-            <div class="relative z-10 w-52 h-52 sm:w-64 sm:h-64 flex items-center justify-center rounded-full bg-white/40 shadow-inner backdrop-blur-sm border border-slate-200/50">
-                <div class="absolute inset-0 border border-dashed border-blue-600/30 rounded-full animate-spin-slow"></div>
-                <div class="absolute inset-4 border border-dashed border-slate-300 rounded-full animate-spin-reverse"></div>
+        <!-- Premium Interactive 3D tilt Editor & Floating Stack Elements -->
+        <div class="relative w-full max-w-4xl flex items-center justify-center mt-6">
+            
+            <!-- Code Editor Window -->
+            <div id="editor-tilt-container" class="gsap-visual relative w-full rounded-2xl p-0.5 bg-gradient-to-tr from-blue-500/20 via-indigo-500/10 to-purple-500/30 shadow-[0_30px_100px_rgba(37,99,235,0.08)] border border-white/20 backdrop-blur-sm transition-all duration-500 pointer-events-auto">
+                <!-- Glassmorphic Window Header -->
+                <div class="flex items-center justify-between px-5 py-3 bg-slate-900/5 border-b border-white/10 rounded-t-2xl">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500/90 shadow shadow-rose-500/30"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500/90 shadow shadow-amber-500/30"></span>
+                        <span class="w-3 h-3 rounded-full bg-emerald-500/90 shadow shadow-emerald-500/30"></span>
+                    </div>
+                    <div class="text-[10px] font-black text-slate-400 tracking-widest uppercase flex items-center gap-1.5">
+                        <i data-lucide="terminal" class="w-3 h-3 text-blue-500 animate-pulse"></i>
+                        andrew.devlog
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 bg-slate-350 rounded-full"></span>
+                        <span class="w-1.5 h-1.5 bg-slate-350 rounded-full"></span>
+                    </div>
+                </div>
                 
-                <div class="relative hover:scale-110 transition-transform duration-500 group cursor-pointer">
-                    <img src="https://img.icons8.com/?size=160&id=ezj3zaVtImPg&format=png" alt="VS Code Logo" class="w-28 h-28 sm:w-36 sm:h-36 object-contain filter drop-shadow-xl group-hover:rotate-12 transition-transform duration-500">
+                <!-- Window Body: Code View -->
+                <div class="p-6 sm:p-8 bg-slate-950/95 rounded-b-2xl font-mono text-[11px] sm:text-xs text-slate-300 text-left overflow-x-auto relative">
+                    <div class="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent"></div>
+                    
+                    <div class="flex gap-4 sm:gap-6">
+                        <!-- Line Numbers -->
+                        <div class="text-slate-650 select-none text-right hidden sm:block">
+                            <div>01</div>
+                            <div>02</div>
+                            <div>03</div>
+                            <div>04</div>
+                            <div>05</div>
+                            <div>06</div>
+                            <div>07</div>
+                            <div>08</div>
+                        </div>
+                        
+                        <!-- Code Snippet -->
+                        <div class="space-y-1">
+                            <div><span class="text-purple-400 font-bold">const</span> <span class="text-blue-400">agency</span> = <span class="text-purple-400">new</span> <span class="text-amber-300">AndrewDevlog</span>({</div>
+                            <div class="pl-4"><span class="text-slate-450">standards</span>: <span class="text-emerald-400">"Ultra-Premium"</span>,</div>
+                            <div class="pl-4"><span class="text-slate-450">stack</span>: [<span class="text-emerald-400">"Next.js"</span>, <span class="text-emerald-400">"Laravel"</span>, <span class="text-emerald-400">"GSAP"</span>],</div>
+                            <div class="pl-4"><span class="text-slate-450">experience</span>: <span class="text-emerald-400">"Aesthetics & Conversions"</span></div>
+                            <div>});</div>
+                            <div class="pt-2"></div>
+                            <div><span class="text-purple-400">await</span> <span class="text-blue-400">agency</span>.<span class="text-indigo-400">elevateOnlinePresence</span>({</div>
+                            <div class="pl-4"><span class="text-slate-450">impact</span>: <span class="text-emerald-400">"Maximum 🚀"</span></div>
+                            <div>});</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Floating Element: Github Logo -->
-            <div class="layer-1 absolute top-[30%] left-[8%] sm:left-[12%] flex items-center justify-center transform -rotate-12 hover:rotate-0 transition-all duration-500 cursor-pointer z-20" data-lag="0.3">
-                <div class="w-14 h-14 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center">
-                    <i data-lucide="github" class="w-8 h-8 text-slate-800"></i>
-                </div>
-            </div>
-
-            <!-- Floating Element: Code Tag -->
-            <div class="layer-2 absolute bottom-[20%] left-[20%] sm:left-[30%] flex items-center justify-center transform rotate-6 hover:scale-110 transition-all duration-500 cursor-pointer z-20" data-lag="0.5">
-                <div class="w-12 h-12 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center">
-                    <i data-lucide="code" class="w-6 h-6 text-blue-600"></i>
-                </div>
-            </div>
-
-            <!-- Floating Element: Hexagon -->
-            <div class="layer-3 absolute bottom-[20%] right-[20%] sm:right-[30%] flex items-center justify-center transform rotate-12 hover:rotate-0 transition-all duration-500 cursor-pointer z-20" data-lag="0.7">
-                <div class="w-12 h-12 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center">
-                    <i data-lucide="hexagon" class="w-6 h-6 text-indigo-500"></i>
-                </div>
-            </div>
-
-            <!-- Floating Element: Terminal Icon -->
-            <div class="layer-2 absolute top-[30%] right-[8%] sm:right-[12%] flex items-center justify-center transform hover:scale-110 transition-all duration-500 cursor-pointer z-20" data-lag="0.4">
-                <div class="w-14 h-14 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center">
-                    <i data-lucide="terminal" class="w-7 h-7 text-indigo-600"></i>
-                </div>
-            </div>
-
-            <!-- Floating Element: WhatsApp Contact Card (Top Right) -->
-            <div class="layer-4 absolute top-[5%] right-[1%] sm:right-[10%] bg-white/90 backdrop-blur-md border border-slate-200/50 p-4 sm:p-5 rounded-[2rem] shadow-2xl flex items-center gap-4 z-30 transform hover:-translate-y-2 transition-transform duration-300" data-lag="0.2">
-                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-400/30 text-white">
-                        <i data-lucide="message-circle" class="w-6 h-6"></i>
+            <!-- Floating Element: Github Card -->
+            <div class="layer-1 absolute -top-[12%] -left-[5%] sm:-left-[10%] flex items-center justify-center transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 cursor-pointer z-20 pointer-events-auto shadow-xl" data-lag="0.3">
+                <div class="px-4 py-3 bg-white/80 backdrop-blur border border-white/50 rounded-2xl flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow">
+                        <i data-lucide="github" class="w-5 h-5"></i>
                     </div>
                     <div class="text-left">
-                        <p class="text-sm sm:text-base font-extrabold text-slate-800 leading-none mb-1">Punya Project?</p>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">WhatsApp Sekarang</p>
+                        <p class="text-[10px] font-black text-slate-800 uppercase tracking-wider leading-none">Code Base</p>
+                        <p class="text-[9px] text-slate-450 font-bold leading-none mt-1">Version Control</p>
                     </div>
-                </a>
+                </div>
             </div>
 
-            <!-- Floating Element: CTA Button (Top Left) -->
-            <div class="layer-1 absolute top-[10%] left-[1%] sm:left-[12%] z-30" data-lag="0.25">
-                <div class="flex items-center gap-3">
-                    <span class="text-xs sm:text-sm font-extrabold text-blue-600 uppercase tracking-widest">Konsultasi</span>
-                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', setting('contact_phone', '+628...')) }}" class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/30 group hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                    </a>
+            <!-- Floating Element: React Card -->
+            <div class="layer-2 absolute bottom-[25%] -left-[8%] sm:-left-[12%] flex items-center justify-center transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 cursor-pointer z-20 pointer-events-auto shadow-xl" data-lag="0.5">
+                <div class="px-4 py-3 bg-white/80 backdrop-blur border border-white/50 rounded-2xl flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-cyan-500 text-white flex items-center justify-center shadow">
+                        <i data-lucide="atom" class="w-5 h-5 animate-spin-slow"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-[10px] font-black text-slate-800 uppercase tracking-wider leading-none">React.js</p>
+                        <p class="text-[9px] text-slate-450 font-bold leading-none mt-1">Interactive UI</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Element: Laravel Card -->
+            <div class="layer-3 absolute bottom-[15%] -right-[8%] sm:-right-[12%] flex items-center justify-center transform rotate-12 hover:rotate-0 hover:scale-105 transition-all duration-300 cursor-pointer z-20 pointer-events-auto shadow-xl" data-lag="0.7">
+                <div class="px-4 py-3 bg-white/80 backdrop-blur border border-white/50 rounded-2xl flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-rose-500/90 text-white flex items-center justify-center shadow">
+                        <i data-lucide="layers" class="w-5 h-5"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-[10px] font-black text-slate-800 uppercase tracking-wider leading-none">Laravel</p>
+                        <p class="text-[9px] text-slate-450 font-bold leading-none mt-1">Robust Backend</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Element: SEO Metric Card -->
+            <div class="layer-2 absolute -top-[5%] -right-[5%] sm:-right-[10%] flex items-center justify-center transform -rotate-12 hover:rotate-0 hover:scale-105 transition-all duration-300 pointer-events-auto shadow-xl z-20" data-lag="0.4">
+                <div class="px-4 py-3 bg-white/80 backdrop-blur border border-white/50 rounded-2xl flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow">
+                        <i data-lucide="trending-up" class="w-5 h-5"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-[10px] font-black text-slate-800 uppercase tracking-wider leading-none">SEO Score</p>
+                        <p class="text-[9px] text-emerald-600 font-black leading-none mt-1 flex items-center gap-0.5">
+                            100% <i data-lucide="check" class="w-2.5 h-2.5"></i>
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -805,10 +874,47 @@
                 tl.from(".gsap-badge",     { y: 24, opacity: 0, duration: 0.7 })
                   .from(splitTitle.words,   { y: "110%", opacity: 0, duration: 1.0, stagger: 0.06 }, "-=0.3")
                   .from(".gsap-subtitle",   { y: 20, opacity: 0, duration: 0.7 }, "-=0.6")
+                  .from(".gsap-cta",        { y: 20, opacity: 0, duration: 0.7 }, "-=0.5")
                   .from(".gsap-visual",     { scale: 0.88, opacity: 0, duration: 1.1, ease: "elastic.out(1,0.75)" }, "-=0.6");
 
                 // Revert split after entrance animation
                 tl.call(() => splitTitle.revert(), null, "+=0.05");
+            }
+
+            // ── Gentle continuous floating animation for stack elements ───
+            gsap.to(".layer-1", { y: "+=8", rotation: "+=1", duration: 2.5, ease: "sine.inOut", repeat: -1, yoyo: true });
+            gsap.to(".layer-2", { y: "-=10", rotation: "-=1", duration: 3.0, ease: "sine.inOut", repeat: -1, yoyo: true });
+            gsap.to(".layer-3", { y: "+=6", rotation: "+=2", duration: 2.8, ease: "sine.inOut", repeat: -1, yoyo: true });
+
+            // ── Interactive 3D tilt on code editor mockup ─────────────────
+            const editorTilt = document.getElementById("editor-tilt-container");
+            if (editorTilt) {
+                editorTilt.addEventListener("mousemove", e => {
+                    const r = editorTilt.getBoundingClientRect();
+                    const x = e.clientX - r.left - r.width  / 2;
+                    const y = e.clientY - r.top  - r.height / 2;
+                    const tiltX = -(y / (r.height / 2)) * 6;
+                    const tiltY = (x / (r.width / 2)) * 6;
+                    gsap.to(editorTilt, { 
+                        rotateY: tiltY, 
+                        rotateX: tiltX, 
+                        scale: 1.02, 
+                        transformPerspective: 1200, 
+                        duration: 0.5, 
+                        ease: "power2.out", 
+                        overwrite: "auto" 
+                    });
+                });
+                editorTilt.addEventListener("mouseleave", () => {
+                    gsap.to(editorTilt, { 
+                        rotateY: 0, 
+                        rotateX: 0, 
+                        scale: 1, 
+                        duration: 0.6, 
+                        ease: "power2.out", 
+                        overwrite: "auto" 
+                    });
+                });
             }
 
             // ── Section heading char reveals ──────────────────────────────
