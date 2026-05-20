@@ -7,7 +7,6 @@
 
 @theme {
     --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    --font-heading: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
     
     --color-primary: #0ea5e9;
     --color-primary-light: #38bdf8;
@@ -36,31 +35,15 @@
     }
 }
 
-/* Header & Navbar Premium Custom Styles */
-#main-header {
-    transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+/* Navbar Custom Styles */
+#main-nav.scrolled #nav-container {
+    @apply shadow-2xl shadow-primary/10;
+    height: 76px;
+    border-color: rgba(255, 255, 255, 1);
 }
 
-#main-nav {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-#main-nav.scrolled {
-    background-color: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
-    border-color: rgba(255, 255, 255, 0.4) !important;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 1px 1px 0 rgba(0, 0, 0, 0.02) !important;
-    padding-top: 0.65rem !important;
-    padding-bottom: 0.65rem !important;
-}
-
-@keyframes sweep {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-.animate-sweep {
-    animation: sweep 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+#main-nav.scrolled #nav-glass {
+    opacity: 1;
 }
 
 /* Mobile Menu Entrance Handled by Tailwind/Alpine */
