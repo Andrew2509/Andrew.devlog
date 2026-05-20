@@ -26,8 +26,8 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #090D16;
-            color: #E2E8F0;
+            background-color: #F8FAFC;
+            color: #334155;
             overflow-x: hidden;
         }
 
@@ -35,13 +35,13 @@
             font-family: 'Outfit', sans-serif;
         }
 
-        /* Glassmorphic Panel Design System */
+        /* Glassmorphic Panel Design System (Light Luxury) */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 10px 30px 0 rgba(15, 23, 42, 0.03);
         }
 
         /* Dynamic Glass Cards Hover Effect */
@@ -50,9 +50,9 @@
         }
 
         .glass-card-hover:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 12px 40px 0 var(--glow-color, rgba(6, 182, 212, 0.15));
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 16px 40px 0 var(--glow-color, rgba(99, 102, 241, 0.08));
             transform: translateY(-3px);
         }
 
@@ -71,20 +71,20 @@
             width: 100%;
         }
 
-        /* Hide scrollbars for full-screen aesthetic, custom indicator is handled natively */
+        /* Customize Scrollbars for premium slate aesthetic */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #090D16;
+            background: #F8FAFC;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.08);
             border-radius: 999px;
-            border: 2px solid #090D16;
+            border: 2px solid #F8FAFC;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(15, 23, 42, 0.16);
         }
 
         /* Helper for title mask clip text reveal */
@@ -93,13 +93,13 @@
         }
     </style>
 </head>
-<body class="bg-[#090D16] text-[#E2E8F0] antialiased overflow-x-hidden selection:bg-cyan-500 selection:text-white">
+<body class="bg-[#F8FAFC] text-[#334155] antialiased overflow-x-hidden selection:bg-indigo-100 selection:text-indigo-900">
 
-    <!-- Glowing Background Mesh Blobs (GSAP Parallax Speed-lag) -->
+    <!-- Glowing Background Mesh Blobs (GSAP Parallax Light Soft-Pastels) -->
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-600/10 to-purple-600/0 blur-[130px] -top-60 -left-60 animate-blob" data-speed="0.75"></div>
-        <div class="absolute w-[700px] h-[700px] rounded-full bg-gradient-to-br from-cyan-500/10 to-emerald-500/0 blur-[140px] top-1/4 -right-40 animate-blob animation-delay-2000" data-speed="0.9"></div>
-        <div class="absolute w-[500px] h-[500px] rounded-full bg-gradient-to-br from-fuchsia-600/8 to-pink-600/0 blur-[120px] bottom-10 left-1/4 animate-blob animation-delay-4000" data-speed="0.6"></div>
+        <div class="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-200/25 to-purple-200/0 blur-[120px] -top-60 -left-60 animate-blob" data-speed="0.75"></div>
+        <div class="absolute w-[700px] h-[700px] rounded-full bg-gradient-to-br from-cyan-200/25 to-emerald-200/0 blur-[130px] top-1/4 -right-40 animate-blob animation-delay-2000" data-speed="0.9"></div>
+        <div class="absolute w-[500px] h-[500px] rounded-full bg-gradient-to-br from-fuchsia-200/15 to-pink-200/0 blur-[110px] bottom-10 left-1/4 animate-blob animation-delay-4000" data-speed="0.6"></div>
     </div>
 
     <!-- ScrollSmoother Outer Wrapper -->
@@ -111,38 +111,38 @@
 
                 <!-- SIDEBAR: Profile Card -->
                 <aside class="w-full lg:w-80 shrink-0">
-                    <div class="glass-panel rounded-3xl p-8 flex flex-col gap-6 text-center lg:text-left border border-white/[0.05] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
+                    <div class="glass-panel rounded-3xl p-8 flex flex-col gap-6 text-center lg:text-left border border-white/60 shadow-[0_10px_30px_0_rgba(15,23,42,0.03)]">
                         <!-- Profile Logo / Photo -->
                         <div class="relative w-28 h-28 mx-auto lg:mx-0">
-                            <!-- Glow Ring background -->
-                            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400 to-indigo-600 blur-md opacity-40 animate-pulse"></div>
+                            <!-- Soft Glow Ring background -->
+                            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-300 to-indigo-500 blur-md opacity-30 animate-pulse"></div>
                             <!-- Actual Container -->
-                            <div class="relative w-full h-full bg-[#0c1424]/90 rounded-2xl flex items-center justify-center p-4 border border-white/[0.08] shadow-inner">
-                                <img src="{{ setting('site_logo') ?: asset('assets/image/logo.png') }}" alt="{{ setting('site_name') }} Logo" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(6,182,212,0.3)]">
+                            <div class="relative w-full h-full bg-white/95 rounded-2xl flex items-center justify-center p-4 border border-slate-200/40 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                                <img src="{{ setting('site_logo') ?: asset('assets/image/logo.png') }}" alt="{{ setting('site_name') }} Logo" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(99,102,241,0.12)]">
                             </div>
                         </div>
 
                         <!-- Name and Tagline -->
                         <div class="space-y-3">
                             <div class="clip-text-reveal">
-                                <h1 class="text-3xl lg:text-2xl font-black text-white tracking-tight leading-tight gsap-title">
+                                <h1 class="text-3xl lg:text-2xl font-black text-slate-900 tracking-tight leading-tight gsap-title">
                                     {{ setting('site_name', 'Andrew.Devlog') }}
                                 </h1>
                             </div>
-                            <p class="text-xs font-bold text-cyan-400 font-mono tracking-widest uppercase">
+                            <p class="text-xs font-extrabold text-indigo-600 font-mono tracking-widest uppercase">
                                 {{ setting('sosmed_full_name', 'Princenton Andrew Brightly Masrikat') }}
                             </p>
-                            <div class="inline-block bg-white/[0.03] text-slate-300 text-xs px-3.5 py-1.5 rounded-full font-medium border border-white/[0.05]">
+                            <div class="inline-block bg-slate-100/80 text-slate-600 text-xs px-3.5 py-1.5 rounded-full font-semibold border border-slate-200/50">
                                 {{ setting('sosmed_tagline', 'Tech Innovator & Developer') }}
                             </div>
                         </div>
 
-                        <div class="h-px bg-white/[0.08]"></div>
+                        <div class="h-px bg-slate-200/60"></div>
 
                         <!-- Location Info -->
-                        <div class="flex items-center justify-center lg:justify-start gap-3 text-sm text-slate-300 bg-white/[0.02] border border-white/[0.04] px-4 py-3 rounded-2xl w-fit mx-auto lg:mx-0">
-                            <i data-lucide="map-pin" class="w-4 h-4 text-cyan-400"></i>
-                            <span class="font-medium">{{ setting('sosmed_location', 'Surabaya, Indonesia') }}</span>
+                        <div class="flex items-center justify-center lg:justify-start gap-3 text-sm text-slate-600 bg-slate-100/60 border border-slate-200/30 px-4 py-3 rounded-2xl w-fit mx-auto lg:mx-0">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-indigo-500"></i>
+                            <span class="font-semibold">{{ setting('sosmed_location', 'Surabaya, Indonesia') }}</span>
                         </div>
                     </div>
                 </aside>
@@ -151,21 +151,21 @@
                 <main class="flex-1 space-y-12">
 
                     <!-- Hero Banner Card -->
-                    <div class="glass-panel rounded-3xl p-8 md:p-12 relative overflow-hidden flex items-center min-h-[160px] md:min-h-[220px] border border-white/[0.08] shadow-[0_12px_40px_0_rgba(0,0,0,0.5)] group cursor-default">
-                        <!-- Gradient Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-950/80 via-[#0a0f1d]/90 to-cyan-950/80 opacity-95 z-0"></div>
-                        <div class="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-cyan-500/10 to-transparent blur-[80px] group-hover:translate-x-12 group-hover:translate-y-12 transition-transform duration-1000"></div>
+                    <div class="glass-panel rounded-3xl p-8 md:p-12 relative overflow-hidden flex items-center min-h-[160px] md:min-h-[220px] border border-white/60 shadow-[0_12px_40px_0_rgba(15,23,42,0.02)] group cursor-default">
+                        <!-- Luxury Light Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-50/70 via-slate-50/90 to-cyan-50/70 opacity-95 z-0"></div>
+                        <div class="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-indigo-500/5 to-transparent blur-[80px] group-hover:translate-x-12 group-hover:translate-y-12 transition-transform duration-1000"></div>
 
                         <div class="relative z-10 w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                             <div class="space-y-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 bg-white/[0.04] backdrop-blur-md rounded-xl flex items-center justify-center text-cyan-400 border border-white/[0.06] shadow-lg">
+                                    <div class="w-9 h-9 bg-white/90 rounded-xl flex items-center justify-center text-indigo-600 border border-slate-200/60 shadow-sm">
                                         <i data-lucide="code" class="w-4 h-4"></i>
                                     </div>
-                                    <span class="text-cyan-400 font-bold text-xs tracking-widest uppercase font-mono">Tingkatkan Bisnis Anda</span>
+                                    <span class="text-indigo-600 font-bold text-xs tracking-widest uppercase font-mono">Tingkatkan Bisnis Anda</span>
                                 </div>
                                 <div class="clip-text-reveal">
-                                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight gsap-title-hero">
+                                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight gsap-title-hero">
                                         Jasa Pembuatan <br class="hidden md:block"/>Website & Aplikasi
                                     </h2>
                                 </div>
@@ -174,17 +174,17 @@
                     </div>
 
                     <!-- About Me -->
-                    <div class="glass-panel rounded-3xl p-8 md:p-10 border border-white/[0.05] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] relative overflow-hidden group">
+                    <div class="glass-panel rounded-3xl p-8 md:p-10 border border-white/60 shadow-[0_8px_32px_0_rgba(15,23,42,0.03)] relative overflow-hidden group">
                         <!-- Decorative background SVG icon -->
-                        <div class="absolute -bottom-6 -right-6 p-8 text-white/[0.01] transition-all group-hover:text-cyan-400/[0.02] group-hover:scale-105 duration-700 pointer-events-none">
+                        <div class="absolute -bottom-6 -right-6 p-8 text-slate-200/20 transition-all group-hover:text-indigo-500/[0.04] group-hover:scale-105 duration-700 pointer-events-none">
                             <i data-lucide="user" class="w-48 h-48"></i>
                         </div>
 
-                        <h3 class="text-xl font-bold text-white mb-5 flex items-center gap-3 gsap-section-title">
-                            <div class="w-1.5 h-6 bg-gradient-to-b from-cyan-400 to-indigo-500 rounded-full"></div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-5 flex items-center gap-3 gsap-section-title">
+                            <div class="w-1.5 h-6 bg-gradient-to-b from-indigo-500 to-cyan-400 rounded-full"></div>
                             Tentang Saya
                         </h3>
-                        <p class="text-slate-300 leading-relaxed text-sm md:text-base relative z-10 whitespace-pre-line font-light">
+                        <p class="text-slate-600 leading-relaxed text-sm md:text-base relative z-10 whitespace-pre-line font-medium">
                             {{ setting('sosmed_about', 'Halo! Saya adalah seorang Software Developer profesional yang berdedikasi dalam mengubah ide menjadi realitas digital. Dengan keahlian mendalam dalam pengembangan web dan aplikasi mobile, saya siap membantu bisnis Anda tumbuh lebih cepat melalui solusi teknologi yang modern, responsif, dan scalable.') }}
                         </p>
                     </div>
@@ -192,20 +192,20 @@
                     <!-- Filter Tabs & Links -->
                     <div class="space-y-6">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <h3 class="text-xl font-bold text-white flex items-center gap-3 gsap-section-title">
-                                <div class="w-1.5 h-6 bg-gradient-to-b from-cyan-400 to-indigo-500 rounded-full"></div>
+                            <h3 class="text-xl font-bold text-slate-900 flex items-center gap-3 gsap-section-title">
+                                <div class="w-1.5 h-6 bg-gradient-to-b from-indigo-500 to-cyan-400 rounded-full"></div>
                                 Tautan & Sosmed
                             </h3>
 
                             <!-- GSAP Flip Filter Buttons -->
-                            <div class="glass-panel p-1 rounded-2xl flex w-fit gap-1 border border-white/[0.04] bg-white/[0.01]">
-                                <button data-filter="semua" class="tab-btn px-4 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer select-none active relative bg-white/[0.06] text-white">
+                            <div class="glass-panel p-1 rounded-2xl flex w-fit gap-1 border-slate-200/40 bg-slate-100/50">
+                                <button data-filter="semua" class="tab-btn px-4 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer select-none active relative bg-white text-slate-900 shadow-md">
                                     Semua
                                 </button>
-                                <button data-filter="bisnis" class="tab-btn px-4 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer select-none relative text-slate-400 hover:text-white">
+                                <button data-filter="bisnis" class="tab-btn px-4 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer select-none relative text-slate-500 hover:text-slate-900">
                                     Bisnis
                                 </button>
-                                <button data-filter="sosial" class="tab-btn px-4 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer select-none relative text-slate-400 hover:text-white">
+                                <button data-filter="sosial" class="tab-btn px-4 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer select-none relative text-slate-500 hover:text-slate-900">
                                     Sosial
                                 </button>
                             </div>
@@ -214,13 +214,13 @@
                         @php
                             $storedLinks = setting('sosmed_links');
                             $baseMetadata = [
-                                ['id' => 0, 'icon' => 'globe', 'icon_color' => 'text-cyan-400', 'type' => 'normal'],
-                                ['id' => 1, 'icon' => 'fa-brands fa-whatsapp', 'icon_color' => 'text-emerald-400', 'type' => 'normal'],
-                                ['id' => 2, 'icon' => 'tag', 'icon_color' => 'text-amber-400', 'type' => 'normal'],
-                                ['id' => 3, 'icon' => 'briefcase', 'icon_color' => 'text-indigo-400', 'type' => 'normal'],
-                                ['id' => 4, 'icon' => 'fa-brands fa-github', 'icon_color' => 'text-slate-300', 'type' => 'normal'],
-                                ['id' => 5, 'icon' => 'fa-brands fa-linkedin', 'icon_color' => 'text-blue-400', 'type' => 'normal'],
-                                ['id' => 6, 'icon' => 'mail', 'icon_color' => 'text-rose-400', 'type' => 'normal']
+                                ['id' => 0, 'icon' => 'globe', 'icon_color' => 'text-cyan-600', 'type' => 'normal'],
+                                ['id' => 1, 'icon' => 'fa-brands fa-whatsapp', 'icon_color' => 'text-emerald-600', 'type' => 'normal'],
+                                ['id' => 2, 'icon' => 'tag', 'icon_color' => 'text-amber-600', 'type' => 'normal'],
+                                ['id' => 3, 'icon' => 'briefcase', 'icon_color' => 'text-indigo-600', 'type' => 'normal'],
+                                ['id' => 4, 'icon' => 'fa-brands fa-github', 'icon_color' => 'text-slate-700', 'type' => 'normal'],
+                                ['id' => 5, 'icon' => 'fa-brands fa-linkedin', 'icon_color' => 'text-blue-600', 'type' => 'normal'],
+                                ['id' => 6, 'icon' => 'mail', 'icon_color' => 'text-rose-600', 'type' => 'normal']
                             ];
 
                             $defaults = [
@@ -274,20 +274,20 @@
                             @foreach($links as $link)
                                 <div class="link-card transform-gpu" data-category="{{ $link['category'] }}">
                                     <a href="{{ $link['url'] }}" target="_blank"
-                                       class="group flex items-center p-4 rounded-2xl transition-all duration-300 glass-panel border-white/[0.04] bg-white/[0.01] glass-card-hover min-h-[84px]"
-                                       style="--glow-color: rgba(6, 182, 212, 0.1);">
-                                        <div class="w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 mr-4 shrink-0 bg-white/[0.03] border border-white/[0.05]">
+                                       class="group flex items-center p-4 rounded-2xl transition-all duration-300 glass-panel border-slate-200/50 bg-white/40 glass-card-hover min-h-[84px]"
+                                       style="--glow-color: rgba(99, 102, 241, 0.06);">
+                                        <div class="w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 mr-4 shrink-0 bg-slate-50 border border-slate-100">
                                             @if(str_contains($link['icon'], 'fa-'))
                                                 <i class="{{ $link['icon'] }} {{ $link['icon_color'] }} text-lg"></i>
                                             @else
                                                 <i data-lucide="{{ $link['icon'] }}" class="w-5 h-5 {{ $link['icon_color'] }}"></i>
                                             @endif
                                         </div>
-                                        <span class="text-sm font-semibold transition-colors flex-1 pr-2 text-slate-200 group-hover:text-cyan-400">
+                                        <span class="text-sm font-semibold transition-colors flex-1 pr-2 text-slate-700 group-hover:text-indigo-600">
                                             {{ $link['title'] }}
                                         </span>
-                                        <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-white/[0.02] border border-white/[0.04] opacity-40 group-hover:opacity-100 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/20 transition-all duration-300 shrink-0">
-                                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-400 group-hover:text-cyan-400"></i>
+                                        <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-slate-100 border border-slate-200/40 opacity-70 group-hover:opacity-100 group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-all duration-300 shrink-0">
+                                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-indigo-600"></i>
                                         </div>
                                     </a>
                                 </div>
@@ -297,8 +297,8 @@
 
                     <!-- Services Section -->
                     <div class="space-y-6 pt-6">
-                        <h3 class="text-xl font-bold text-white flex items-center gap-3 gsap-section-title">
-                            <div class="w-1.5 h-6 bg-gradient-to-b from-cyan-400 to-indigo-500 rounded-full"></div>
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-3 gsap-section-title">
+                            <div class="w-1.5 h-6 bg-gradient-to-b from-indigo-500 to-cyan-400 rounded-full"></div>
                             Layanan Saya
                         </h3>
 
@@ -347,60 +347,60 @@
 
                             @foreach($finalServices as $item)
                                 @php
-                                    // Custom colors mapping for maximum visual hierarchy and aesthetic wow-factor
-                                    $glowColor = 'rgba(6,182,212,0.12)';
-                                    $accentColor = 'text-cyan-400';
-                                    $gradient = 'from-slate-900/60 to-[#0c1220]/80';
+                                    // Custom colors mapping for visual balance on bright theme
+                                    $glowColor = 'rgba(99,102,241,0.06)';
+                                    $accentColor = 'text-indigo-600';
+                                    $gradient = 'from-slate-50/70 via-white/80 to-slate-100/50';
 
                                     if($item['id'] === 'web') {
-                                        $gradient = 'from-indigo-950/40 via-[#0d1326]/70 to-[#080c18]/90';
-                                        $glowColor = 'rgba(99,102,241,0.12)';
-                                        $accentColor = 'text-indigo-400';
+                                        $gradient = 'from-indigo-50/30 via-white/85 to-[#f8fafc]';
+                                        $glowColor = 'rgba(99,102,241,0.07)';
+                                        $accentColor = 'text-indigo-600';
                                     } elseif($item['id'] === 'app') {
-                                        $gradient = 'from-violet-950/40 via-[#0e1227]/70 to-[#090b19]/90';
-                                        $glowColor = 'rgba(139,92,246,0.12)';
-                                        $accentColor = 'text-violet-400';
+                                        $gradient = 'from-violet-50/30 via-white/85 to-[#f8fafc]';
+                                        $glowColor = 'rgba(139,92,246,0.07)';
+                                        $accentColor = 'text-violet-600';
                                     } elseif($item['id'] === 'uiux') {
-                                        $gradient = 'from-fuchsia-950/40 via-[#12112b]/70 to-[#0a0a1a]/90';
-                                        $glowColor = 'rgba(217,70,239,0.12)';
-                                        $accentColor = 'text-fuchsia-400';
+                                        $gradient = 'from-fuchsia-50/30 via-white/85 to-[#f8fafc]';
+                                        $glowColor = 'rgba(217,70,239,0.07)';
+                                        $accentColor = 'text-fuchsia-600';
                                     } elseif($item['id'] === 'api') {
-                                        $gradient = 'from-teal-950/40 via-[#0a1523]/70 to-[#050b12]/90';
-                                        $glowColor = 'rgba(20,184,166,0.12)';
-                                        $accentColor = 'text-teal-400';
+                                        $gradient = 'from-teal-50/30 via-white/85 to-[#f8fafc]';
+                                        $glowColor = 'rgba(20,184,166,0.07)';
+                                        $accentColor = 'text-teal-600';
                                     } elseif($item['id'] === 'seo') {
-                                        $gradient = 'from-amber-950/40 via-[#141221]/70 to-[#090914]/90';
-                                        $glowColor = 'rgba(245,158,11,0.12)';
-                                        $accentColor = 'text-amber-400';
+                                        $gradient = 'from-amber-50/30 via-white/85 to-[#f8fafc]';
+                                        $glowColor = 'rgba(245,158,11,0.07)';
+                                        $accentColor = 'text-amber-600';
                                     } elseif($item['id'] === 'redesign') {
-                                        $gradient = 'from-rose-950/40 via-[#151023]/70 to-[#0a0815]/90';
-                                        $glowColor = 'rgba(244,63,94,0.12)';
-                                        $accentColor = 'text-rose-400';
+                                        $gradient = 'from-rose-50/30 via-white/85 to-[#f8fafc]';
+                                        $glowColor = 'rgba(244,63,94,0.07)';
+                                        $accentColor = 'text-rose-600';
                                     }
                                 @endphp
 
-                                <div class="glass-panel bg-gradient-to-br {{ $gradient }} rounded-3xl p-8 h-56 relative overflow-hidden group cursor-pointer border border-white/[0.04] glass-card-hover"
+                                <div class="glass-panel bg-gradient-to-br {{ $gradient }} rounded-3xl p-8 h-56 relative overflow-hidden group cursor-pointer border border-white/80 glass-card-hover"
                                      style="--glow-color: {{ $glowColor }};">
                                     <div class="relative z-10 w-11/12 h-full flex flex-col justify-between">
-                                        <h4 class="text-xl font-bold text-white group-hover:text-cyan-300 origin-left transition-colors duration-300 flex items-center gap-3">
-                                            <div class="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center {{ $accentColor }} shrink-0">
+                                        <h4 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 origin-left transition-colors duration-300 flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-lg bg-white border border-slate-200/60 flex items-center justify-center {{ $accentColor }} shrink-0 shadow-sm">
                                                 <i data-lucide="{{ $item['icon'] }}" class="w-4.5 h-4.5"></i>
                                             </div>
                                             {{ $item['name'] }}
                                         </h4>
-                                        <p class="text-slate-300/80 text-sm leading-relaxed font-light mt-4 flex-1">
+                                        <p class="text-slate-600/90 text-sm leading-relaxed font-medium mt-4 flex-1">
                                             {{ $item['desc'] }}
                                         </p>
                                     </div>
 
                                     <!-- Parallax decorative background icon -->
-                                    <div class="absolute -bottom-8 -right-8 opacity-[0.03] group-hover:opacity-[0.09] text-white transform {{ $item['rotate'] }} scale-90 group-hover:scale-105 group-hover:-translate-y-2 transition-all duration-700 ease-out pointer-events-none"
+                                    <div class="absolute -bottom-8 -right-8 opacity-[0.02] group-hover:opacity-[0.05] text-slate-500 transform {{ $item['rotate'] }} scale-90 group-hover:scale-105 group-hover:-translate-y-2 transition-all duration-700 ease-out pointer-events-none"
                                          data-speed="0.1">
                                         <i data-lucide="{{ $item['icon'] }}" class="w-36 h-36"></i>
                                     </div>
 
                                     <!-- Hover Glass Overlay Shine -->
-                                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.01] to-white/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                                 </div>
                             @endforeach
                         </div>
@@ -410,7 +410,7 @@
             </div>
 
             <!-- Footer -->
-            <footer class="text-center py-12 text-xs text-slate-500 font-mono tracking-wider relative z-10 border-t border-white/[0.04] mt-12 bg-[#060a12]/30">
+            <footer class="text-center py-12 text-xs text-slate-400 font-mono tracking-wider relative z-10 border-t border-slate-200/50 mt-12 bg-white/20">
                 <p>&copy; Hak Cipta 2026 {{ setting('site_name', 'Andrew.Devlog') }} - Princenton Andrew Brightly Masrikat</p>
             </footer>
 
@@ -522,15 +522,15 @@
 
                 filterButtons.forEach(btn => {
                     btn.addEventListener("click", () => {
-                        // De-activate current tabs
+                        // De-activate current tabs (Light Mode states)
                         filterButtons.forEach(b => {
-                            b.classList.remove("active", "bg-white/[0.06]", "text-white");
-                            b.classList.add("text-slate-400");
+                            b.classList.remove("active", "bg-white", "text-slate-900", "shadow-md");
+                            b.classList.add("text-slate-500");
                         });
 
                         // Set clicked button to active state
-                        btn.classList.add("active", "bg-white/[0.06]", "text-white");
-                        btn.classList.remove("text-slate-400");
+                        btn.classList.add("active", "bg-white", "text-slate-900", "shadow-md");
+                        btn.classList.remove("text-slate-500");
 
                         const filterValue = btn.getAttribute("data-filter");
 
